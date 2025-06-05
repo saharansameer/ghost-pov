@@ -1,5 +1,4 @@
 import { nanoid } from "nanoid";
-import {env} from "@/config/env.client";
 
 export const getRandomGhostTag = () => {
   const ghostTags = [
@@ -18,6 +17,6 @@ export const getRandomGhostTag = () => {
 
 export const getRandomGhostAvatar = () => {
   const avatarNum = Math.floor(Math.random() * 18)
-  const avatarUrl = `${env.AVATAR_URL}/ghsavt-${avatarNum}.jpg`
+  const avatarUrl = `${process.env.NEXT_PUBLIC_AVATAR_URL}/ghsavt-${avatarNum}.jpg`
   return avatarUrl
 }

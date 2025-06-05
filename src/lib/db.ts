@@ -1,11 +1,15 @@
 import mongoose from "mongoose";
-import { env } from "@/config/env.server";
+
+const connection: { isConnected?: number } = {};
 
 async function connectDB(): Promise<void> {
+  if (connection.isConnected) return;
+
   try {
-    await mongoose.connect(env.MONGO_URI, {
+    const db = await mongoose.connect(process.env.MONGO_URI as string, {
       dbName: "ghostpovdb",
     });
+    connection.isConnected = db.connections[0].readyState;
     console.log("MongoDB Connected");
   } catch (err) {
     console.log("MongoDB Connection Failed:", err);
