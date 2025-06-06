@@ -7,10 +7,16 @@ export async function sendVerificationEmail(
 ): Promise<BaseResponse> {
   try {
     await resend.emails.send({
-      from: "GhostPOV <noreply@ghostpov.xyz>",
-      to: [email, "delivered@resend.dev"],
+      from: "GhostPOV <onboarding@ghostpov.xyz>",
+      to: [email],
       subject: "Verification Code",
       react: VerifyEmailTemplate({ email, code }),
+      text: `Thanks for starting the new GhostPOV account creation process. 
+        We want to make sure it's really you. \n 
+        Please verify your email ${email}. \n
+        Verification Code: ${code} \n
+        This code is valid for 10 minutes.
+        `,
     });
 
     return {

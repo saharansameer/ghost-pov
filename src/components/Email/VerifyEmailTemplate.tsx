@@ -6,7 +6,6 @@ import {
   Heading,
   Hr,
   Html,
-  Img,
   Preview,
   Section,
   Text,
@@ -26,19 +25,11 @@ export function VerifyEmailTemplate({
       <Preview>GhostPOV Account Verification</Preview>
       <Container >
         <Section >
-          <Section>
-            <Img
-              src={""}
-              width="75"
-              height="45"
-              alt="GhostPOV Logo"
-            />
-          </Section>
           <Section >
             <Heading>Verify Your Account</Heading>
             <Text >
               Thanks for starting the new GhostPOV account creation process. We want
-              to make sure it`&apos;`s really you. Please verify your email {email}.
+              to make sure it&apos;s really you. Please verify your email {email}.
             </Text>
             <Section >
               <Text >Verification code</Text>
