@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid";
 
-export const getRandomGhostTag = () => {
+export const getRandomUsername = () => {
   const ghostTags = [
     "PhantomWhisper", "SilentShade", "WraithWalker", "EchoSoul", 
     "CrypticFog", "MidnightDrift", "HauntPulse", "NocturneGlimmer", 
@@ -15,7 +15,7 @@ export const getRandomGhostTag = () => {
   return tag
 }
 
-export const getRandomGhostAvatar = () => {
+export const getRandomAvatar = () => {
   const avatarNum = Math.floor(Math.random() * 18)
   const avatarUrl = `${process.env.NEXT_PUBLIC_AVATAR_URL}/ghsavt-${avatarNum}.jpg`
   return avatarUrl

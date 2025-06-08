@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     "A simple way to get anonymous feedback on your project, resume, portfolio and more.",
 };
 
-export default function RootLayout({ children }: LayoutProps) {
+export default function RootLayout({ children }: ReactChildren) {
   return (
     <html lang="en" className="dark">
         <body

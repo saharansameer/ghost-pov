@@ -1,11 +1,23 @@
 import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { mongoClient } from "@/lib/mongo-client";
+import { sendEmail } from "@/helpers/email";
 
 export const auth = betterAuth({
   database: mongodbAdapter(mongoClient.db("ghostpovdb")),
+  plugins: [],
+  session: {
+    expiresIn: 60 * 60 * 24 * 7, // 7 days
+    updateAge: 60 * 60 * 24, // 1 day
+    freshAge: 0, // disabled
+    cookieCache: {
+      enabled: true,
+      maxAge: 60 * 15, // 15 minutes
+    },
+  },
   emailAndPassword: {
     enabled: true,
+    requireEmailVerification: true,
   },
   socialProviders: {
     google: {
@@ -15,6 +27,12 @@ export const auth = betterAuth({
     github: {
       clientId: process.env.GITHUB_CLIENT_ID as string,
       clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
+    },
+  },
+  emailVerification: {
+    sendOnSignUp: true,
+    sendVerificationEmail: async ({ user, url }) => {
+      await sendEmail({ type: "verify", email: user.email, url });
     },
   },
 });

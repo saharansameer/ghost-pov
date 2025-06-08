@@ -1,33 +1,44 @@
 import { resend } from "@/lib/resend";
-import { VerifyEmailTemplate } from "@/components";
+import { VerifyEmailTemplate, VerifyEmailText } from "@/components";
 
-export async function sendVerificationEmail(
-  email: string,
-  code: string
-): Promise<BaseResponse> {
+const emailType = {
+  "verify": {
+    template: VerifyEmailTemplate,
+    text: VerifyEmailText,
+  }
+};
+
+type EmailType = keyof typeof emailType;
+
+interface SendEmailParams {
+  type: EmailType;
+  email: string;
+  url: string;
+}
+
+export async function sendEmail({
+  type,
+  email,
+  url,
+}: SendEmailParams): Promise<BaseResponse> {
   try {
     await resend.emails.send({
       from: "GhostPOV <onboarding@ghostpov.xyz>",
       to: [email],
-      subject: "Verification Code",
-      react: VerifyEmailTemplate({ email, code }),
-      text: `Thanks for starting the new GhostPOV account creation process. 
-        We want to make sure it's really you. \n 
-        Please verify your email ${email}. \n
-        Verification Code: ${code} \n
-        This code is valid for 10 minutes.
-        `,
+      subject: "Account Verification",
+      react: emailType[type]["template"]({ email, url }),
+      text: emailType[type]["text"]({ email, url }),
     });
 
     return {
       success: true,
-      message: "Verification Code sent successfully",
+      message: "Email sent successfully",
     };
   } catch (error) {
-    console.error("Verification Email Error:", error);
+    console.error("Email Helper Error:", error);
     return {
       success: false,
-      message: "Failed to send Verification Email",
+      message: "Failed to send Email",
     };
   }
 }

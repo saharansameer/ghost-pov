@@ -13,10 +13,10 @@ export const signupSchema = z.object({
 
 export type SignupSchemaType = z.input<typeof signupSchema>;
 
-// Login Schema
-export const loginSchema = z.object({
+// Signin Schema
+export const signinSchema = z.object({
   email: emailValidator,
   password: passwordValidator,
 });
 
-export type LoginSchemaType = z.input<typeof loginSchema>;
+export type SigninSchemaType = z.input<typeof signinSchema>;

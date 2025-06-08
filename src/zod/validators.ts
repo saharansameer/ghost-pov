@@ -9,5 +9,5 @@ export const signupPasswordValidator = z
 
 export const passwordValidator = z
   .string()
-  .min(8, { error: "Incorrect Password" })
-  .max(128, { error: "Incorrect Password" });
+  .min(1, { error: "Password can't be empty" })
+  .max(128, { error: "Password exceeded 128 characters" });
