@@ -21,11 +21,13 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: ReactChildren) {
   return (
     <html lang="en" className="dark">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <main className="w-full max-w-screen-sm mx-auto min-h-screen px-5 responsive">
           {children}
-        </body>
+        </main>
+      </body>
     </html>
   );
 }

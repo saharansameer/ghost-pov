@@ -1,19 +1,36 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-import { getToken } from "next-auth/jwt";
+import { NextRequest, NextResponse } from "next/server";
+import { betterFetch } from "@better-fetch/fetch";
+import type { Session } from "better-auth";
+
+const authRoutes = ["/sign-in", "/sign-up"];
+const protectedRoutes = ["/dashboard"];
 
 export async function middleware(request: NextRequest) {
-  const token = await getToken({ req: request });
-  const url = request.nextUrl;
+  const { pathname, origin } = request.nextUrl;
+  const isAuthRoute = authRoutes.includes(pathname);
+  const isProtectedRoute = protectedRoutes.includes(pathname);
 
-  if (token && ["/sign-in"].includes(url.pathname)) {
-    return NextResponse.redirect(new URL("/", request.url));
+  const { data: session } = await betterFetch<Session>(
+    "/api/auth/get-session",
+    {
+      baseURL: origin,
+      headers: {
+        cookie: request.headers.get("cookie") || "",
+      },
+    }
+  );
+
+  if (session && isAuthRoute) {
+    return NextResponse.redirect(new URL("/dashboard", request.url));
+  }
+
+  if (!session && isProtectedRoute) {
+    return NextResponse.redirect(new URL("/sign-in", request.url));
   }
 
   return NextResponse.next();
 }
 
-// See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/sign-in"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
 };

@@ -1,5 +1,5 @@
 import { resend } from "@/lib/resend";
-import { VerifyEmailTemplate, VerifyEmailText } from "@/components";
+import { VerifyEmailTemplate, VerifyEmailText } from "@/components/client";
 
 const emailType = {
   "verify": {
