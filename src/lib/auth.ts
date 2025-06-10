@@ -1,6 +1,6 @@
 import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
-import { mongoClient } from "@/lib/mongo-client";
+import mongoClient from "@/lib/mongo-client";
 import { sendEmail } from "@/helpers/email";
 
 export const auth = betterAuth({
@@ -13,6 +13,17 @@ export const auth = betterAuth({
     cookieCache: {
       enabled: true,
       maxAge: 60 * 15, // 15 minutes
+    },
+  },
+  rateLimit: {
+    enabled: true,
+    window: 10, // time window in seconds
+    max: 5, // max requests in the window
+    customRules: {
+      "/sign-in/email": {
+        window: 600,
+        max: 2,
+      },
     },
   },
   emailAndPassword: {

@@ -1,3 +1,5 @@
 import { MongoClient } from "mongodb";
 
-export const mongoClient = new MongoClient(process.env.MONGO_URI as string);
+const mongoClient = new MongoClient(process.env.MONGO_URI as string);
+
+export default mongoClient;
