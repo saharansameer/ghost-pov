@@ -12,12 +12,14 @@ import {
 } from "@/zod/schema/auth.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 interface AuthFormProps {
   mode: AuthMode;
 }
 
 export default function AuthForm({ mode }: AuthFormProps) {
+  const router = useRouter();
   const isSignIn = mode === "sign-in";
 
   // React Hook Form Configuration
@@ -26,36 +28,60 @@ export default function AuthForm({ mode }: AuthFormProps) {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
+    setError,
   } = useForm<SigninSchemaType>({
     resolver: zodResolver(isSignIn ? signinSchema : signupSchema),
     mode: "onSubmit",
   });
 
   // SignIn Handler
-  const onSignInHandler: SubmitHandler<SigninSchemaType> = async (data) => {
+  const onSignInHandler: SubmitHandler<SigninSchemaType> = async (formData) => {
     try {
-      const { email, password } = data;
-      await authClient.signIn.email({ email, password });
+      const { email, password } = formData;
+      const { error } = await authClient.signIn.email({
+        email,
+        password,
+      });
+
+      if (error?.code) {
+        setError("root", {
+          type: "validate",
+          message: error.message,
+        });
+        return;
+      }
     } catch (error) {
       console.error("SignIn Error:", error);
     }
     reset();
+    router.push("/dashboard");
+    router.refresh()
   };
 
   // SignUp Handler
-  const onSignUpHandler: SubmitHandler<SignupSchemaType> = async (data) => {
+  const onSignUpHandler: SubmitHandler<SignupSchemaType> = async (formData) => {
     try {
-      const { email, password } = data;
+      const { email, password } = formData;
 
-      await authClient.signUp.email({
+      const { error } = await authClient.signUp.email({
         email,
         password,
         name: email.split("@")[0],
       });
+
+      if (error?.code) {
+        setError("root", {
+          type: "validate",
+          message: error.message,
+        });
+        return;
+      }
     } catch (error) {
       console.error("SignUp Error:", error);
     }
     reset();
+    router.push("/sign-in");
+    router.refresh()
   };
 
   return (
@@ -63,6 +89,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
       onSubmit={handleSubmit(isSignIn ? onSignInHandler : onSignUpHandler)}
       className="w-xs space-y-7 modal-content"
     >
+      {errors.root && <ErrorMessage text={errors.root.message as string} />}
       <div>
         <div className="space-y-2">
           <Label>Email</Label>
@@ -88,7 +115,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
       </div>
 
       <Button type="submit" size={"sm"} className="font-semibold w-full">
-        {isSubmitting ? <LoaderSpin /> : "Submit"}
+        {isSubmitting ? <LoaderSpin /> : isSignIn ? "Sign in" : "Sign up"}
       </Button>
     </form>
   );

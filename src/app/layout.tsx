@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Header, Footer } from "@/components/server";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,18 +18,27 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "GhostPOV",
   description:
-    "A simple way to get anonymous feedback on your project, resume, portfolio and more.",
+    "The simplest way to get anonymous feedback on your project, resume, portfolio and more.",
 };
 
-export default function RootLayout({ children }: ReactChildren) {
+export default async function RootLayout({ children }: ReactChildren) {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
   return (
     <html lang="en" className="dark">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <main className="w-full max-w-screen-sm mx-auto min-h-screen px-5 responsive">
+        <header className="layout-container">
+          <Header session={session}/>
+        </header>
+        <main className="layout-container max-w-screen-sm min-h-screen px-2">
           {children}
         </main>
+        <footer className="layout-container">
+          <Footer />
+        </footer>
       </body>
     </html>
   );

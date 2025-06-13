@@ -22,10 +22,10 @@ export default function SignupPage() {
             Choose your way to create new account
           </CardDescription>
         </CardHeader>
-        <CardContent className="flex flex-col gap-y-10">
+        <CardContent className="flex flex-col gap-y-10 items-center">
           <SignupForm mode="sign-up" />
           <Separator orientation="horizontal" />
-          <div className="flex flex-col gap-y-4">
+          <div className="w-full flex flex-col gap-y-4 pb-4">
             <SignUpButton
               provider="google"
               mode="sign-up"
