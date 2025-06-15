@@ -1,7 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { authClient } from "./auth-client";
-import type { NextRequest } from "next/server";
+import { authClient } from "@/lib/auth-client";
+import { type NextRequest } from "next/server";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

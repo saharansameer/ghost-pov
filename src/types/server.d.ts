@@ -1,5 +1,6 @@
-import { FeedbackDocument } from "@/models/feedback.model";
-import { EchoDocument } from "@/models/echo.model";
+import { FeedbackDocument, FeedbackAggregate } from "@/models/feedback.model";
+import { EchoDocument, EchoAggregate } from "@/models/echo.model";
+import { AggregatePaginateResult } from "mongoose";
 
 declare global {
   interface BaseResponse {
@@ -8,14 +9,12 @@ declare global {
   }
 
   interface FeedbackResponse extends BaseResponse {
-    isAcceptingFeedback?: boolean;
-    data: Array<FeedbackDocument>;
+    data: FeedbackDocument | AggregatePaginateResult<FeedbackAggregate>;
   }
 
   interface EchoResponse extends BaseResponse {
-    data: EchoDocument;
+    data: EchoDocument | AggregatePaginateResult<EchoAggregate>;
   }
-
 }
 
 export {};

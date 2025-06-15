@@ -3,7 +3,12 @@ import { betterFetch } from "@better-fetch/fetch";
 import type { Session } from "better-auth";
 
 const authRoutes = ["/sign-in", "/sign-up"];
-const protectedRoutes = ["/dashboard"];
+const protectedRoutes = [
+  "/dashboard",
+  "/account",
+  "/api/create-echo",
+  "/api/get-feedback",
+];
 
 export async function middleware(request: NextRequest) {
   const { pathname, origin } = request.nextUrl;

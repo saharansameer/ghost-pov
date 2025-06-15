@@ -5,7 +5,7 @@ import { EchoModel } from "@/models/echo.model";
 import { getClientInfo } from "@/lib/utils";
 
 export async function POST(request: NextRequest) {
-  connectDB();
+  await connectDB();
   const ip = getClientInfo(request);
   try {
     // Extract data from request body

@@ -2,26 +2,17 @@ import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/db";
 import { EchoModel } from "@/models/echo.model";
 import { nanoid } from "nanoid";
-import { auth } from "@/lib/auth";
-import { User } from "better-auth";
+import { getAuthSession, unauthorized } from "@/lib/session-utils";
 
 export async function POST(request: NextRequest) {
-  connectDB();
+  await connectDB();
 
-  const session = await auth.api.getSession({
-    headers: request.headers,
-  });
+  const session = await getAuthSession(request.headers);
   if (!session) {
-    return NextResponse.json<BaseResponse>(
-      { success: false, message: "Please Sign-in and try again" },
-      { status: 401 }
-    );
+    return unauthorized();
   }
 
   try {
-    // Get user from session
-    const user = session.user as User;
-
     // Extract title, description and owner from Request body
     const { title, description } = await request.json();
 
@@ -38,7 +29,7 @@ export async function POST(request: NextRequest) {
       publicId: nanoid(6),
       title,
       description: description || "",
-      owner: user.id,
+      owner: session.userId,
     });
 
     if (!echo) {

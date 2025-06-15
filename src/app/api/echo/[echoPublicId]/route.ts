@@ -9,7 +9,7 @@ type Params = {
 };
 
 export async function GET(request: NextRequest, { params }: Params) {
-  connectDB();
+  await connectDB();
   try {
     // Extract echoPublicId from params
     const { echoPublicId } = await params;
