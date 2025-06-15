@@ -1,4 +1,5 @@
 import { FeedbackDocument } from "@/models/feedback.model";
+import { EchoDocument } from "@/models/echo.model";
 
 declare global {
   interface BaseResponse {
@@ -8,8 +9,13 @@ declare global {
 
   interface FeedbackResponse extends BaseResponse {
     isAcceptingFeedback?: boolean;
-    feedbacks?: Array<FeedbackDocument>;
+    data: Array<FeedbackDocument>;
   }
+
+  interface EchoResponse extends BaseResponse {
+    data: EchoDocument;
+  }
+
 }
 
 export {};

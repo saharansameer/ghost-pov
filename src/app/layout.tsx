@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Header, Footer } from "@/components/server";
-import { auth } from "@/lib/auth";
+import { auth, Session } from "@/lib/auth";
 import { headers } from "next/headers";
 
 const geistSans = Geist({
@@ -31,11 +31,13 @@ export default async function RootLayout({ children }: ReactChildren) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <header className="layout-container">
-          <Header session={session}/>
+          <Header session={session as Session} />
         </header>
+
         <main className="layout-container max-w-screen-sm min-h-screen px-2">
           {children}
         </main>
+        
         <footer className="layout-container">
           <Footer />
         </footer>

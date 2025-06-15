@@ -11,6 +11,7 @@ enum FeedbackCategory {
 export interface FeedbackDocument extends Document {
   category: FeedbackCategory;
   message: string;
+  echoId: Schema.Types.ObjectId;
   ip: string;
 }
 
