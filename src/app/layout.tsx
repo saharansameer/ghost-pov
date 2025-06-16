@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header, Footer } from "@/components/server";
 import { auth, Session } from "@/lib/auth";
 import { headers } from "next/headers";
+import { ThemeProvider } from "@/context/theme-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,21 +27,23 @@ export default async function RootLayout({ children }: ReactChildren) {
     headers: await headers(),
   });
   return (
-    <html lang="en" className="dark">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <header className="layout-container">
-          <Header session={session as Session} />
-        </header>
+        <ThemeProvider>
+          <header className="layout-container">
+            <Header session={session as Session} />
+          </header>
 
-        <main className="layout-container max-w-screen-sm min-h-screen px-2">
-          {children}
-        </main>
-        
-        <footer className="layout-container">
-          <Footer />
-        </footer>
+          <main className="layout-container max-w-screen-sm min-h-screen px-2">
+            {children}
+          </main>
+
+          <footer className="layout-container">
+            <Footer />
+          </footer>
+        </ThemeProvider>
       </body>
     </html>
   );

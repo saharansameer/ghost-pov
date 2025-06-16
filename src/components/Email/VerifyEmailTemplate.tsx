@@ -12,46 +12,38 @@ import {
 } from "@react-email/components";
 
 interface VerifyEmailTemplateProps {
-  email: string;
+  name: string;
   url: string;
 }
 
 // Template
-export function VerifyEmailTemplate({ email, url }: VerifyEmailTemplateProps) {
+export function VerifyEmailTemplate({ name, url }: VerifyEmailTemplateProps) {
   return (
     <Html>
       <Head />
-      <Preview>Verify your email address for GhostPOV</Preview>
+      <Preview>Verify Your GhostPOV Account</Preview>
       <Body style={main}>
         <Container style={container}>
           <Section style={logoContainer}>
-            <Heading style={logo}>GhostPOV</Heading>
+            <Heading style={logo}>Welcome to GhostPOV</Heading>
           </Section>
 
           <Section style={content}>
-            <Heading style={heading}>Verify your email address</Heading>
-
             <Text style={paragraph}>
-              Hey there, Welcome to GhostPOV. To complete your registration and
-              start using your account, please verify your email address by
-              clicking the button below.
+              Hey! <strong style={bold}>{name}</strong>, Welcome to GhostPOV. To
+              complete your registration and start using your account, please
+              verify your email address by clicking the button below.
             </Text>
 
             <Section style={buttonContainer}>
               <Button href={url} style={button}>
-                Click here to verify
+                Verify Account
               </Button>
             </Section>
 
             <Text style={paragraph}>
-              This verification link was sent to{" "}
-              <strong style={bold}>{email}</strong>. If you didn&apos;t create
-              an account with GhostPOV, you can safely ignore this email.
-            </Text>
-
-            <Text style={paragraph}>
               If the button above doesn&apos;t work, you can also copy and paste
-              this link into your browser:
+              the following link into your browser:
             </Text>
 
             <Text style={linkText}>
@@ -60,18 +52,26 @@ export function VerifyEmailTemplate({ email, url }: VerifyEmailTemplateProps) {
               </Link>
             </Text>
 
-            <Text style={paragraph}>
-              This verification link will expire in 24 hours for your
-              security.
+            <Text style={footerText}>
+              The verification link will expire in 24 hours for your security.
+            </Text>
+
+            <Text style={footerText}>
+              By completing registration or verifying account you agree to our{" "}
+              <Link href={"https://ghostpov.xyz/terms-of-service"} style={link}>
+                Terms of Service
+              </Link>{" "}
+              and{" "}
+              <Link href={"https://ghostpov.xyz/privacy-policy"} style={link}>
+                Privacy Policy
+              </Link>
+              .
             </Text>
           </Section>
 
           <Section style={footer}>
             <Text style={footerText}>
-              © 2025 GhostPOV. All rights reserved.
-            </Text>
-            <Text style={footerText}>
-              If you have any questions, feel free to contact our support team.
+              &copy; {new Date().getFullYear()} GhostPOV. All rights reserved.
             </Text>
           </Section>
         </Container>
@@ -80,23 +80,24 @@ export function VerifyEmailTemplate({ email, url }: VerifyEmailTemplateProps) {
   );
 }
 
-// Plain text version 
+// Plain text version
 export function VerifyEmailText({
-  email,
+  name,
   url,
 }: VerifyEmailTemplateProps): string {
   return `
-Hey there! Welcome to GhostPOV.
+Hey ${name}! Welcome to GhostPOV.
 
 To complete your registration and start using your account, please verify your email address by visiting the following link:
 ${url}
 
-This verification link was sent to ${email}. If you didn't create an account with GhostPOV, you can safely ignore this email.
-
 This verification link will expire in 24 hours for your security.
 
-© 2025 GhostPOV. All rights reserved.
-If you have any questions, feel free to contact our support team.
+ By completing registration or verifying account you agree to our Terms of Service and Privacy Policy.
+ Terms of Service: https://ghostpov.xyz/terms-of-service
+ Privacy Policy: https://ghostpov.xyz/privacy-policy
+
+© ${new Date().getFullYear()} GhostPOV. All rights reserved.
 `.trim();
 }
 
@@ -133,15 +134,6 @@ const content = {
   margin: "0 20px",
 };
 
-const heading = {
-  color: "#1f2937",
-  fontSize: "24px",
-  fontWeight: "600",
-  lineHeight: "1.25",
-  margin: "0 0 24px",
-  textAlign: "center" as const,
-};
-
 const paragraph = {
   color: "#4b5563",
   fontSize: "16px",
@@ -174,9 +166,9 @@ const bold = {
 };
 
 const linkText = {
-  fontSize: "14px",
+  fontSize: "12px",
   lineHeight: "1.5",
-  margin: "16px 0",
+  margin: "5px 0 16px 0",
   wordBreak: "break-all" as const,
 };
 

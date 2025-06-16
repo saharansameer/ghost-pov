@@ -44,7 +44,12 @@ export const auth = betterAuth({
   emailVerification: {
     sendOnSignUp: true,
     sendVerificationEmail: async ({ user, url }) => {
-      await sendEmail({ type: "verify", email: user.email, url });
+      await sendEmail({
+        type: "verify",
+        email: user.email,
+        name: user.name,
+        url,
+      });
     },
   },
 });
