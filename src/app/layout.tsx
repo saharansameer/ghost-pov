@@ -36,7 +36,7 @@ export default async function RootLayout({ children }: ReactChildren) {
             <Header session={session as Session} />
           </header>
 
-          <main className="layout-container max-w-screen-sm min-h-screen px-2">
+          <main className="layout-container min-h-screen">
             {children}
           </main>
 

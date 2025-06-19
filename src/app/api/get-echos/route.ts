@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/db";
-import { FeedbackModel } from "@/models/feedback.model";
-import { EchoModel } from "@/models/echo.model";
+import { EchoAggregate, EchoModel } from "@/models/echo.model";
 import { getAuthSession, unauthorized } from "@/lib/session-utils";
+import { Types, AggregatePaginateResult } from "mongoose";
+import redis from "@/lib/redis";
 
 export async function GET(request: NextRequest) {
   await connectDB();
@@ -16,32 +17,27 @@ export async function GET(request: NextRequest) {
   try {
     // Extract query parameters from url
     const searchParams = request.nextUrl.searchParams;
-    const echoPublicId = searchParams.get("echoPublicId");
     const page = Number(searchParams.get("page") || 1);
     const limit = Number(searchParams.get("limit") || 15);
 
-    // Find Echo by public-Id
-    const echo = await EchoModel.findOne({
-      publicId: echoPublicId,
-      owner: session.userId,
-    });
-
-    // Check authorization
-    if (!echo) {
-      return NextResponse.json<BaseResponse>(
+    // Check cached storage
+    const cache = await redis.get(`echos:${session.userId}:${page}`);
+    if (cache) {
+      return NextResponse.json<EchoResponse>(
         {
-          success: false,
-          message: "You are unauthorized",
+          success: true,
+          message: "Echos fetched from redis cache",
+          data: cache as AggregatePaginateResult<EchoAggregate>,
         },
-        { status: 403 }
+        { status: 200 }
       );
     }
 
     // Aggregate Query
-    const feedbackAggregateQuery = FeedbackModel.aggregate([
+    const echoAggregateQuery = EchoModel.aggregate([
       {
         $match: {
-          echoId: echo._id,
+          owner: new Types.ObjectId(session.userId),
         },
       },
       {
@@ -50,43 +46,48 @@ export async function GET(request: NextRequest) {
       {
         $project: {
           _id: 0,
-          category: 1,
-          message: 1,
+          publicId: 1,
+          title: 1,
+          isAcceptingFeedback: 1,
           createdAt: 1,
         },
       },
     ]);
 
     // Paginated Result
-    const paginatedFeedback = await FeedbackModel.aggregatePaginate(
-      feedbackAggregateQuery,
-      {
-        page,
-        limit,
-      }
+    const paginatedEchos = await EchoModel.aggregatePaginate(
+      echoAggregateQuery,
+      { page, limit }
     );
 
     // Validate Page Number
-    if (paginatedFeedback.page! > paginatedFeedback.totalPages) {
+    if (paginatedEchos.page! > paginatedEchos.totalPages) {
       return NextResponse.json<BaseResponse>(
         { success: false, message: "Invalid Page Selection" },
         { status: 404 }
       );
     }
 
+    // Cache echos
+    await redis.setex(
+      `echos:${session.userId}:${page}`,
+      600,
+      JSON.stringify(paginatedEchos)
+    );
+
     // Final Response
-    return NextResponse.json<FeedbackResponse>(
+    return NextResponse.json<EchoResponse>(
       {
         success: true,
-        message: "Feedbacks fetched successfully",
-        data: paginatedFeedback,
+        message: "Echos fetched successfully",
+        data: paginatedEchos,
       },
       { status: 200 }
     );
   } catch (error) {
-    console.error("Failed to GET feedbacks:", error);
+    console.error("Failed to GET Echos:", error);
     return NextResponse.json<BaseResponse>(
-      { success: false, message: "Failed to GET feedbacks" },
+      { success: false, message: "Failed to GET Echos" },
       { status: 500 }
     );
   }

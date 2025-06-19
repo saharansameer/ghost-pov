@@ -12,7 +12,7 @@ interface HeaderProps {
 
 export async function Header({ session }: HeaderProps) {
   return (
-    <div className="container mx-auto px-2 py-5 border-b border-b-[#d5d5d5] dark:border-border">
+    <div className="mx-auto px-2 py-5 border-b border-b-[#d5d5d5] dark:border-border">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-2">
           <Ghost />

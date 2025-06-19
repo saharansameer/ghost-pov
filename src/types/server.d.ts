@@ -15,6 +15,26 @@ declare global {
   interface EchoResponse extends BaseResponse {
     data: EchoDocument | AggregatePaginateResult<EchoAggregate>;
   }
+
+  interface EchoObject {
+    publicId: string;
+    title: string;
+    isAcceptingFeedback: boolean;
+    createdAt: Date;
+  }
+
+  interface PaginationInfo {
+    currPage: number;
+    totalPages: number;
+    prevPage: number | null;
+    nextPage: number | null;
+    hasPrevPage: boolean;
+    hasNextPage: boolean;
+  }
+
+  type PaginatedDataOnly =
+    | AggregatePaginateResult<EchoAggregate>
+    | AggregatePaginateResult<FeedbackAggregate>;
 }
 
 export {};

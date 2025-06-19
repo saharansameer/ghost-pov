@@ -21,3 +21,14 @@ export function getClientInfo(request: NextRequest) {
 
   return `${ip}:${userAgent}`;
 }
+
+export function getPaginationInfo(data: PaginatedDataOnly) {
+  return {
+    currPage: data.page,
+    totalPages: data.totalPages,
+    prevPage: data.prevPage,
+    nextPage: data.nextPage,
+    hasPrevPage: data.hasPrevPage,
+    hasNextPage: data.hasNextPage,
+  } as PaginationInfo;
+}

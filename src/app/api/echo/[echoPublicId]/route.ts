@@ -12,7 +12,7 @@ export async function GET(request: NextRequest, { params }: Params) {
   await connectDB();
   try {
     // Extract echoPublicId from params
-    const { echoPublicId } = await params;
+    const { echoPublicId } = params;
 
     // Find echo with publicId
     const echo = await EchoModel.findOne({
@@ -33,7 +33,7 @@ export async function GET(request: NextRequest, { params }: Params) {
 
     // Final Response
     return NextResponse.json<EchoResponse>(
-      { success: true, message: "Echo found success", data: echo },
+      { success: true, message: "Echo fetched successfully", data: echo },
       { status: 200 }
     );
   } catch (error) {
