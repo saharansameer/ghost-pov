@@ -7,6 +7,10 @@
   .layout-container {
     @apply w-full mx-auto max-w-screen-xl px-2;
   }
+
+  .nav-button {
+    @apply px-0 font-semibold text-foreground/80 hover:text-foreground transition-colors;
+  }
 }
 
 .modal-container {
@@ -79,7 +83,7 @@
 
 :root {
   --radius: 0.65rem;
-  --background: oklch(1 0.00 0);
+  --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);

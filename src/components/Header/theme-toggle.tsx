@@ -8,9 +8,10 @@ export function ThemeToggle() {
 
   return (
     <Button
-      variant={"outline"}
+      variant={"ghost"}
+      size={"sm"}
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="rounded-md  transition-colors"
+      className="transition-colors"
     >
       <svg
         width="24"

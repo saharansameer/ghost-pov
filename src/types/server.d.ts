@@ -1,6 +1,6 @@
 import { FeedbackDocument, FeedbackAggregate } from "@/models/feedback.model";
 import { EchoDocument, EchoAggregate } from "@/models/echo.model";
-import { AggregatePaginateResult } from "mongoose";
+import { Types, AggregatePaginateResult } from "mongoose";
 
 declare global {
   interface BaseResponse {
@@ -17,9 +17,11 @@ declare global {
   }
 
   interface EchoObject {
+    _id: Types.ObjectId;
     publicId: string;
     title: string;
     isAcceptingFeedback: boolean;
+    feedbackCount: number;
     createdAt: Date;
   }
 

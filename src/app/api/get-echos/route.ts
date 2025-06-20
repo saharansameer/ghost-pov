@@ -41,14 +41,37 @@ export async function GET(request: NextRequest) {
         },
       },
       {
+        $lookup: {
+          from: "feedbacks",
+          localField: "_id",
+          foreignField: "echoId",
+          as: "feedbacks",
+          pipeline: [
+            {
+              $project: {
+                _id: 1,
+              },
+            },
+          ],
+        },
+      },
+      {
+        $addFields: {
+          feedbackCount: {
+            $size: "$feedbacks",
+          },
+        },
+      },
+      {
         $sort: { createdAt: -1 },
       },
       {
         $project: {
-          _id: 0,
+          _id: 1,
           publicId: 1,
           title: 1,
           isAcceptingFeedback: 1,
+          feedbackCount: 1,
           createdAt: 1,
         },
       },
