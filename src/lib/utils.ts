@@ -32,3 +32,13 @@ export function getPaginationInfo(data: PaginatedDataOnly) {
     hasNextPage: data.hasNextPage,
   } as PaginationInfo;
 }
+
+export function getFormatDate(date: Date) {
+  const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  
+  return new Date(date).toLocaleString("en-US", options);
+}
