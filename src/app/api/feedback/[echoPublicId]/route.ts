@@ -4,15 +4,16 @@ import { FeedbackModel } from "@/models/feedback.model";
 import { EchoModel } from "@/models/echo.model";
 import { getClientInfo } from "@/lib/utils";
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest, { params }: RequestParams) {
   await connectDB();
   const ip = getClientInfo(request);
   try {
     // Extract data from request body
-    const { category, message, echoPublicId } = await request.json();
+    const echoPublicId = params;
+    const { category, message } = await request.json();
 
     // Verify all fields exist
-    if (!category || message.trim() === "" || !echoPublicId) {
+    if (!category || message.trim() === "") {
       return NextResponse.json<BaseResponse>(
         { success: false, message: "All Fields are required" },
         { status: 400 }

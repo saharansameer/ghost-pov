@@ -5,10 +5,10 @@ import { usePathname } from "next/navigation";
 
 interface PartiallyHiddenProps {
   children: React.ReactNode;
+  routes: string[];
 }
-const routes = ["/sign-in", "/sign-up", "/e"];
 
-export function PartiallyHidden({ children }: PartiallyHiddenProps) {
+export function PartiallyHidden({ children, routes }: PartiallyHiddenProps) {
   const pathname = usePathname();
 
   if (routes.some((route) => pathname.startsWith(route))) return null;

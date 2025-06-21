@@ -2,13 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/db";
 import { EchoModel } from "@/models/echo.model";
 
-type Params = {
-  params: {
-    echoPublicId: string;
-  };
-};
-
-export async function GET(request: NextRequest, { params }: Params) {
+export async function GET(request: NextRequest, { params }: RequestParams) {
   await connectDB();
   try {
     // Extract echoPublicId from params

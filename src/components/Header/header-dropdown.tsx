@@ -11,7 +11,7 @@ export function HeaderDropdown({ children }: ReactChildren) {
       <DropdownMenuTrigger asChild className="cursor-pointer sm:hidden">
         <Menu />
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent className="flex gap-x-5 px-2">
         {children}
       </DropdownMenuContent>
     </DropdownMenu>

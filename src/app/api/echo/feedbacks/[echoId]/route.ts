@@ -4,7 +4,7 @@ import { FeedbackModel } from "@/models/feedback.model";
 import { EchoModel } from "@/models/echo.model";
 import { getAuthSession, unauthorized } from "@/lib/session-utils";
 
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest, { params }: RequestParams) {
   await connectDB();
 
   // Re-check auth
@@ -15,14 +15,14 @@ export async function GET(request: NextRequest) {
 
   try {
     // Extract query parameters from url
+    const { echoId } = params;
     const searchParams = request.nextUrl.searchParams;
-    const echoPublicId = searchParams.get("echoPublicId");
     const page = Number(searchParams.get("page") || 1);
     const limit = Number(searchParams.get("limit") || 15);
 
     // Find Echo by public-Id
     const echo = await EchoModel.findOne({
-      publicId: echoPublicId,
+      _id: echoId,
       owner: session.userId,
     });
 

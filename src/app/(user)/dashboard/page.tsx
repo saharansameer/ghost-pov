@@ -12,7 +12,7 @@ export default async function Dashboard({ searchParams }: DashboardProps) {
   const page = Number(params?.p || 1);
 
   const response = await fetch(
-    `${process.env.APP_URL}/api/get-echos?page=${page}&limit=2`,
+    `${process.env.APP_URL}/api/user-echos?page=${page}&limit=15`,
     {
       // next: { revalidate: 600 },
       headers: await headers(),

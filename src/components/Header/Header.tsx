@@ -37,7 +37,7 @@ function NavItems({ session }: HeaderProps) {
 
 export function Header({ session }: HeaderProps) {
   return (
-    <div className="mx-auto px-2 py-5 border-b border-b-[#d5d5d5] dark:border-border">
+    <div className="mx-auto px-1 py-5 border-b border-b-[#d5d5d5] dark:border-border">
       <div className="flex items-center justify-between">
         {/* Logo and Title */}
         <div className="flex items-center space-x-2">
@@ -70,7 +70,7 @@ export function Header({ session }: HeaderProps) {
 
           {/* Sign in Button */}
           {!session && (
-            <PartiallyHidden>
+            <PartiallyHidden routes={["/sign-in", "/sign-up", "/f/"]}>
               <Link href={"/sign-in"}>
                 <Button variant={"outline"} className="font-semibold">
                   Sign in
