@@ -37,6 +37,13 @@ declare global {
   type PaginatedDataOnly =
     | AggregatePaginateResult<EchoAggregate>
     | AggregatePaginateResult<FeedbackAggregate>;
+
+  type RequestParams = {
+    params: {
+      echoId?: string;
+      echoPublicId?: string;
+    };
+  };
 }
 
 export {};

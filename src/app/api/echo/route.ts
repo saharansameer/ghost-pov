@@ -43,8 +43,12 @@ export async function POST(request: NextRequest) {
     }
 
     // Final Response
-    return NextResponse.json<BaseResponse>(
-      { success: true, message: "Echo created successfully" },
+    return NextResponse.json(
+      {
+        success: true,
+        message: "Echo created successfully",
+        data: { echoId: echo._id },
+      },
       { status: 201 }
     );
   } catch (error) {

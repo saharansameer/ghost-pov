@@ -2,6 +2,7 @@ import { headers } from "next/headers";
 import { EchoCard } from "@/components/Echo/EchoCard";
 import { PaginationButtons } from "@/components/Common/PaginationButtons";
 import { getPaginationInfo } from "@/lib/utils";
+import { EchoForm } from "@/components/client";
 
 interface DashboardProps {
   searchParams?: Promise<{ p?: string }>;
@@ -23,7 +24,9 @@ export default async function Dashboard({ searchParams }: DashboardProps) {
 
   return (
     <div className="flex flex-col min-h-screen h-auto overflow-y-scroll">
-      <div> Create Echo </div>
+      <div>
+        <EchoForm />
+      </div>
 
       <div className="flex flex-wrap gap-10 justify-center xl:justify-normal px-5">
         {data.docs.map((echo: EchoObject) => (
