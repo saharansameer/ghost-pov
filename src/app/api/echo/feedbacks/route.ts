@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/db";
-import { FeedbackModel } from "@/models/feedback.model";
+import { FeedbackModel, FeedbackAggregate } from "@/models/feedback.model";
 import { EchoModel } from "@/models/echo.model";
+import { AggregatePaginateResult } from "mongoose";
 import { getAuthSession, unauthorized } from "@/lib/session-utils";
+import redis from "@/lib/redis";
 
-export async function GET(request: NextRequest, { params }: RequestParams) {
+export async function GET(request: NextRequest) {
   await connectDB();
 
   // Re-check auth
@@ -15,10 +17,23 @@ export async function GET(request: NextRequest, { params }: RequestParams) {
 
   try {
     // Extract query parameters from url
-    const { echoId } = params;
     const searchParams = request.nextUrl.searchParams;
+    const echoId = searchParams.get("echoId");
     const page = Number(searchParams.get("page") || 1);
     const limit = Number(searchParams.get("limit") || 15);
+
+    // Check cached storage
+    const cache = await redis.get(`feedbacks:${echoId}:${page}`);
+    if (cache) {
+      return NextResponse.json<FeedbackResponse>(
+        {
+          success: true,
+          message: "Feedbacks fetched from redis cache",
+          data: cache as AggregatePaginateResult<FeedbackAggregate>,
+        },
+        { status: 200 }
+      );
+    }
 
     // Find Echo by public-Id
     const echo = await EchoModel.findOne({
@@ -49,9 +64,10 @@ export async function GET(request: NextRequest, { params }: RequestParams) {
       },
       {
         $project: {
-          _id: 0,
+          _id: 1,
           category: 1,
           message: 1,
+          flagged: 1,
           createdAt: 1,
         },
       },
@@ -73,6 +89,13 @@ export async function GET(request: NextRequest, { params }: RequestParams) {
         { status: 404 }
       );
     }
+
+    // Cache Feedbacks
+    await redis.setex(
+      `feedbacks:${echoId}:${page}`,
+      600,
+      JSON.stringify(paginatedFeedback)
+    );
 
     // Final Response
     return NextResponse.json<FeedbackResponse>(
