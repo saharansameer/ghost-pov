@@ -1,27 +1,28 @@
 import mongoose, { Schema, Document, AggregatePaginateModel } from "mongoose";
 import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2";
 
-enum FeedbackCategory {
-  GENERAL = "GENERAL-FEEDBACK",
-  FEATURE = "FEATURE-REQUEST",
-  BUG = "BUG-REPORT",
-  ERROR = "ERROR-REPORT",
+export enum FeedbackCategories {
+  GENERAL = "General",
+  FEATURE = "Feature Request",
+  BUG = "Bug Report",
+  ERROR = "Error Report",
 }
 
 export interface FeedbackDocument extends Document {
-  category: FeedbackCategory;
+  category: FeedbackCategories;
   message: string;
   echoId: Schema.Types.ObjectId;
   ip: string;
+  flagged: boolean;
 }
 
 const feedbackSchema = new Schema(
   {
     category: {
       type: String,
-      enum: Object.values(FeedbackCategory),
+      enum: Object.values(FeedbackCategories),
       required: true,
-      default: FeedbackCategory.GENERAL,
+      default: FeedbackCategories.GENERAL,
     },
     message: {
       type: String,
@@ -36,6 +37,10 @@ const feedbackSchema = new Schema(
     ip: {
       type: String,
       required: [true, "IP is required"],
+    },
+    flagged: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }

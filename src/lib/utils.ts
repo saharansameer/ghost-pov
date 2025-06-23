@@ -33,12 +33,23 @@ export function getPaginationInfo(data: PaginatedDataOnly) {
   } as PaginationInfo;
 }
 
-export function getFormatDate(date: Date) {
-  const options: Intl.DateTimeFormatOptions = {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
-  
+export function getFormatDate(date: Date, type: "date-only" | "date-time") {
+  const options: Intl.DateTimeFormatOptions =
+    type === "date-only"
+      ? {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }
+      : {
+          year: "numeric",
+          month: "numeric",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          hourCycle: "h23",
+          timeZone: "UTC",
+        };
+
   return new Date(date).toLocaleString("en-US", options);
 }
