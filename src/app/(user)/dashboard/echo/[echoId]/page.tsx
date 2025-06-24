@@ -2,6 +2,7 @@ import { headers } from "next/headers";
 import { PaginationButtons } from "@/components/Common/PaginationButtons";
 import { getPaginationInfo } from "@/lib/utils";
 import { FeedbackCard } from "@/components/Feedback/FeedbackCard";
+import { FeedbackObject } from "@/types";
 
 type EchoDashboardProps = {
   params: Promise<{ echoId: string }>;
@@ -19,7 +20,7 @@ export default async function EchoDashboard({
   const response = await fetch(
     `${process.env.APP_URL}/api/echo/feedbacks?echoId=${echoId}&page=${page}&limit=2`,
     {
-      // next: { revalidate: 60 },
+      next: { revalidate: 60 },
       headers: await headers(),
     }
   );

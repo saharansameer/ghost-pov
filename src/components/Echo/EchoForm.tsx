@@ -9,7 +9,6 @@ import { TextEditor } from "@/components/client";
 import { ErrorMessage, LoaderSpin } from "@/components/server";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
 
 export function EchoForm() {
   const router = useRouter();
@@ -32,20 +31,27 @@ export function EchoForm() {
     try {
       const { title, description } = formData;
 
-      const response = await axios.post("/api/echo", { title, description });
+      const response = await fetch("/api/echo/new", {
+        method: "POST",
+        body: JSON.stringify({ title, description }),
+        cache: "no-store",
+      });
 
-      if (!response.data.success) {
+      const { success, message } = await response.json();
+
+      if (!success) {
         setError("root", {
           type: "validate",
-          message: response.data.message,
+          message: message,
         });
         return;
       }
-
-      router.push(`/dashboard/${response.data.data.echoId}`);
     } catch (error) {
       console.error("Echo Form Error:", error);
     }
+
+    router.push("/dashboard");
+    setEchoOverlayOpen(false);
     reset();
   };
 
@@ -76,9 +82,6 @@ export function EchoForm() {
               onSubmit={handleSubmit(onSubmitHandler)}
               className="flex flex-col gap-y-5 p-5 rounded-sm bg-background border border-[#d5d5d5] dark:border-border"
             >
-              {errors.root && (
-                <ErrorMessage text={errors.root.message as string} />
-              )}
               <div>
                 <h1 className="text-primary font-bold text-2xl">
                   Create New Echo
@@ -88,35 +91,47 @@ export function EchoForm() {
                 </p>
               </div>
 
-              <div className="space-y-2">
-                <Label>Title</Label>
-                <Input
-                  {...register("title")}
-                  placeholder="Start with a clear title"
-                ></Input>
+              {errors.root && (
+                <ErrorMessage text={errors.root.message as string} />
+              )}
+
+              <div>
+                <div className="space-y-2">
+                  <Label htmlFor="title">Title</Label>
+                  <Input
+                    {...register("title")}
+                    id="title"
+                    placeholder="Start with a clear title"
+                  />
+                </div>
+
                 {errors.title && (
                   <ErrorMessage text={errors.title.message as string} />
                 )}
               </div>
 
-              <div className="space-y-2">
-                <Label>Description</Label>
-                <Controller
-                  name="description"
-                  control={control}
-                  render={({ field }) => (
-                    <>
-                      <TextEditor
-                        className="min-h-24 md:min-h-40"
-                        value={field.value || ""}
-                        onChange={field.onChange}
-                        placeholder={
-                          "Add more context, details or links — Optional"
-                        }
-                      />
-                    </>
-                  )}
-                />
+              <div>
+                <div className="space-y-2">
+                  <Label htmlFor="description">Description</Label>
+                  <Controller
+                    name="description"
+                    control={control}
+                    render={({ field }) => (
+                      <>
+                        <TextEditor
+                          id="description"
+                          className="min-h-24 md:min-h-40 max-h-80 overflow-y-scroll"
+                          value={field.value || ""}
+                          onChange={field.onChange}
+                          placeholder={
+                            "Add more context, details or links — Optional"
+                          }
+                        />
+                      </>
+                    )}
+                  />
+                </div>
+
                 {errors.description && (
                   <ErrorMessage text={errors.description.message as string} />
                 )}

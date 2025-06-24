@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/db";
 import { EchoModel } from "@/models/echo.model";
+import { BaseResponse, RequestParams, EchoResponse } from "@/types";
 
 export async function GET(request: NextRequest, { params }: RequestParams) {
   await connectDB();
   try {
     // Extract echoPublicId from params
-    const { echoPublicId } = params;
+    const { echoPublicId } = await params;
 
     // Find echo with publicId
     const echo = await EchoModel.findOne({

@@ -4,6 +4,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Menu } from "lucide-react";
+import { ReactChildren } from "@/types";
 
 export function HeaderDropdown({ children }: ReactChildren) {
   return (

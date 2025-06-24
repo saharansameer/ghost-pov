@@ -4,6 +4,7 @@ import { Calendar } from "lucide-react";
 import { Separator, Badge } from "@/components/ui";
 import { FeedbackCategory } from "./FeedbackCategory";
 import { FeedbackDropdown } from "./feedback-dropdown";
+import { FeedbackObject } from "@/types";
 
 interface FeedbackCardProps {
   feedback: FeedbackObject;

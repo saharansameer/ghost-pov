@@ -1,8 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-/* custom utility and media */
-
+/* Custom Utility Classes*/
 @layer utilities {
   .layout-container {
     @apply w-full mx-auto max-w-screen-xl px-2;
@@ -34,6 +33,16 @@
   }
   @media (max-width: 300px) {
     width: 232px;
+  }
+}
+
+/* Keyframes */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 

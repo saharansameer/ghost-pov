@@ -1,6 +1,7 @@
 import { getFormatDate } from "@/lib/utils";
 import { MessageCircle, Calendar } from "lucide-react";
 import Link from "next/link";
+import { EchoObject } from "@/types";
 
 interface EchoCardProps {
   echo: EchoObject;
@@ -9,11 +10,11 @@ interface EchoCardProps {
 export function EchoCard({ echo }: EchoCardProps) {
   return (
     <Link
-      href={`/dashboard/${echo._id}`}
+      href={`/dashboard/echo/${echo._id}`}
       className="w-[380px] modal-container group min-h-40 p-4 rounded-lg border 
       bg-card hover:bg-accent/50 shadow-sm hover:shadow-md cursor-pointer
-      transition-all duration-300 ease-out hover:scale-[1.02] hover:-translate-y-1
-      active:scale-[0.98]"
+      hover:scale-[1.02] hover:-translate-y-1 active:scale-[0.98]
+      transition-all duration-300 ease-in-out animate-[fadeIn_0.5s_ease-in-out_forwards]"
     >
       <div className="flex flex-col justify-between h-full">
         {/* Title */}
@@ -38,7 +39,9 @@ export function EchoCard({ echo }: EchoCardProps) {
               size={16}
               className="group-hover:scale-110 transition-transform duration-200"
             />
-            <span className="text-sm">{getFormatDate(echo.createdAt)}</span>
+            <span className="text-sm">
+              {getFormatDate(echo.createdAt, "date-only")}
+            </span>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth";
 import { Session } from "better-auth";
 import { NextResponse } from "next/server";
+import { BaseResponse } from "@/types";
 
 export async function getAuthSession(headers: Headers) {
   const authSession = await auth.api.getSession({

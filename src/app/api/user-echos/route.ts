@@ -4,6 +4,7 @@ import { EchoAggregate, EchoModel } from "@/models/echo.model";
 import { getAuthSession, unauthorized } from "@/lib/session-utils";
 import { Types, AggregatePaginateResult } from "mongoose";
 import redis from "@/lib/redis";
+import { BaseResponse, EchoResponse } from "@/types";
 
 export async function GET(request: NextRequest) {
   await connectDB();
@@ -94,7 +95,7 @@ export async function GET(request: NextRequest) {
     // Cache echos
     await redis.setex(
       `echos:${session.userId}:${page}`,
-      600,
+      60,
       JSON.stringify(paginatedEchos)
     );
 

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React from "react";
 import { Textarea } from "@/components/ui/textarea";
@@ -8,6 +8,7 @@ interface TextEditorProps {
   onChange: (value: string) => void;
   className?: string;
   placeholder?: string;
+  id: string;
 }
 
 export function TextEditor({
@@ -15,6 +16,7 @@ export function TextEditor({
   onChange,
   className,
   placeholder = "",
+  id,
 }: TextEditorProps) {
   const textareaRef = React.useRef<HTMLTextAreaElement>(null);
 
@@ -40,6 +42,7 @@ export function TextEditor({
       placeholder={placeholder}
       className={`resize-none overflow-hidden ${className}`}
       style={{ height: "auto" }}
+      id={id}
     />
   );
 }

@@ -7,6 +7,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { PaginationInfo } from "@/types";
 
 interface PaginationButtonsProps {
   pagination: PaginationInfo;

@@ -5,6 +5,7 @@ import { Header, Footer } from "@/components/server";
 import { auth, Session } from "@/lib/auth";
 import { headers } from "next/headers";
 import { ThemeProvider } from "@/context/theme-provider";
+import { ReactChildren } from "@/types";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,9 +37,7 @@ export default async function RootLayout({ children }: ReactChildren) {
             <Header session={session as Session} />
           </header>
 
-          <main className="layout-container min-h-screen">
-            {children}
-          </main>
+          <main className="layout-container min-h-screen">{children}</main>
 
           <footer className="layout-container">
             <Footer />

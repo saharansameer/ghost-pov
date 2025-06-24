@@ -1,3 +1,5 @@
+import { BaseResponse } from "@/types";
+
 interface FilterResponse extends BaseResponse {
   flagged: boolean;
   scores?: {

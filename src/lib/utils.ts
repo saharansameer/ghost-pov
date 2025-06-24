@@ -1,16 +1,10 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { authClient } from "@/lib/auth-client";
 import { type NextRequest } from "next/server";
+import { PaginationInfo, PaginatedDataOnly } from "@/types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
-}
-
-export async function socialSignInHandler(provider: SocialProvider) {
-  await authClient.signIn.social({
-    provider,
-  });
 }
 
 export function getClientInfo(request: NextRequest) {

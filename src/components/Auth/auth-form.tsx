@@ -13,6 +13,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
+import { AuthMode } from "@/types";
 
 interface AuthFormProps {
   mode: AuthMode;
@@ -55,7 +56,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
     }
     reset();
     router.push("/dashboard");
-    router.refresh()
+    router.refresh();
   };
 
   // SignUp Handler
@@ -81,7 +82,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
     }
     reset();
     router.push("/sign-in");
-    router.refresh()
+    router.refresh();
   };
 
   return (
@@ -92,8 +93,9 @@ export default function AuthForm({ mode }: AuthFormProps) {
       {errors.root && <ErrorMessage text={errors.root.message as string} />}
       <div>
         <div className="space-y-2">
-          <Label>Email</Label>
+          <Label htmlFor="email">Email</Label>
           <Input
+            id="email"
             type="email"
             placeholder="Enter your email"
             {...register("email")}
@@ -105,8 +107,8 @@ export default function AuthForm({ mode }: AuthFormProps) {
 
       <div>
         <div className="space-y-2">
-          <Label>Password</Label>
-          <PasswordInput {...register("password")} />
+          <Label htmlFor="password">Password</Label>
+          <PasswordInput {...register("password")} id="password" />
         </div>
 
         {errors.password && (

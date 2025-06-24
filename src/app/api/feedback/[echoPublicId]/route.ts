@@ -4,6 +4,7 @@ import { FeedbackModel } from "@/models/feedback.model";
 import { EchoModel } from "@/models/echo.model";
 import { getClientInfo } from "@/lib/utils";
 import { filterFeedbackMessage } from "@/lib/filter";
+import { BaseResponse, RequestParams } from "@/types";
 
 export async function POST(request: NextRequest, { params }: RequestParams) {
   await connectDB();

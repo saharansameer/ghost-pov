@@ -3,19 +3,20 @@ import { EchoCard } from "@/components/Echo/EchoCard";
 import { PaginationButtons } from "@/components/Common/PaginationButtons";
 import { getPaginationInfo } from "@/lib/utils";
 import { EchoForm } from "@/components/client";
+import { EchoObject } from "@/types";
 
 interface DashboardProps {
   searchParams?: Promise<{ p?: string }>;
 }
 
 export default async function Dashboard({ searchParams }: DashboardProps) {
-  const params = await searchParams;
-  const page = Number(params?.p || 1);
+  const queryParams = await searchParams;
+  const page = Number(queryParams?.p || 1);
 
   const response = await fetch(
     `${process.env.APP_URL}/api/user-echos?page=${page}&limit=15`,
     {
-      // next: { revalidate: 600 },
+      next: { revalidate: 60 },
       headers: await headers(),
     }
   );
