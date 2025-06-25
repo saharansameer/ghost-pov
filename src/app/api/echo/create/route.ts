@@ -3,6 +3,8 @@ import connectDB from "@/lib/db";
 import { EchoModel } from "@/models/echo.model";
 import { nanoid } from "nanoid";
 import { getAuthSession, unauthorized } from "@/lib/session-utils";
+import redis from "@/lib/redis";
+import { BaseResponse } from "@/types";
 
 export async function POST(request: NextRequest) {
   await connectDB();
@@ -41,6 +43,9 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    // Clear Dashboard Cache
+    await redis.del(`echos:${session.userId}:1`);
 
     // Final Response
     return NextResponse.json(

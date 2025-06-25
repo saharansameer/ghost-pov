@@ -1,18 +1,17 @@
 import { headers } from "next/headers";
-import { PaginationButtons } from "@/components/Common/PaginationButtons";
+import { PaginationButtons, FeedbackCard } from "@/components/server";
 import { getPaginationInfo } from "@/lib/utils";
-import { FeedbackCard } from "@/components/Feedback/FeedbackCard";
 import { FeedbackObject } from "@/types";
 
-type EchoDashboardProps = {
+type EchoPageProps = {
   params: Promise<{ echoId: string }>;
   searchParams: Promise<{ p?: string }>;
 };
 
-export default async function EchoDashboard({
+export default async function EchoPage({
   params,
   searchParams,
-}: EchoDashboardProps) {
+}: EchoPageProps) {
   const { echoId } = await params;
   const queryParams = await searchParams;
   const page = Number(queryParams?.p || 1);

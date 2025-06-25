@@ -1,19 +1,22 @@
 "use client";
 
-import React from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { echoSchema, EchoSchemaType } from "@/zod/schema/echo.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input, Button, Label } from "@/components/ui";
 import { TextEditor } from "@/components/client";
 import { ErrorMessage, LoaderSpin } from "@/components/server";
-import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { EchoObject } from "@/types";
 
-export function EchoForm() {
+interface EchoFormProps {
+  method: "POST" | "PATCH";
+  data?: EchoObject;
+}
+
+export function EchoForm({ method, data }: EchoFormProps) {
+  const isPostMethod = method === "POST";
   const router = useRouter();
-  const [isEchoOverlayOpen, setEchoOverlayOpen] =
-    React.useState<boolean>(false);
 
   const {
     register,
@@ -25,15 +28,28 @@ export function EchoForm() {
   } = useForm<EchoSchemaType>({
     resolver: zodResolver(echoSchema),
     mode: "onSubmit",
+    defaultValues: isPostMethod
+      ? {}
+      : {
+          title: data?.title,
+          description: data?.description,
+          isAcceptingFeedback: data?.isAcceptingFeedback,
+        },
   });
 
   const onSubmitHandler: SubmitHandler<EchoSchemaType> = async (formData) => {
     try {
-      const { title, description } = formData;
+      const { title, description, isAcceptingFeedback } = formData;
 
-      const response = await fetch("/api/echo/new", {
-        method: "POST",
-        body: JSON.stringify({ title, description }),
+      const url = isPostMethod ? "/api/echo/create" : `/api/echo/update?echoId=${data?._id}`;
+
+      const response = await fetch(url, {
+        method: method,
+        body: JSON.stringify({
+          title,
+          description,
+          isAcceptingFeedback,
+        }),
         cache: "no-store",
       });
 
@@ -51,103 +67,78 @@ export function EchoForm() {
     }
 
     router.push("/dashboard");
-    setEchoOverlayOpen(false);
     reset();
   };
 
   return (
-    <div>
-      <Button
-        variant={"default"}
-        onClick={() => setEchoOverlayOpen(true)}
-        className="font-semibold"
-      >
-        Create Echo
-      </Button>
+    <form
+      onSubmit={handleSubmit(onSubmitHandler)}
+      className="flex flex-col gap-y-5 p-5"
+    >
+      {/* Heading */}
+      <div>
+        <h1 className="text-primary font-bold text-2xl">
+          {isPostMethod ? "Create New Echo" : "Update Echo"}
+        </h1>
+        <p className="text-foreground/80 text-sm">
+          {isPostMethod
+            ? "Share your thoughts and invite anonymous feedback."
+            : "Make changes in your echo."}
+        </p>
+      </div>
 
-      {isEchoOverlayOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm backdrop-brightness-90">
-          <div className="w-full max-w-2xl px-3 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-auto">
-            <div className="flex justify-end py-1">
-              <Button
-                variant={"outline"}
-                onClick={() => setEchoOverlayOpen(false)}
-                className="font-semibold"
-              >
-                <X />
-              </Button>
-            </div>
+      {errors.root && <ErrorMessage text={errors.root.message as string} />}
 
-            <form
-              onSubmit={handleSubmit(onSubmitHandler)}
-              className="flex flex-col gap-y-5 p-5 rounded-sm bg-background border border-[#d5d5d5] dark:border-border"
-            >
-              <div>
-                <h1 className="text-primary font-bold text-2xl">
-                  Create New Echo
-                </h1>
-                <p className="text-foreground/80 text-sm">
-                  Share your thoughts and invite anonymous feedback.
-                </p>
-              </div>
-
-              {errors.root && (
-                <ErrorMessage text={errors.root.message as string} />
-              )}
-
-              <div>
-                <div className="space-y-2">
-                  <Label htmlFor="title">Title</Label>
-                  <Input
-                    {...register("title")}
-                    id="title"
-                    placeholder="Start with a clear title"
-                  />
-                </div>
-
-                {errors.title && (
-                  <ErrorMessage text={errors.title.message as string} />
-                )}
-              </div>
-
-              <div>
-                <div className="space-y-2">
-                  <Label htmlFor="description">Description</Label>
-                  <Controller
-                    name="description"
-                    control={control}
-                    render={({ field }) => (
-                      <>
-                        <TextEditor
-                          id="description"
-                          className="min-h-24 md:min-h-40 max-h-80 overflow-y-scroll"
-                          value={field.value || ""}
-                          onChange={field.onChange}
-                          placeholder={
-                            "Add more context, details or links — Optional"
-                          }
-                        />
-                      </>
-                    )}
-                  />
-                </div>
-
-                {errors.description && (
-                  <ErrorMessage text={errors.description.message as string} />
-                )}
-              </div>
-
-              <Button
-                type="submit"
-                variant={"default"}
-                className="font-semibold w-full sm:w-40"
-              >
-                {isSubmitting ? <LoaderSpin /> : "Publish"}
-              </Button>
-            </form>
-          </div>
+      {/* Title */}
+      <div>
+        <div className="space-y-2">
+          <Label htmlFor="title">Title</Label>
+          <Input
+            {...register("title")}
+            id="title"
+            placeholder="Start with a clear title"
+          />
         </div>
-      )}
-    </div>
+
+        {errors.title && <ErrorMessage text={errors.title.message as string} />}
+      </div>
+
+      {/* Description */}
+      <div>
+        <div className="space-y-2">
+          <Label htmlFor="description">Description</Label>
+          <Controller
+            name="description"
+            control={control}
+            render={({ field }) => (
+              <>
+                <TextEditor
+                  id="description"
+                  className="min-h-24 md:min-h-40 max-h-80 overflow-y-scroll"
+                  value={field.value || ""}
+                  onChange={field.onChange}
+                  placeholder={"Add more context, details or links — Optional"}
+                />
+              </>
+            )}
+          />
+        </div>
+
+        {errors.description && (
+          <ErrorMessage text={errors.description.message as string} />
+        )}
+      </div>
+
+      {/* Feedback Switch */}
+      <div className={isPostMethod ? "hidden" : ""}></div>
+
+      <Button
+        type="submit"
+        variant={"default"}
+        className="font-semibold w-full sm:w-40"
+      >
+        {isSubmitting ? <LoaderSpin /> : "Publish"}
+      </Button>
+    </form>
   );
 }

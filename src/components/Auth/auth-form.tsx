@@ -88,7 +88,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
   return (
     <form
       onSubmit={handleSubmit(isSignIn ? onSignInHandler : onSignUpHandler)}
-      className="w-xs space-y-7 modal-content"
+      className="w-full space-y-7"
     >
       {errors.root && <ErrorMessage text={errors.root.message as string} />}
       <div>

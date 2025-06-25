@@ -13,8 +13,8 @@ import Link from "next/link";
 
 export default function SignupPage() {
   return (
-    <div className="flex h-screen justify-center items-center">
-      <Card className="modal-container">
+    <div className="flex min-h-screen justify-center items-center">
+      <Card className="w-full max-w-96">
         <CardHeader>
           <CardTitle className="text-2xl">Create New Account</CardTitle>
           <CardDescription>
@@ -29,11 +29,17 @@ export default function SignupPage() {
             <SignUpButton provider="github" mode="sign-up" />
           </div>
         </CardContent>
-        <CardFooter className="flex items-center gap-x-3 font-mono text-sm">
-          <span>Already have an account?</span>
-          <Link href={"/sign-in"} className="hover:underline">
-            Sign in
-          </Link>
+        <CardFooter>
+          <div className="flex items-center gap-x-3 font-mono text-sm">
+            <span>Already have an account?</span>
+            <Link
+              href={"/sign-in"}
+              className="hover:underline underline-offset-1 hover:text-primary 
+              transition-all ease-initial duration-200"
+            >
+              Sign in
+            </Link>
+          </div>
         </CardFooter>
       </Card>
     </div>

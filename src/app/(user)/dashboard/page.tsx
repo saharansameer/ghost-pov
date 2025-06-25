@@ -1,9 +1,9 @@
 import { headers } from "next/headers";
-import { EchoCard } from "@/components/Echo/EchoCard";
-import { PaginationButtons } from "@/components/Common/PaginationButtons";
+import { EchoCard, PaginationButtons } from "@/components/server";
+import { Button } from "@/components/ui";
 import { getPaginationInfo } from "@/lib/utils";
-import { EchoForm } from "@/components/client";
 import { EchoObject } from "@/types";
+import Link from "next/link";
 
 interface DashboardProps {
   searchParams?: Promise<{ p?: string }>;
@@ -25,11 +25,13 @@ export default async function Dashboard({ searchParams }: DashboardProps) {
 
   return (
     <div className="flex flex-col min-h-screen h-auto overflow-y-scroll">
-      <div>
-        <EchoForm />
+      <div className="py-5">
+        <Link href={"/dashboard/echo/create"}>
+          <Button variant="default">Create Echo</Button>
+        </Link>
       </div>
 
-      <div className="flex flex-wrap gap-10 justify-center xl:justify-normal px-5">
+      <div className="flex flex-wrap gap-10 justify-center xl:justify-normal px-2">
         {data.docs.map((echo: EchoObject) => (
           <EchoCard key={echo.publicId} echo={echo} />
         ))}

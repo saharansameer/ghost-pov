@@ -30,7 +30,7 @@ export default async function RootLayout({ children }: ReactChildren) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased transition-theme ease-initial duration-300`}
       >
         <ThemeProvider>
           <header className="layout-container">
