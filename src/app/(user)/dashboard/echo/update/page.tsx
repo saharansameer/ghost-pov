@@ -14,7 +14,7 @@ export default async function EchoUpdatePage({
   const response = await fetch(
     `${process.env.APP_URL}/api/echo/read?echoId=${echoId}`,
     {
-      next: { revalidate: 60 },
+      next: { revalidate: 10 },
       headers: await headers(),
     }
   );
@@ -22,7 +22,7 @@ export default async function EchoUpdatePage({
   const { data } = await response.json();
 
   return (
-    <div>
+    <div className="flex justify-center">
       <EchoForm method="PATCH" data={data} />
     </div>
   );

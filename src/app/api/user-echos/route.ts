@@ -71,6 +71,7 @@ export async function GET(request: NextRequest) {
           _id: 1,
           publicId: 1,
           title: 1,
+          description: 1,
           isAcceptingFeedback: 1,
           feedbackCount: 1,
           createdAt: 1,
@@ -94,7 +95,7 @@ export async function GET(request: NextRequest) {
 
     // Cache echos
     await redis.setex(
-      `echos:${session.userId}:${page}`,
+      `echos:${session.userId}`,
       60,
       JSON.stringify(paginatedEchos)
     );

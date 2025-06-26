@@ -4,6 +4,7 @@ import { Button } from "@/components/ui";
 import { getPaginationInfo } from "@/lib/utils";
 import { EchoObject } from "@/types";
 import Link from "next/link";
+import { Plus } from "lucide-react";
 
 interface DashboardProps {
   searchParams?: Promise<{ p?: string }>;
@@ -16,7 +17,7 @@ export default async function Dashboard({ searchParams }: DashboardProps) {
   const response = await fetch(
     `${process.env.APP_URL}/api/user-echos?page=${page}&limit=15`,
     {
-      next: { revalidate: 60 },
+      next: { revalidate: 10 },
       headers: await headers(),
     }
   );
@@ -25,13 +26,25 @@ export default async function Dashboard({ searchParams }: DashboardProps) {
 
   return (
     <div className="flex flex-col min-h-screen h-auto overflow-y-scroll">
-      <div className="py-5">
-        <Link href={"/dashboard/echo/create"}>
-          <Button variant="default">Create Echo</Button>
-        </Link>
+      <div className="flex justify-center pt-4 pb-10">
+        {/* Page Title and Actions */}
+        <div className="w-full max-w-2xl flex justify-between items-start">
+          <div>
+            <h1 className="text-2xl font-bold text-foreground">Echos Dashboard</h1>
+            <p className="text-muted-foreground text-sm mt-1">
+              Manage and track your feedback collection
+            </p>
+          </div>
+          <Link href={"/dashboard/echo/create"}>
+            <Button variant="default" className="hover:ring-2 font-semibold">
+              <Plus size={16} className="mr-2" />
+              Create Echo
+            </Button>
+          </Link>
+        </div>
       </div>
 
-      <div className="flex flex-wrap gap-10 justify-center xl:justify-normal px-2">
+      <div className="flex flex-col items-center gap-y-10 px-2">
         {data.docs.map((echo: EchoObject) => (
           <EchoCard key={echo.publicId} echo={echo} />
         ))}

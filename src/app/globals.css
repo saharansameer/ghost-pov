@@ -8,31 +8,7 @@
   }
 
   .nav-button {
-    @apply px-0 font-semibold text-foreground/80 hover:text-foreground transition-colors;
-  }
-}
-
-.modal-container {
-  @media (max-width: 400px) {
-    width: 320px;
-  }
-  @media (max-width: 330px) {
-    width: 288px;
-  }
-  @media (max-width: 300px) {
-    width: 256px;
-  }
-}
-
-.modal-content {
-  @media (max-width: 400px) {
-    width: 288px;
-  }
-  @media (max-width: 330px) {
-    width: 256px;
-  }
-  @media (max-width: 300px) {
-    width: 232px;
+    @apply px-0 font-semibold text-foreground/80 hover:text-primary transition-colors;
   }
 }
 

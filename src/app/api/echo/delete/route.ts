@@ -37,7 +37,7 @@ export async function DELETE(request: NextRequest) {
     }
 
     // Clear Cache
-    await redis.del(`echos:${session.userId}`)
+    await redis.del(`echos:${session.userId}`);
 
     // Final Response
     return NextResponse.json<BaseResponse>(

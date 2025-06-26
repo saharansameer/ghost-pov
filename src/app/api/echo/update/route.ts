@@ -17,7 +17,7 @@ export async function PATCH(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;
     const echoId = searchParams.get("echoId");
 
-    const { title, description, isAcceptingFeedback } = await request.json();
+    const { title, description } = await request.json();
 
     if (!title) {
       return NextResponse.json<BaseResponse>(
@@ -29,7 +29,7 @@ export async function PATCH(request: NextRequest) {
     // Find and Update echo
     const updatedEcho = await EchoModel.findOneAndUpdate(
       { _id: echoId, owner: session.userId },
-      { title, description: description || "", isAcceptingFeedback },
+      { title, description: description || "" },
       { new: true, runValidators: true }
     );
 

@@ -10,6 +10,7 @@ export interface EchoObject {
   _id: Types.ObjectId;
   publicId: string;
   title: string;
+  description: string;
   isAcceptingFeedback: boolean;
   feedbackCount: number;
   createdAt: Date;

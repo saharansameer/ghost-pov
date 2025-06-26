@@ -29,28 +29,30 @@ export function EchoForm({ method, data }: EchoFormProps) {
     resolver: zodResolver(echoSchema),
     mode: "onSubmit",
     defaultValues: isPostMethod
-      ? {}
+      ? { title: "", description: "" }
       : {
           title: data?.title,
           description: data?.description,
-          isAcceptingFeedback: data?.isAcceptingFeedback,
         },
   });
 
   const onSubmitHandler: SubmitHandler<EchoSchemaType> = async (formData) => {
     try {
-      const { title, description, isAcceptingFeedback } = formData;
+      const { title, description } = formData;
 
-      const url = isPostMethod ? "/api/echo/create" : `/api/echo/update?echoId=${data?._id}`;
+      const url = isPostMethod
+        ? "/api/echo/create"
+        : `/api/echo/update?echoId=${data?._id}`;
 
       const response = await fetch(url, {
         method: method,
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           title,
           description,
-          isAcceptingFeedback,
         }),
-        cache: "no-store",
       });
 
       const { success, message } = await response.json();
@@ -73,7 +75,7 @@ export function EchoForm({ method, data }: EchoFormProps) {
   return (
     <form
       onSubmit={handleSubmit(onSubmitHandler)}
-      className="flex flex-col gap-y-5 p-5"
+      className="w-full max-w-2xl flex flex-col gap-y-5 p-5"
     >
       {/* Heading */}
       <div>
@@ -129,10 +131,8 @@ export function EchoForm({ method, data }: EchoFormProps) {
         )}
       </div>
 
-      {/* Feedback Switch */}
-      <div className={isPostMethod ? "hidden" : ""}></div>
-
       <Button
+        disabled={isSubmitting}
         type="submit"
         variant={"default"}
         className="font-semibold w-full sm:w-40"
