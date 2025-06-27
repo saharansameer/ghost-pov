@@ -70,7 +70,7 @@ export function Header({ session }: HeaderProps) {
 
           {/* Sign in Button */}
           {!session && (
-            <PartiallyHidden routes={["/sign-in", "/sign-up", "/f/"]}>
+            <PartiallyHidden routes={["/sign-in", "/sign-up", "/e/", "/verification-pending"]}>
               <Link href={"/sign-in"}>
                 <Button variant={"outline"} className="font-semibold">
                   Sign in

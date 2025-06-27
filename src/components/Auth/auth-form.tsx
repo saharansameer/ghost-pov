@@ -44,6 +44,12 @@ export default function AuthForm({ mode }: AuthFormProps) {
         password,
       });
 
+      if (error?.code === "EMAIL_NOT_VERIFIED") {
+        router.push(`/verification-pending?email=${email}`);
+        router.refresh()
+        return;
+      }
+
       if (error?.code) {
         setError("root", {
           type: "validate",
@@ -54,9 +60,9 @@ export default function AuthForm({ mode }: AuthFormProps) {
     } catch (error) {
       console.error("SignIn Error:", error);
     }
-    reset();
     router.push("/dashboard");
-    router.refresh();
+    router.refresh()
+    reset();
   };
 
   // SignUp Handler
@@ -80,9 +86,9 @@ export default function AuthForm({ mode }: AuthFormProps) {
     } catch (error) {
       console.error("SignUp Error:", error);
     }
+
+    router.push(`/verification-pending?email=${formData.email}`);
     reset();
-    router.push("/sign-in");
-    router.refresh();
   };
 
   return (
