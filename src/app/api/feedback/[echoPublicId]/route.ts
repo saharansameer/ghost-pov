@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import connectDB from "@/lib/db";
+import connectDB from "@/lib/db/db";
 import { FeedbackModel } from "@/models/feedback.model";
 import { EchoModel } from "@/models/echo.model";
 import { getClientInfo } from "@/lib/utils";

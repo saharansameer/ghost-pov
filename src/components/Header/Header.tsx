@@ -5,7 +5,7 @@ import { ThemeToggle } from "./theme-toggle";
 import { LogoutButton } from "./logout-button";
 import { HeaderDropdown } from "./header-dropdown";
 import Link from "next/link";
-import { Session } from "@/lib/auth";
+import { Session } from "@/lib/auth/auth";
 
 interface HeaderProps {
   session: Session | null;

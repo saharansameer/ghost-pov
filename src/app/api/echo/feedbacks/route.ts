@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import connectDB from "@/lib/db";
+import connectDB from "@/lib/db/db";
 import { FeedbackModel, FeedbackAggregate } from "@/models/feedback.model";
 import { EchoModel } from "@/models/echo.model";
 import { AggregatePaginateResult } from "mongoose";
-import { getAuthSession, unauthorized } from "@/lib/session-utils";
-import redis from "@/lib/redis";
+import { getAuthSession, unauthorized } from "@/lib/auth/session";
+import redis from "@/lib/db/redis";
 import { BaseResponse, FeedbackResponse } from "@/types";
 
 export async function GET(request: NextRequest) {

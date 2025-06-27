@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import connectDB from "@/lib/db";
+import connectDB from "@/lib/db/db";
 import { EchoModel } from "@/models/echo.model";
 import { BaseResponse, RequestParams, EchoResponse } from "@/types";
 

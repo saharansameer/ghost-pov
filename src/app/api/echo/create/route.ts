@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import connectDB from "@/lib/db";
+import connectDB from "@/lib/db/db";
 import { EchoModel } from "@/models/echo.model";
 import { nanoid } from "nanoid";
-import { getAuthSession, unauthorized } from "@/lib/session-utils";
-import redis from "@/lib/redis";
+import { getAuthSession, unauthorized } from "@/lib/auth/session";
+import redis from "@/lib/db/redis";
 import { BaseResponse } from "@/types";
 
 export async function POST(request: NextRequest) {

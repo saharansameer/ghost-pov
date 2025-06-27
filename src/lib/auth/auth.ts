@@ -1,7 +1,7 @@
 import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
-import mongoClient from "@/lib/mongo-client";
-import { sendEmail } from "@/helpers/email";
+import mongoClient from "@/lib/db/mongo-client";
+import { sendEmail } from "@/lib/email/email";
 
 export const auth = betterAuth({
   database: mongodbAdapter(mongoClient.db("ghostpovdb")),

@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/card";
 import { Mail, Clock } from "lucide-react";
 import { redirect } from "next/navigation";
-import { getAuthUser } from "@/lib/session-utils";
+import { getAuthUser } from "@/lib/auth/session";
 import { headers } from "next/headers";
 
 interface Props {

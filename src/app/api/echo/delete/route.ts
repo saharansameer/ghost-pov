@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import connectDB from "@/lib/db";
+import connectDB from "@/lib/db/db";
 import { EchoModel } from "@/models/echo.model";
-import { getAuthSession, unauthorized } from "@/lib/session-utils";
+import { getAuthSession, unauthorized } from "@/lib/auth/session";
 import { BaseResponse } from "@/types";
-import redis from "@/lib/redis";
+import redis from "@/lib/db/redis";
 
 export async function DELETE(request: NextRequest) {
   await connectDB();

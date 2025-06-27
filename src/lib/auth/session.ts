@@ -1,4 +1,4 @@
-import { auth } from "@/lib/auth";
+import { auth } from "@/lib/auth/auth";
 import { Session, User } from "better-auth";
 import { NextResponse } from "next/server";
 import { BaseResponse } from "@/types";

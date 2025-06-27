@@ -11,7 +11,7 @@ import {
   SignupSchemaType,
 } from "@/zod/schema/auth.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { authClient } from "@/lib/auth-client";
+import { authClient } from "@/lib/auth/auth-client";
 import { useRouter } from "next/navigation";
 import { AuthMode } from "@/types";
 

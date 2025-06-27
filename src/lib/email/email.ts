@@ -1,4 +1,4 @@
-import { resend } from "@/lib/resend";
+import { resend } from "@/lib/email/resend";
 import { VerifyEmailTemplate, VerifyEmailText } from "@/components/client";
 import { BaseResponse } from "@/types";
 

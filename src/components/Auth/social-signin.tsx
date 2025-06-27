@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui";
 import Image from "next/image";
 import { SocialProvider, AuthMode } from "@/types";
-import { authClient } from "@/lib/auth-client";
+import { authClient } from "@/lib/auth/auth-client";
 
 interface SocialSigninProps {
   provider: SocialProvider;
