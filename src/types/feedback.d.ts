@@ -13,7 +13,7 @@ export interface FeedbackResponse extends BaseResponse {
 export interface FeedbackObject {
   _id: Typed.ObjectId;
   category: FeedbackCategory;
-  message: string;
+  feedbackMessage: string;
   flagged: boolean;
   createdAt: Date;
 }

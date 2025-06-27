@@ -55,7 +55,7 @@ export function FeedbackCard({ feedback }: FeedbackCardProps) {
       </div>
 
       {/* Feedback Message */}
-      <ExpandableField text={feedback.message} />
+      <ExpandableField text={feedback.feedbackMessage} />
     </div>
   );
 }

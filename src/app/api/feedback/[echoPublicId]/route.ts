@@ -2,20 +2,19 @@ import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/db/db";
 import { FeedbackModel } from "@/models/feedback.model";
 import { EchoModel } from "@/models/echo.model";
-import { getClientInfo } from "@/lib/utils";
 import { filterFeedbackMessage } from "@/lib/filter";
 import { BaseResponse, RequestParams } from "@/types";
 
 export async function POST(request: NextRequest, { params }: RequestParams) {
   await connectDB();
-  const ip = getClientInfo(request);
+
   try {
     // Extract data from request body
     const { echoPublicId } = await params;
-    const { category, message } = await request.json();
+    const { category, feedbackMessage } = await request.json();
 
     // Verify all fields exist
-    if (!category || message.trim() === "") {
+    if (!category || feedbackMessage.trim() === "") {
       return NextResponse.json<BaseResponse>(
         { success: false, message: "All Fields are required" },
         { status: 400 }
@@ -81,7 +80,7 @@ export async function POST(request: NextRequest, { params }: RequestParams) {
     // Filter Abuse and Spam (Only for Paid Users)
     let flagged = false;
     if (echo.allowFilter) {
-      const filter = await filterFeedbackMessage(message);
+      const filter = await filterFeedbackMessage(feedbackMessage);
       if (filter.success) {
         flagged = filter.flagged;
       } else {
@@ -92,9 +91,8 @@ export async function POST(request: NextRequest, { params }: RequestParams) {
     // Save Feedback message in DB
     const feedback = await FeedbackModel.create({
       category,
-      message,
+      feedbackMessage,
       echoId: echo._id,
-      ip,
       flagged,
     });
 
@@ -119,7 +117,7 @@ export async function POST(request: NextRequest, { params }: RequestParams) {
   } catch (error) {
     console.error("Send Feedback Failed:", error);
     return NextResponse.json<BaseResponse>(
-      { success: false, message: "Send Feedback Failed" },
+      { success: false, message: "Failed to send feedback" },
       { status: 500 }
     );
   }

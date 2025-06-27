@@ -67,7 +67,7 @@ export async function GET(request: NextRequest) {
         $project: {
           _id: 1,
           category: 1,
-          message: 1,
+          feedbackMessage: 1,
           flagged: 1,
           createdAt: 1,
         },

@@ -1,10 +1,16 @@
 import { z } from "zod/v4";
 
 export const feedbackSchema = z.object({
-  message: z
+  category: z.enum([
+    "General",
+    "Feature Request",
+    "Bug Report",
+    "Error Report",
+  ]),
+  feedbackMessage: z
     .string()
-    .min(1, { error: "Feedback message can not be empty" })
-    .max(1000, { error: "Feedback message must be at most 1000 characters" }),
+    .min(1, { error: "Feedback Message can not be empty" })
+    .max(5000, { error: "Character limit exceeded" }),
 });
 
 export type FeedbackSchemaType = z.input<typeof feedbackSchema>;

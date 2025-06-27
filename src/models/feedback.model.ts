@@ -12,7 +12,6 @@ export interface FeedbackDocument extends Document {
   category: FeedbackCategories;
   message: string;
   echoId: Schema.Types.ObjectId;
-  ip: string;
   flagged: boolean;
 }
 
@@ -24,19 +23,15 @@ const feedbackSchema = new Schema(
       required: true,
       default: FeedbackCategories.GENERAL,
     },
-    message: {
+    feedbackMessage: {
       type: String,
       required: [true, "Feedback message is required"],
       minLength: [1, "Feedback message can not be empty"],
-      maxlength: [2000, "Feedback message must not exceed 2000 characters"],
+      maxlength: [5000, "Feedback message must not exceed 5000 characters"],
     },
     echoId: {
       type: Schema.Types.ObjectId,
       ref: "Echo",
-    },
-    ip: {
-      type: String,
-      required: [true, "IP is required"],
     },
     flagged: {
       type: Boolean,
