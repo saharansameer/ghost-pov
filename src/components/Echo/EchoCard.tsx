@@ -36,7 +36,7 @@ export function EchoCard({ echo }: EchoCardProps) {
         </div>
 
         {/* Dropdown and Feedback Status */}
-        <div className="flex gap-x-2">
+        <div className="flex gap-2">
           <div className="pb-1">
             {echo.isAcceptingFeedback ? (
               <Badge
@@ -60,7 +60,7 @@ export function EchoCard({ echo }: EchoCardProps) {
               </Badge>
             )}
           </div>
-          <EchoDropdown echoId={String(echo._id)} />
+          <EchoDropdown echoId={String(echo._id)} echoPublicId={echo.publicId}/>
         </div>
       </div>
 

@@ -16,6 +16,8 @@ export interface EchoObject {
   createdAt: Date;
 }
 
+export type EchoCacheResult = AggregatePaginateResult<EchoAggregate> | null;
+
 export interface EchoActionState {
   success: boolean;
   message?: string;

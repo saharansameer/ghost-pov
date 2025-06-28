@@ -8,6 +8,14 @@ import { AggregatePaginateResult } from "mongoose";
 
 export interface FeedbackResponse extends BaseResponse {
   data: FeedbackDocument | AggregatePaginateResult<FeedbackAggregate>;
+  echo: {
+    title: string;
+    description: string;
+    owner: {
+      plan: string;
+      summaryCredits: number;
+    };
+  };
 }
 
 export interface FeedbackObject {

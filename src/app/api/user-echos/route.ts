@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/db/db";
-import { EchoAggregate, EchoModel } from "@/models/echo.model";
+import { EchoModel } from "@/models/echo.model";
 import { getAuthSession, unauthorized } from "@/lib/auth/session";
-import { Types, AggregatePaginateResult } from "mongoose";
+import { Types } from "mongoose";
 import redis from "@/lib/db/redis";
-import { BaseResponse, EchoResponse } from "@/types";
+import { BaseResponse, EchoResponse, EchoCacheResult } from "@/types";
 
 export async function GET(request: NextRequest) {
   await connectDB();
@@ -22,13 +22,13 @@ export async function GET(request: NextRequest) {
     const limit = Number(searchParams.get("limit") || 15);
 
     // Check cached storage
-    const cache = await redis.get(`echos:${session.userId}:${page}`);
+    const cache: EchoCacheResult = await redis.get(`echos:${session.userId}`);
     if (cache) {
       return NextResponse.json<EchoResponse>(
         {
           success: true,
           message: "Echos fetched from redis cache",
-          data: cache as AggregatePaginateResult<EchoAggregate>,
+          data: cache,
         },
         { status: 200 }
       );
@@ -109,10 +109,9 @@ export async function GET(request: NextRequest) {
       },
       { status: 200 }
     );
-  } catch (error) {
-    console.error("Failed to GET Echos:", error);
+  } catch {
     return NextResponse.json<BaseResponse>(
-      { success: false, message: "Failed to GET Echos" },
+      { success: false, message: "Echos are unvailable" },
       { status: 500 }
     );
   }

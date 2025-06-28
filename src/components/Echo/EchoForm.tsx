@@ -8,6 +8,7 @@ import { TextEditor } from "@/components/client";
 import { ErrorMessage, LoaderSpin } from "@/components/server";
 import { useRouter } from "next/navigation";
 import { EchoObject } from "@/types";
+import { toast } from "sonner";
 
 interface EchoFormProps {
   method: "POST" | "PATCH";
@@ -64,11 +65,14 @@ export function EchoForm({ method, data }: EchoFormProps) {
         });
         return;
       }
+
+      toast.success(message);
+      router.push("/dashboard");
+      router.refresh()
     } catch (error) {
       console.error("Echo Form Error:", error);
     }
 
-    router.push("/dashboard");
     reset();
   };
 

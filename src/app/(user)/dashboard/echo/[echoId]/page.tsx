@@ -1,5 +1,9 @@
 import { headers } from "next/headers";
-import { PaginationButtons, FeedbackCard } from "@/components/server";
+import {
+  PaginationButtons,
+  FeedbackCard,
+  EchoDetails,
+} from "@/components/server";
 import { getPaginationInfo } from "@/lib/utils";
 import { FeedbackObject } from "@/types";
 
@@ -17,22 +21,37 @@ export default async function EchoPage({
   const page = Number(queryParams?.p || 1);
 
   const response = await fetch(
-    `${process.env.APP_URL}/api/echo/feedbacks?echoId=${echoId}&page=${page}&limit=2`,
+    `${process.env.APP_URL}/api/echo/feedbacks?echoId=${echoId}&page=${page}&limit=15`,
     {
       next: { revalidate: 10 },
       headers: await headers(),
     }
   );
 
-  const { data } = await response.json();
+  const { success, message, data, echo } = await response.json();
 
-  const paginationInfo = getPaginationInfo(data);
+  if (!success) {
+    return <div>{message}</div>;
+  }
+
+  const paginationInfo = getPaginationInfo({ ...data, docs: [] });
+
+  // const isPremiumUser = echo.owner.plan !== "FREE";
 
   return (
-    <div className="flex flex-col min-h-screen h-auto py-5 px-1">
-      <div>{/* AI Summary or maybbe something else */}</div>
+    <div className="w-full max-w-3xl flex flex-col items-center mx-auto min-h-screen h-auto py-5 px-1 ">
+      <div className="max-w-3xl">
+        <EchoDetails title={echo.title} description={echo.description} />
+      </div>
 
-      <div className="flex flex-col gap-y-16 items-center">
+      <div className="w-full max-w-xl h-px my-10 bg-gradient-to-r from-transparent via-border to-transparent" />
+
+      <div className="w-full flex justify-between px-12">
+        <h2 className="font-bold text-3xl">Feedbacks</h2>
+        <p>Filter Option</p>
+      </div>
+
+      <div className="flex flex-col gap-y-16 items-center py-10">
         {data.docs.map((item: FeedbackObject) => (
           <FeedbackCard key={item._id} feedback={item} />
         ))}

@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/db/db";
-import { FeedbackModel, FeedbackAggregate } from "@/models/feedback.model";
+import { FeedbackModel } from "@/models/feedback.model";
 import { EchoModel } from "@/models/echo.model";
-import { AggregatePaginateResult } from "mongoose";
 import { getAuthSession, unauthorized } from "@/lib/auth/session";
 import redis from "@/lib/db/redis";
 import { BaseResponse, FeedbackResponse } from "@/types";
+import { Types } from "mongoose";
 
 export async function GET(request: NextRequest) {
   await connectDB();
@@ -24,26 +24,71 @@ export async function GET(request: NextRequest) {
     const limit = Number(searchParams.get("limit") || 15);
 
     // Check cached storage
-    const cache = await redis.get(`feedbacks:${echoId}:${page}`);
+    const cache: FeedbackResponse | null = await redis.get(
+      `feedbacks:${session.userId}:${page}`
+    );
     if (cache) {
       return NextResponse.json<FeedbackResponse>(
         {
           success: true,
           message: "Feedbacks fetched from redis cache",
-          data: cache as AggregatePaginateResult<FeedbackAggregate>,
+          data: cache.data,
+          echo: cache.echo,
         },
         { status: 200 }
       );
     }
 
     // Find Echo by public-Id
-    const echo = await EchoModel.findOne({
-      _id: echoId,
-      owner: session.userId,
-    });
+    const echoAggregate = await EchoModel.aggregate([
+      {
+        $match: {
+          _id: new Types.ObjectId(String(echoId)),
+          owner: new Types.ObjectId(session.userId),
+        },
+      },
+      {
+        $lookup: {
+          from: "profiles",
+          localField: "owner",
+          foreignField: "betterAuthUserId",
+          as: "owner",
+          pipeline: [
+            {
+              $project: {
+                _id: 0,
+                plan: 1,
+                summaryCredits: 1,
+              },
+            },
+          ],
+        },
+      },
+      {
+        $addFields: {
+          owner: {
+            $cond: {
+              if: { $gt: [{ $size: "$owner" }, 0] },
+              then: {
+                $arrayElemAt: ["$owner", 0],
+              },
+              else: { plan: "FREE", summaryCredits: 1 },
+            },
+          },
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          title: 1,
+          description: 1,
+          owner: 1,
+        },
+      },
+    ]);
 
     // Check authorization
-    if (!echo) {
+    if (echoAggregate.length === 0) {
       return NextResponse.json<BaseResponse>(
         {
           success: false,
@@ -52,6 +97,15 @@ export async function GET(request: NextRequest) {
         { status: 403 }
       );
     }
+
+    // Extract echo from aggreate
+    const echo = echoAggregate[0];
+
+    const echoDetails = {
+      title: echo.title,
+      description: echo.description,
+      owner: echo.owner,
+    };
 
     // Aggregate Query
     const feedbackAggregateQuery = FeedbackModel.aggregate([
@@ -93,9 +147,12 @@ export async function GET(request: NextRequest) {
 
     // Cache Feedbacks
     await redis.setex(
-      `feedbacks:${echoId}:${page}`,
+      `feedbacks:${session.userId}:${page}`,
       60,
-      JSON.stringify(paginatedFeedback)
+      JSON.stringify({
+        data: paginatedFeedback,
+        echo: echoDetails,
+      })
     );
 
     // Final Response
@@ -104,13 +161,13 @@ export async function GET(request: NextRequest) {
         success: true,
         message: "Feedbacks fetched successfully",
         data: paginatedFeedback,
+        echo: echoDetails,
       },
       { status: 200 }
     );
-  } catch (error) {
-    console.error("Failed to GET feedbacks:", error);
+  } catch {
     return NextResponse.json<BaseResponse>(
-      { success: false, message: "Failed to GET feedbacks" },
+      { success: false, message: "Feedbacks are unavailable" },
       { status: 500 }
     );
   }

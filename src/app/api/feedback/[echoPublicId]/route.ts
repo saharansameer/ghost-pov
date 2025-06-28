@@ -100,7 +100,7 @@ export async function POST(request: NextRequest, { params }: RequestParams) {
       return NextResponse.json<BaseResponse>(
         {
           success: false,
-          message: "Failed to save feedback message",
+          message: "Feedback not saved",
         },
         { status: 400 }
       );
@@ -110,12 +110,11 @@ export async function POST(request: NextRequest, { params }: RequestParams) {
     return NextResponse.json<BaseResponse>(
       {
         success: true,
-        message: "Feedback message saved successfully",
+        message: "Feedback Sent",
       },
       { status: 201 }
     );
-  } catch (error) {
-    console.error("Send Feedback Failed:", error);
+  } catch {
     return NextResponse.json<BaseResponse>(
       { success: false, message: "Failed to send feedback" },
       { status: 500 }

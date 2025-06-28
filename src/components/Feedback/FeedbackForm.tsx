@@ -19,6 +19,7 @@ import {
 } from "@/zod/schema/feedback.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Ghost } from "lucide-react";
+import { toast } from "sonner";
 
 interface FeedbackFormProps {
   echoPublicId: string;
@@ -64,10 +65,13 @@ export function FeedbackForm({ echoPublicId }: FeedbackFormProps) {
         });
         return;
       }
-      reset();
+
+      toast.success(message)
     } catch (error) {
       console.error("Feedback Form Error:", error);
     }
+
+    reset();
   };
 
   const feedbackValue = watch("feedbackMessage") || "";

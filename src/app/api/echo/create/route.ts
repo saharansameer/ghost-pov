@@ -51,7 +51,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         success: true,
-        message: "Echo created successfully",
+        message: "Echo Created",
         data: { echoId: echo._id },
       },
       { status: 201 }

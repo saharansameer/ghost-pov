@@ -35,7 +35,7 @@ export async function PATCH(request: NextRequest) {
 
     if (!updatedEcho) {
       return NextResponse.json<BaseResponse>(
-        { success: false, message: "Echo updation failed" },
+        { success: false, message: "Failed to save changes" },
         { status: 400 }
       );
     }
@@ -45,13 +45,12 @@ export async function PATCH(request: NextRequest) {
 
     // Final Response
     return NextResponse.json<BaseResponse>(
-      { success: true, message: "Echo deleted successfully" },
+      { success: true, message: "Changes Saved" },
       { status: 200 }
     );
-  } catch (error) {
-    console.error("Failed to update echo:", error);
+  } catch {
     return NextResponse.json<BaseResponse>(
-      { success: false, message: "Failed to update echo" },
+      { success: false, message: "Failed to save changes" },
       { status: 500 }
     );
   }

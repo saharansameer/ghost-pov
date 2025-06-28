@@ -19,15 +19,17 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui";
-import { EllipsisVertical } from "lucide-react";
+import { EllipsisVertical, Pencil, Trash2, Copy } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 interface EchoDropdownProps {
   echoId: string;
+  echoPublicId: string;
 }
 
-export function EchoDropdown({ echoId }: EchoDropdownProps) {
+export function EchoDropdown({ echoId, echoPublicId }: EchoDropdownProps) {
   const [open, setOpen] = useState<boolean>(false);
   const router = useRouter();
   const onDeleteHandler = async () => {
@@ -37,11 +39,23 @@ export function EchoDropdown({ echoId }: EchoDropdownProps) {
       method: "DELETE",
     });
 
-    const { success } = await response.json();
+    const { success, message } = await response.json();
 
+    toast.success(message);
     router.refresh();
 
     return success;
+  };
+
+  const copyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(
+        `${process.env.NEXT_PUBLIC_APP_URL}/e/${text}`
+      );
+      toast.info("Copied to clipboard")
+    } catch {
+      toast.error("Failed to copy link")
+    }
   };
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
@@ -56,10 +70,22 @@ export function EchoDropdown({ echoId }: EchoDropdownProps) {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="flex flex-col">
         <DropdownMenuItem asChild>
+          <Button
+            onClick={() => copyToClipboard(echoPublicId)}
+            variant={"ghost"}
+            className="font-semibold pl-2 w-full flex justify-start dark:hover:text-foreground dark:hover:bg-accent/40"
+          >
+            <Copy />
+            Share
+          </Button>
+        </DropdownMenuItem>
+
+        <DropdownMenuItem asChild>
           <Link
             href={`/dashboard/echo/update?echoId=${echoId}`}
-            className="font-semibold dark:hover:text-foreground dark:hover:bg-accent/40"
+            className="min-h-9 pl-3 font-semibold dark:hover:text-foreground dark:hover:bg-accent/40"
           >
+            <Pencil />
             Edit
           </Link>
         </DropdownMenuItem>
@@ -69,8 +95,9 @@ export function EchoDropdown({ echoId }: EchoDropdownProps) {
           <AlertDialogTrigger asChild>
             <Button
               variant={"ghost"}
-              className="font-semibold pl-2 w-full flex justify-start dark:hover:text-foreground dark:hover:bg-accent/40"
+              className="font-semibold w-full flex justify-start dark:hover:text-foreground dark:hover:bg-accent/40"
             >
+              <Trash2 />
               Delete
             </Button>
           </AlertDialogTrigger>

@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Header, Footer } from "@/components/server";
-import { auth, Session } from "@/lib/auth";
+import { auth, Session } from "@/lib/auth/auth";
 import { headers } from "next/headers";
 import { ThemeProvider } from "@/context/theme-provider";
 import { ReactChildren } from "@/types";
+import { PageTransition } from "@/components/Motion/PageTransition";
+import SonnerToaster from "@/components/Sonner/SonnerToaster";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,15 +32,18 @@ export default async function RootLayout({ children }: ReactChildren) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased transition-theme ease-initial duration-300`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased transition-theme ease-initial duration-200 animate-collapsible-up`}
       >
         <ThemeProvider>
           <header className="layout-container">
             <Header session={session as Session} />
           </header>
-
-          <main className="layout-container min-h-screen">{children}</main>
-
+          <PageTransition>
+            <main className="layout-container min-h-screen">
+              {children}
+              <SonnerToaster />
+            </main>
+          </PageTransition>
           <footer className="layout-container">
             <Footer />
           </footer>

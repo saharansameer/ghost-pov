@@ -31,10 +31,9 @@ export async function GET(request: NextRequest, { params }: RequestParams) {
       { success: true, message: "Echo fetched successfully", data: echo },
       { status: 200 }
     );
-  } catch (error) {
-    console.error("Failed to GET Echo:", error);
+  } catch {
     return NextResponse.json<BaseResponse>(
-      { success: false, message: "Failed to GET Echo" },
+      { success: false, message: "Echo is unavailable" },
       { status: 500 }
     );
   }

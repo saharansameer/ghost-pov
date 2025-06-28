@@ -41,11 +41,10 @@ export async function DELETE(request: NextRequest) {
 
     // Final Response
     return NextResponse.json<BaseResponse>(
-      { success: false, message: "Echo deleted successfully" },
+      { success: false, message: "Echo Deleted" },
       { status: 200 }
     );
-  } catch (error) {
-    console.error("Failed to delete echo:", error);
+  } catch {
     return NextResponse.json<BaseResponse>(
       { success: false, message: "Failed to delete echo" },
       { status: 500 }
