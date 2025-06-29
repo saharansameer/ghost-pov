@@ -11,10 +11,20 @@ import { PaginationInfo } from "@/types";
 
 interface PaginationButtonsProps {
   pagination: PaginationInfo;
+  filter?: string;
 }
 
-export function PaginationButtons({ pagination }: PaginationButtonsProps) {
+export function PaginationButtons({
+  pagination,
+  filter,
+}: PaginationButtonsProps) {
   const isFirstPage = pagination.currPage === 1;
+
+  const getHref = (page: number) => {
+    if (filter) return `?p=${page}&f=${filter}`;
+    return `?p=${page}`;
+  };
+
   return (
     <div
       className={
@@ -26,13 +36,13 @@ export function PaginationButtons({ pagination }: PaginationButtonsProps) {
           {/* Previous Button */}
           {pagination.hasPrevPage && (
             <PaginationItem>
-              <PaginationPrevious href={`?p=${pagination.prevPage || 1}`} />
+              <PaginationPrevious href={getHref(pagination.prevPage || 1)} />
             </PaginationItem>
           )}
 
           {/* First Page */}
           <PaginationItem>
-            <PaginationLink href={`?p=${1}`} isActive={isFirstPage}>
+            <PaginationLink href={getHref(1)} isActive={isFirstPage}>
               1
             </PaginationLink>
           </PaginationItem>
@@ -46,7 +56,7 @@ export function PaginationButtons({ pagination }: PaginationButtonsProps) {
           {!isFirstPage && (
             <PaginationItem>
               <PaginationLink
-                href={`?p=${pagination.currPage}`}
+                href={getHref(pagination.currPage)}
                 isActive={true}
               >
                 {pagination.currPage}
@@ -58,7 +68,7 @@ export function PaginationButtons({ pagination }: PaginationButtonsProps) {
           {pagination.hasNextPage && (
             <PaginationItem>
               <PaginationNext
-                href={`?p=${pagination.nextPage || pagination.currPage}`}
+                href={getHref(pagination.nextPage || pagination.currPage)}
               />
             </PaginationItem>
           )}

@@ -6,10 +6,11 @@ import {
 } from "@/components/server";
 import { getPaginationInfo } from "@/lib/utils";
 import { FeedbackObject } from "@/types";
+import { FilterOptions } from "@/components/Feedback/FilterOptions";
 
 type EchoPageProps = {
   params: Promise<{ echoId: string }>;
-  searchParams: Promise<{ p?: string }>;
+  searchParams: Promise<{ p?: string; f?: string; }>;
 };
 
 export default async function EchoPage({
@@ -19,9 +20,10 @@ export default async function EchoPage({
   const { echoId } = await params;
   const queryParams = await searchParams;
   const page = Number(queryParams?.p || 1);
+  const filterBy = queryParams?.f || "";
 
   const response = await fetch(
-    `${process.env.APP_URL}/api/echo/feedbacks?echoId=${echoId}&page=${page}&limit=15`,
+    `${process.env.APP_URL}/api/echo/feedbacks?echoId=${echoId}&page=${page}&limit=15&filter=${filterBy}`,
     {
       next: { revalidate: 10 },
       headers: await headers(),
@@ -46,18 +48,22 @@ export default async function EchoPage({
 
       <div className="w-full max-w-xl h-px my-10 bg-gradient-to-r from-transparent via-border to-transparent" />
 
-      <div className="w-full flex justify-between px-12">
+      <div className="w-full flex flex-col sm:flex-row sm:justify-between gap-y-2 max-w-2xl ">
         <h2 className="font-bold text-3xl">Feedbacks</h2>
-        <p>Filter Option</p>
+        <FilterOptions
+          echoId={echo._id}
+          page={String(page)}
+          defaultFilter={filterBy}
+        />
       </div>
 
-      <div className="flex flex-col gap-y-16 items-center py-10">
+      <div className="w-full flex flex-col gap-y-16 items-center py-10">
         {data.docs.map((item: FeedbackObject) => (
           <FeedbackCard key={item._id} feedback={item} />
         ))}
       </div>
 
-      <PaginationButtons pagination={paginationInfo} />
+      <PaginationButtons pagination={paginationInfo} filter={filterBy} />
     </div>
   );
 }

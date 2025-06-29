@@ -22,12 +22,24 @@ export async function GET(request: NextRequest) {
     const echoId = searchParams.get("echoId");
     const page = Number(searchParams.get("page") || 1);
     const limit = Number(searchParams.get("limit") || 15);
+    const filter = searchParams.get("filter");
+    const filterOptions: Record<
+      "general" | "feature" | "bug" | "error",
+      string
+    > = {
+      general: "General",
+      feature: "Feature Request",
+      bug: "Bug Report",
+      error: "Error Report",
+    };
+
+    const filterBy = filter as keyof typeof filterOptions | null;
 
     // Check cached storage
     const cache: FeedbackResponse | null = await redis.get(
       `feedbacks:${session.userId}:${page}`
     );
-    if (cache) {
+    if (cache && !filter) {
       return NextResponse.json<FeedbackResponse>(
         {
           success: true,
@@ -102,17 +114,34 @@ export async function GET(request: NextRequest) {
     const echo = echoAggregate[0];
 
     const echoDetails = {
+      _id: echo._id,
       title: echo.title,
       description: echo.description,
       owner: echo.owner,
     };
 
+    // Feedback Aggregate Logic
+    const matchStage: {
+      echoId: Types.ObjectId;
+      category?: string;
+      flagged?: boolean;
+    } = {
+      echoId: new Types.ObjectId(String(echo._id)),
+    };
+
+    if (filterBy) {
+      if (filter === "spam") {
+        matchStage.flagged = true;
+      } else {
+        matchStage.category = filterOptions[filterBy];
+        matchStage.flagged = false;
+      }
+    }
+
     // Aggregate Query
     const feedbackAggregateQuery = FeedbackModel.aggregate([
       {
-        $match: {
-          echoId: echo._id,
-        },
+        $match: matchStage,
       },
       {
         $sort: { createdAt: -1 },
@@ -146,8 +175,11 @@ export async function GET(request: NextRequest) {
     }
 
     // Cache Feedbacks
+    const key = filter
+      ? `feedbacks:${session.userId}:${filter}:${page}`
+      : `feedbacks:${session.userId}:${page}`;
     await redis.setex(
-      `feedbacks:${session.userId}:${page}`,
+      key,
       60,
       JSON.stringify({
         data: paginatedFeedback,

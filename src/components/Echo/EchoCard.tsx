@@ -23,7 +23,7 @@ export function EchoCard({ echo }: EchoCardProps) {
       <div className="flex justify-between gap-8">
         <div className="flex-1 min-w-0">
           <Link
-            href={`/dashboard/echo/${echo._id}`}
+            href={`/dashboard/echo/${echo._id}/feedbacks`}
             className="block group-hover:text-primary transition-colors focus:outline-none focus:text-primary"
           >
             <h2

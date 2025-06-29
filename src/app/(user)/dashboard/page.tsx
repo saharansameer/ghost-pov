@@ -21,7 +21,12 @@ export default async function Dashboard({ searchParams }: DashboardProps) {
       headers: await headers(),
     }
   );
-  const { data } = await response.json();
+  const { success, message, data } = await response.json();
+
+  if (!success) {
+    return <div>{message}</div>;
+  }
+
   const paginationInfo = getPaginationInfo(data);
 
   return (
@@ -30,13 +35,15 @@ export default async function Dashboard({ searchParams }: DashboardProps) {
         {/* Page Title and Actions */}
         <div className="w-full max-w-2xl flex justify-between items-start">
           <div>
-            <h1 className="text-2xl font-bold text-foreground">Echos Dashboard</h1>
+            <h1 className="text-2xl font-bold text-foreground">
+              Echos Dashboard
+            </h1>
             <p className="text-muted-foreground text-sm mt-1">
-              Manage and track your feedback collection
+              Manage and track your echo collection
             </p>
           </div>
           <Link href={"/dashboard/echo/create"}>
-            <Button variant="default" className="hover:ring-2 font-semibold">
+            <Button variant="default" className="font-semibold">
               <Plus size={16} className="mr-2" />
               Create Echo
             </Button>
