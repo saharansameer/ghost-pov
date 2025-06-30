@@ -14,7 +14,7 @@ export default async function EchoUpdatePage({
   const response = await fetch(
     `${process.env.APP_URL}/api/echo/read?echoId=${echoId}`,
     {
-      next: { revalidate: 10 },
+      next: { revalidate: 0 },
       headers: await headers(),
     }
   );

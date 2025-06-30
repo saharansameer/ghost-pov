@@ -50,6 +50,7 @@ export function EchoForm({ method, data }: EchoFormProps) {
         headers: {
           "Content-Type": "application/json",
         },
+        next: { revalidate: 0 },
         body: JSON.stringify({
           title,
           description,
@@ -68,7 +69,7 @@ export function EchoForm({ method, data }: EchoFormProps) {
 
       toast.success(message);
       router.push("/dashboard");
-      router.refresh()
+      router.refresh();
     } catch (error) {
       console.error("Echo Form Error:", error);
     }

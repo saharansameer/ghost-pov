@@ -31,7 +31,7 @@ export function FeedbackCard({ feedback }: FeedbackCardProps) {
 
         {/* Toggle Button */}
         <div>
-          <SpamToggleButton flagged={feedback.flagged} />
+          <SpamToggleButton flagged={feedback.flagged} feedbackId={feedback._id} />
         </div>
       </div>
 

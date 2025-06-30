@@ -37,6 +37,7 @@ export function EchoDropdown({ echoId, echoPublicId }: EchoDropdownProps) {
 
     const response = await fetch(`/api/echo/delete?echoId=${echoId}`, {
       method: "DELETE",
+      next: { revalidate: 0 }
     });
 
     const { success, message } = await response.json();

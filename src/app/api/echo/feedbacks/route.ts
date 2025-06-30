@@ -36,10 +36,11 @@ export async function GET(request: NextRequest) {
     const filterBy = filter as keyof typeof filterOptions | null;
 
     // Check cached storage
-    const cache: FeedbackResponse | null = await redis.get(
-      `feedbacks:${session.userId}:${page}`
-    );
-    if (cache && !filter) {
+    const cacheKey = filter
+      ? `feedbacks:${echoId}:${filter}:${page}`
+      : `feedbacks:${echoId}:${page}`;
+    const cache: FeedbackResponse | null = await redis.get(cacheKey);
+    if (cache) {
       return NextResponse.json<FeedbackResponse>(
         {
           success: true,
@@ -175,11 +176,8 @@ export async function GET(request: NextRequest) {
     }
 
     // Cache Feedbacks
-    const key = filter
-      ? `feedbacks:${session.userId}:${filter}:${page}`
-      : `feedbacks:${session.userId}:${page}`;
     await redis.setex(
-      key,
+      cacheKey,
       60,
       JSON.stringify({
         data: paginatedFeedback,

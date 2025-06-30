@@ -12,7 +12,7 @@ export default async function EchoFeedbackPage({ params }: EchoFeedbackProps) {
     `${process.env.APP_URL}/api/echo/${echoPublicId}`,
     {
       method: "GET",
-      next: { revalidate: 10 },
+      next: { revalidate: 0 },
     }
   );
 

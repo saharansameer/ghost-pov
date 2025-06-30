@@ -3,7 +3,7 @@ import connectDB from "@/lib/db/db";
 import { EchoModel } from "@/models/echo.model";
 import { getAuthSession, unauthorized } from "@/lib/auth/session";
 import { BaseResponse } from "@/types";
-import redis from "@/lib/db/redis";
+import { deleteByPrefix } from "@/lib/db/redis";
 
 export async function DELETE(request: NextRequest) {
   await connectDB();
@@ -37,7 +37,7 @@ export async function DELETE(request: NextRequest) {
     }
 
     // Clear Cache
-    await redis.del(`echos:${session.userId}`);
+    await deleteByPrefix(`echos:${session.userId}`);
 
     // Final Response
     return NextResponse.json<BaseResponse>(

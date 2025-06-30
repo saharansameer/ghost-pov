@@ -25,7 +25,7 @@ export default async function EchoPage({
   const response = await fetch(
     `${process.env.APP_URL}/api/echo/feedbacks?echoId=${echoId}&page=${page}&limit=15&filter=${filterBy}`,
     {
-      next: { revalidate: 10 },
+      next: { revalidate: 0 },
       headers: await headers(),
     }
   );

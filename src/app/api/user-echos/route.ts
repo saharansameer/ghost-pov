@@ -22,7 +22,8 @@ export async function GET(request: NextRequest) {
     const limit = Number(searchParams.get("limit") || 15);
 
     // Check cached storage
-    const cache: EchoCacheResult = await redis.get(`echos:${session.userId}`);
+    const cacheKey = `echos:${session.userId}:${page}`;
+    const cache: EchoCacheResult = await redis.get(cacheKey);
     if (cache) {
       return NextResponse.json<EchoResponse>(
         {
@@ -94,11 +95,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Cache echos
-    await redis.setex(
-      `echos:${session.userId}`,
-      60,
-      JSON.stringify(paginatedEchos)
-    );
+    await redis.setex(cacheKey, 60, JSON.stringify(paginatedEchos));
 
     // Final Response
     return NextResponse.json<EchoResponse>(

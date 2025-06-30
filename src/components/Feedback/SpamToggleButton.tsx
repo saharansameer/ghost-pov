@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Shield, ShieldAlert } from "lucide-react";
 import {
@@ -11,12 +13,35 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 interface SpamToggleButtonProps {
   flagged: boolean;
+  feedbackId: string;
 }
 
-export function SpamToggleButton({ flagged }: SpamToggleButtonProps) {
+export function SpamToggleButton({
+  flagged,
+  feedbackId,
+}: SpamToggleButtonProps) {
+  const router = useRouter();
+  const onContinueHandler = async () => {
+    try {
+      const { message } = await fetch(
+        `${process.env.NEXT_PUBLIC_APP_URL}/api/feedback/toggle/${feedbackId}`,
+        {
+          method: "PATCH",
+          next: { revalidate: 0 }
+        }
+      ).then((res) => res.json());
+
+      toast.success(message);
+      router.refresh();
+    } catch {
+      toast.error("Toggle Failed");
+    }
+  };
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -44,7 +69,10 @@ export function SpamToggleButton({ flagged }: SpamToggleButtonProps) {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction className={flagged ? "bg-green-500" : ""}>
+          <AlertDialogAction
+            className={flagged ? "bg-green-500" : ""}
+            onClick={onContinueHandler}
+          >
             Continue
           </AlertDialogAction>
         </AlertDialogFooter>
