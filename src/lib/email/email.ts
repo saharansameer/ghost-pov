@@ -1,11 +1,24 @@
 import { resend } from "@/lib/email/resend";
-import { VerifyEmailTemplate, VerifyEmailText } from "@/components/client";
+import {
+  VerifyEmailTemplate,
+  VerifyEmailText,
+  ResetPasswordTemplate,
+  ResetPasswordText
+} from "@/components/server";
 import { BaseResponse } from "@/types";
 
 const emailType = {
   verify: {
+    sender: "GhostPOV <no-reply@ghostpov.xyz>",
+    subject: "Account Verification",
     template: VerifyEmailTemplate,
     text: VerifyEmailText,
+  },
+  reset: {
+    sender: "GhostPOV <no-reply@ghostpov.xyz>",
+    subject: "Reset Password",
+    template: ResetPasswordTemplate,
+    text: ResetPasswordText,
   },
 };
 
@@ -26,9 +39,9 @@ export async function sendEmail({
 }: SendEmailParams): Promise<BaseResponse> {
   try {
     await resend.emails.send({
-      from: "GhostPOV <onboarding@ghostpov.xyz>",
+      from: emailType[type].sender,
       to: [email],
-      subject: "Account Verification",
+      subject: emailType[type].subject,
       react: emailType[type]["template"]({ name, url }),
       text: emailType[type]["text"]({ name, url }),
     });

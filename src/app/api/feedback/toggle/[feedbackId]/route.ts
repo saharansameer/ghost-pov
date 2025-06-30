@@ -37,16 +37,14 @@ export async function PATCH(request: NextRequest, { params }: RequestParams) {
     }
 
     // Clear cache
-    await deleteByPrefix(`feedbacks:${toggle.echoId}`)
-
+    await deleteByPrefix(`feedbacks:${toggle.echoId}`);
 
     // Final Response
     return NextResponse.json<BaseResponse>(
       { success: true, message: "Toggle Success" },
       { status: 200 }
     );
-  } catch (error) {
-    console.error("Toggle Spam Error", error);
+  } catch {
     return NextResponse.json<BaseResponse>(
       { success: false, message: "Toggle Spam Failed" },
       { status: 500 }
