@@ -3,22 +3,27 @@ import {
   VerifyEmailTemplate,
   VerifyEmailText,
   ResetPasswordTemplate,
-  ResetPasswordText
+  ResetPasswordText,
+  ChangeEmailTemplate,
+  ChangeEmailText,
 } from "@/components/server";
 import { BaseResponse } from "@/types";
 
 const emailType = {
   verify: {
-    sender: "GhostPOV <no-reply@ghostpov.xyz>",
     subject: "Account Verification",
     template: VerifyEmailTemplate,
     text: VerifyEmailText,
   },
   reset: {
-    sender: "GhostPOV <no-reply@ghostpov.xyz>",
     subject: "Reset Password",
     template: ResetPasswordTemplate,
     text: ResetPasswordText,
+  },
+  change: {
+    subject: "Approve Email Change",
+    template: ChangeEmailTemplate,
+    text: ChangeEmailText,
   },
 };
 
@@ -29,6 +34,7 @@ interface SendEmailParams {
   email: string;
   name: string;
   url: string;
+  newEmail?: string
 }
 
 export async function sendEmail({
@@ -36,14 +42,15 @@ export async function sendEmail({
   email,
   name,
   url,
+  newEmail
 }: SendEmailParams): Promise<BaseResponse> {
   try {
     await resend.emails.send({
-      from: emailType[type].sender,
+      from: "GhostPOV <no-reply@ghostpov.xyz>",
       to: [email],
       subject: emailType[type].subject,
-      react: emailType[type]["template"]({ name, url }),
-      text: emailType[type]["text"]({ name, url }),
+      react: emailType[type]["template"]({ name, url, newEmail }),
+      text: emailType[type]["text"]({ name, url, newEmail }),
     });
 
     return {

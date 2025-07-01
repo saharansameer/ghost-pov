@@ -21,7 +21,9 @@ export function VerifyEmailTemplate({ name, url }: VerifyEmailTemplateProps) {
   return (
     <Html>
       <Head />
-      <Preview>Verify Your GhostPOV Account</Preview>
+      <Preview>
+        Hey {name}, Welcome to GhostPOV. Please verify your account.
+      </Preview>
       <Body style={main}>
         <Container style={container}>
           <Section style={logoContainer}>
@@ -30,7 +32,7 @@ export function VerifyEmailTemplate({ name, url }: VerifyEmailTemplateProps) {
 
           <Section style={content}>
             <Text style={paragraph}>
-              Hey! <strong style={bold}>{name}</strong>, Welcome to GhostPOV. To
+              Hey <strong style={bold}>{name}</strong>, Welcome to GhostPOV. To
               complete your registration and start using your account, please
               verify your email address by clicking the button below.
             </Text>
@@ -86,7 +88,7 @@ export function VerifyEmailText({
   url,
 }: VerifyEmailTemplateProps): string {
   return `
-Hey ${name}! Welcome to GhostPOV.
+Hey ${name}, Welcome to GhostPOV.
 
 To complete your registration and start using your account, please verify your email address by visiting the following link:
 ${url}

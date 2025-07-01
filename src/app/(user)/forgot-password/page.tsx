@@ -8,12 +8,14 @@ import { ErrorMessage, LoaderSpin } from "@/components/server";
 import { authClient } from "@/lib/auth/auth-client";
 import { toast } from "sonner";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function ForgotPasswordPage() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting, isSubmitSuccessful },
+    formState: { errors, isSubmitting },
     reset,
     setError,
   } = useForm<EmailSchemaType>({
@@ -56,16 +58,13 @@ export default function ForgotPasswordPage() {
       }
 
       toast.info("Email Sent");
+      router.push(`/mail-sent?to=${email}&type=password`);
     } catch (error) {
       console.log("Forgot Password Page Error:", error);
     }
 
     reset();
   };
-
-  if (isSubmitSuccessful) {
-    return <div>Mail Sent Successfully</div>;
-  }
 
   return (
     <div className="min-h-[85vh] flex items-center justify-center px-4 sm:px-6 lg:px-8">
@@ -81,8 +80,10 @@ export default function ForgotPasswordPage() {
           <form onSubmit={handleSubmit(onSubmitHandler)} className="space-y-8">
             <div className="space-y-2">
               {errors.email && (
-                <div className="rounded-md bg-destructive/15 p-2 transition-all duration-100
-                animate-[fadeIn_0.5s_ease-in-out_forwards]">
+                <div
+                  className="rounded-md bg-destructive/15 p-2 transition-all duration-100
+                animate-[fadeIn_0.5s_ease-in-out_forwards]"
+                >
                   <ErrorMessage text={errors.email.message as string} />
                 </div>
               )}

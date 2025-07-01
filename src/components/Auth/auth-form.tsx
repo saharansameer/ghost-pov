@@ -46,7 +46,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
       });
 
       if (error?.code === "EMAIL_NOT_VERIFIED") {
-        router.push(`/verification-pending?email=${email}`);
+        router.push(`/mail-sent?to=${email}&type=verification`);
         router.refresh();
         return;
       }
@@ -88,7 +88,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
       console.error("SignUp Error:", error);
     }
 
-    router.push(`/verification-pending?email=${formData.email}`);
+    router.push(`/mail-sent?to=${formData.email}&type=verification`);
     reset();
   };
 

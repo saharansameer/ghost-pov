@@ -11,24 +11,28 @@ import {
   Text,
 } from "@react-email/components";
 
-interface ResetPasswordTemplateProps {
+interface ChangeEmailTemplateProps {
   name: string;
   url: string;
+  newEmail?: string;
 }
 
 // Template
-export function ResetPasswordTemplate({
+export function ChangeEmailTemplate({
   name,
   url,
-}: ResetPasswordTemplateProps) {
+  newEmail,
+}: ChangeEmailTemplateProps) {
   return (
     <Html>
       <Head />
-      <Preview>Hey {name}, reset your GhostPOV account password.</Preview>
+      <Preview>
+        Hey {name}, Confirm your new email address for GhostPOV.
+      </Preview>
       <Body style={main}>
         <Container style={container}>
           <Section style={logoContainer}>
-            <Heading style={logo}>Reset Password</Heading>
+            <Heading style={logo}>Approve Email Change</Heading>
           </Section>
 
           <Section style={content}>
@@ -37,13 +41,18 @@ export function ResetPasswordTemplate({
             </Text>
 
             <Text style={paragraph}>
-              We received a request to reset the password for your GhostPOV
-              account. To proceed, click the button below:
+              We received a request to change the email address associated with
+              your GhostPOV account.
+            </Text>
+
+            <Text style={paragraph}>
+              New Email: {newEmail}
+              To confirm this change, please click the button below:
             </Text>
 
             <Section style={buttonContainer}>
               <Button href={url} style={button}>
-                Reset Passowrd
+                Confirm
               </Button>
             </Section>
 
@@ -76,17 +85,19 @@ export function ResetPasswordTemplate({
 }
 
 // Plain text version
-export function ResetPasswordText({
+export function ChangeEmailText({
   name,
   url,
-}: ResetPasswordTemplateProps): string {
+}: ChangeEmailTemplateProps): string {
   return `
 Hey ${name},
-We received a request to reset the password for your GhostPOV account.
-To proceed, visiting the following link:
+We received a request to change the email address associated with your GhostPOV account.
+
+New Email: 
+To confirm this change, visit the following link:
 ${url}
 
-For your security, this password reset link will expire in 24 hours.
+This link will expire in 24 hours for your security. If you didn't requested this change, you can ignore this email.
 
 © ${new Date().getFullYear()} GhostPOV. All rights reserved.
 `.trim();
