@@ -6,11 +6,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Label, Button } from "@/components/ui";
 import { PasswordInput } from "@/components/client";
 import { LoaderSpin, ErrorMessage } from "@/components/server";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth/auth-client";
 import { toast } from "sonner";
 
 export default function ResetPasswordPage() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get("token")!;
 
@@ -23,6 +24,7 @@ export default function ResetPasswordPage() {
   } = useForm<PasswordSchemaType>({
     resolver: zodResolver(passwordSchema),
     mode: "onSubmit",
+    reValidateMode: "onSubmit",
   });
 
   const onSubmitHandler: SubmitHandler<PasswordSchemaType> = async (
@@ -41,9 +43,12 @@ export default function ResetPasswordPage() {
           type: "validate",
           message: "Token Expired",
         });
+        return;
       }
 
       toast.success("Password Reset Successfully");
+      router.push("/sign-in");
+      router.refresh();
     } catch (error) {
       console.error("Reset Password Error:", error);
     }
@@ -51,44 +56,72 @@ export default function ResetPasswordPage() {
     reset();
   };
   return (
-    <div className="flex flex-col items-center gap-y-5 py-10">
-      <div className="w-full max-w-xl space-y-10">
-        <div>
-          <h1 className="font-bold text-3xl">Reset Password</h1>
-          <p>Reset your password and remember this one.</p>
+    <div className="min-h-[85vh] flex items-center justify-center px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-md space-y-8">
+        <div className="text-center">
+          <h1 className="text-3xl font-bold tracking-tight">Reset Password</h1>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Choose a strong password that you&apos;ll remember.
+          </p>
         </div>
-        <form onSubmit={handleSubmit(onSubmitHandler)} className="space-y-5">
-          {errors.root && <ErrorMessage text={errors.root.message as string} />}
 
-          <div className="space-y-2">
+        <div>
+          <form onSubmit={handleSubmit(onSubmitHandler)} className="space-y-6">
+            {errors.root && (
+              <div
+                className="rounded-md bg-destructive/15 p-2 transition-all duration-100
+                animate-[fadeIn_0.5s_ease-in-out_forwards]"
+              >
+                <ErrorMessage text={errors.root.message as string} />
+              </div>
+            )}
+
             <div>
-              <Label htmlFor="new-password">New Password</Label>
+              <div className="space-y-2">
+                <Label htmlFor="new-password">New Password</Label>
+                <PasswordInput id="new-password" {...register("newPassword")} />
+              </div>
               {errors.newPassword && (
                 <ErrorMessage text={errors.newPassword.message as string} />
               )}
             </div>
-            <PasswordInput id="new-password" {...register("newPassword")} />
-          </div>
 
-          <div className="space-y-2">
             <div>
-              <Label htmlFor="c-new-password">Confirm Password</Label>
+              <div className="space-y-2">
+                <Label htmlFor="c-new-password">Confirm Password</Label>
+                <PasswordInput
+                  id="c-new-password"
+                  {...register("confirmNewPassword")}
+                />
+              </div>
               {errors.confirmNewPassword && (
                 <ErrorMessage
                   text={errors.confirmNewPassword.message as string}
                 />
               )}
             </div>
-            <PasswordInput
-              id="c-new-password"
-              {...register("confirmNewPassword")}
-            />
-          </div>
 
-          <Button type="submit">
-            {isSubmitting ? <LoaderSpin /> : "Submit"}
-          </Button>
-        </form>
+            <Button
+              type="submit"
+              className="w-full font-semibold"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? <LoaderSpin /> : "Reset Password"}
+            </Button>
+          </form>
+
+          <div className="mt-6 text-center">
+            <p className="text-sm text-muted-foreground">
+              Remember your password?{" "}
+              <a
+                href="/sign=in"
+                className="font-medium text-primary hover:underline"
+              >
+                Sign in
+              </a>
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import type { Session } from "better-auth";
+import { Session } from "better-auth";
 
-const authRoutes = ["/sign-in", "/sign-up"];
+const authRoutes = [
+  "/sign-in",
+  "/sign-up",
+  "/forgot-password",
+  "/reset-password",
+];
 const protectedRoutes = ["/dashboard", "/account"];
 
 export async function middleware(request: NextRequest) {

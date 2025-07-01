@@ -167,6 +167,7 @@ export function FeedbackForm({ echoPublicId }: FeedbackFormProps) {
         type="submit"
         variant={"default"}
         className="max-w-40 font-semibold"
+        disabled={isSubmitting}
       >
         <Ghost />
         {isSubmitting ? <LoaderSpin /> : "Send"}

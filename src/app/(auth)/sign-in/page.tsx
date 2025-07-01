@@ -21,7 +21,7 @@ export default function SigninPage() {
             Enter your account&apos;s credentials below
           </CardDescription>
         </CardHeader>
-        <CardContent className="flex flex-col gap-y-10">
+        <CardContent className="flex flex-col gap-y-6">
           <SigninForm mode="sign-in" />
           <Separator orientation="horizontal" />
           <div className="w-full flex flex-col gap-y-4 pb-4">
@@ -30,11 +30,11 @@ export default function SigninPage() {
           </div>
         </CardContent>
         <CardFooter>
-          <div className="flex items-center gap-x-3 font-mono text-sm">
+          <div className="w-full flex justify-center gap-x-2 text-sm font-semibold">
             <span>Don&apos;t have an account?</span>
             <Link
               href={"/sign-up"}
-              className="hover:underline underline-offset-1 hover:text-primary 
+              className="hover:underline underline-offset-1 text-primary 
               transition-all ease-initial duration-200"
             >
               Sign up

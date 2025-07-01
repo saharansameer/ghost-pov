@@ -7,6 +7,7 @@ import { Input, Button } from "@/components/ui";
 import { ErrorMessage, LoaderSpin } from "@/components/server";
 import { authClient } from "@/lib/auth/auth-client";
 import { toast } from "sonner";
+import Link from "next/link";
 
 export default function ForgotPasswordPage() {
   const {
@@ -35,7 +36,7 @@ export default function ForgotPasswordPage() {
       const { success, message } = await response.json();
 
       if (!success) {
-        setError("root", {
+        setError("email", {
           type: "validate",
           message: message,
         });
@@ -48,7 +49,7 @@ export default function ForgotPasswordPage() {
       });
 
       if (error) {
-        setError("root", {
+        setError("email", {
           type: "validate",
           message: error.message,
         });
@@ -67,30 +68,53 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className="flex flex-col items-center gap-y-5 py-10">
-      <div className="w-full max-w-xl space-y-10">
-        <div>
-          <h1 className="font-bold text-3xl">Forgot Password</h1>
-          <p>Enter your registered email address to reset your password.</p>
+    <div className="min-h-[85vh] flex items-center justify-center px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-md space-y-6">
+        <div className="text-center">
+          <h1 className="text-3xl font-bold tracking-tight">Forgot Password</h1>
+          <p className="text-sm text-muted-foreground">
+            Enter your registered email address to reset your password.
+          </p>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmitHandler)} className="space-y-5">
-          {errors.root && <ErrorMessage text={errors.root.message as string} />}
-          <div className="space-y-2">
-            {errors.email && (
-              <ErrorMessage text={errors.email.message as string} />
-            )}
-            <Input
-              type="email"
-              {...register("email")}
-              placeholder="Enter your email"
-            />
-          </div>
+        <div>
+          <form onSubmit={handleSubmit(onSubmitHandler)} className="space-y-8">
+            <div className="space-y-2">
+              {errors.email && (
+                <div className="rounded-md bg-destructive/15 p-2 transition-all duration-100
+                animate-[fadeIn_0.5s_ease-in-out_forwards]">
+                  <ErrorMessage text={errors.email.message as string} />
+                </div>
+              )}
+              <Input
+                id="email"
+                type="email"
+                {...register("email")}
+                placeholder="Enter your email address"
+              />
+            </div>
 
-          <Button type="submit">
-            {isSubmitting ? <LoaderSpin /> : "Submit"}
-          </Button>
-        </form>
+            <Button
+              type="submit"
+              className="w-full font-semibold"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? <LoaderSpin /> : "Send Reset Link"}
+            </Button>
+          </form>
+
+          <div className="mt-6 text-center">
+            <p className="text-sm text-muted-foreground">
+              Remember your password?{" "}
+              <Link
+                href="/sign-in"
+                className="font-medium text-primary hover:underline"
+              >
+                Sign in
+              </Link>
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );

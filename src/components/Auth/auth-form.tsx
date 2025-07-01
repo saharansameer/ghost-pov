@@ -14,6 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { authClient } from "@/lib/auth/auth-client";
 import { useRouter } from "next/navigation";
 import { AuthMode } from "@/types";
+import Link from "next/link";
 
 interface AuthFormProps {
   mode: AuthMode;
@@ -46,7 +47,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
 
       if (error?.code === "EMAIL_NOT_VERIFIED") {
         router.push(`/verification-pending?email=${email}`);
-        router.refresh()
+        router.refresh();
         return;
       }
 
@@ -61,7 +62,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
       console.error("SignIn Error:", error);
     }
     router.push("/dashboard");
-    router.refresh()
+    router.refresh();
     reset();
   };
 
@@ -94,9 +95,11 @@ export default function AuthForm({ mode }: AuthFormProps) {
   return (
     <form
       onSubmit={handleSubmit(isSignIn ? onSignInHandler : onSignUpHandler)}
-      className="w-full space-y-7"
+      className="w-full space-y-5"
     >
-      {errors.root && <ErrorMessage text={errors.root.message as string} />}
+      {errors.root && (
+        <ErrorMessage text={errors.root.message as string} className="pb-0.5" />
+      )}
       <div>
         <div className="space-y-2">
           <Label htmlFor="email">Email</Label>
@@ -120,9 +123,25 @@ export default function AuthForm({ mode }: AuthFormProps) {
         {errors.password && (
           <ErrorMessage text={errors.password.message as string} />
         )}
+
+        {isSignIn && (
+          <div className="relative py-2">
+            <Link
+              href={"/forgot-password"}
+              className="absolute right-0 text-xs hover:underline hover:text-primary transition-colors"
+            >
+              Forgot Password?
+            </Link>
+          </div>
+        )}
       </div>
 
-      <Button type="submit" size={"sm"} className="font-semibold w-full">
+      <Button
+        type="submit"
+        size={"sm"}
+        className="font-semibold w-full"
+        disabled={isSubmitting}
+      >
         {isSubmitting ? <LoaderSpin /> : isSignIn ? "Sign in" : "Sign up"}
       </Button>
     </form>

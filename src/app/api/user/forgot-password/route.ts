@@ -19,7 +19,10 @@ export async function POST(request: NextRequest) {
 
     if (!user) {
       return NextResponse.json<BaseResponse>(
-        { success: false, message: "No user exist with this email" },
+        {
+          success: false,
+          message: "No account found with this email address.",
+        },
         { status: 404 }
       );
     }
@@ -31,7 +34,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json<BaseResponse>(
         {
           success: false,
-          message: "This email is registered using social signin",
+          message: "This email is associated with a social login.",
         },
         { status: 400 }
       );
@@ -39,12 +42,18 @@ export async function POST(request: NextRequest) {
 
     // Final Response
     return NextResponse.json<BaseResponse>(
-      { success: true, message: "Password Reset is possible" },
+      {
+        success: true,
+        message: "Password reset is available for this account.",
+      },
       { status: 200 }
     );
   } catch {
     return NextResponse.json<BaseResponse>(
-      { success: false, message: "Failed to check email" },
+      {
+        success: false,
+        message: "An error occurred while reset link verification.",
+      },
       { status: 500 }
     );
   }

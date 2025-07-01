@@ -1,20 +1,51 @@
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Menu } from "lucide-react";
+"use client";
+
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Menu, X } from "lucide-react";
 import { ReactChildren } from "@/types";
+import { cn } from "@/lib/utils";
 
 export function HeaderDropdown({ children }: ReactChildren) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => setIsOpen(!isOpen);
+
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild className="cursor-pointer sm:hidden">
-        <Menu />
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="flex gap-x-5 px-2">
-        {children}
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <div className="sm:hidden">
+      {/* Trigger Button */}
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={toggleDropdown}
+        className="p-2"
+        aria-expanded={isOpen}
+        aria-label="Toggle navigation menu"
+      >
+        {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+      </Button>
+
+      {/* Backdrop */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 top-20 backdrop-blur-sm z-40"
+          onClick={toggleDropdown}
+        />
+      )}
+
+      {/* Dropdown Content */}
+      <div
+        className={cn(
+          "absolute inset-0 top-full bg-background shadow-lg z-50 transition-all duration-200 ease-in-out",
+          isOpen
+            ? "opacity-100 translate-y-0 visible"
+            : "opacity-0 -translate-y-2 invisible"
+        )}
+      >
+        <div className="px-4 py-6">
+          <div className="flex flex-col gap-y-3 items-start" onClick={toggleDropdown}>{children}</div>
+        </div>
+      </div>
+    </div>
   );
 }
