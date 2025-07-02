@@ -41,12 +41,16 @@ export function ChangeEmailTemplate({
             </Text>
 
             <Text style={paragraph}>
-              We received a request to change the email address associated with
-              your GhostPOV account.
+              We&apos;ve received a request to change the email address
+              associated with your GhostPOV account.
             </Text>
 
             <Text style={paragraph}>
-              New Email: {newEmail}
+              Your account will be linked to the following email address:{" "}
+              <i>{newEmail}</i>
+            </Text>
+
+            <Text style={paragraph}>
               To confirm this change, please click the button below:
             </Text>
 
@@ -88,12 +92,13 @@ export function ChangeEmailTemplate({
 export function ChangeEmailText({
   name,
   url,
+  newEmail,
 }: ChangeEmailTemplateProps): string {
   return `
 Hey ${name},
 We received a request to change the email address associated with your GhostPOV account.
 
-New Email: 
+Your account will be linked to the following email address: ${newEmail}
 To confirm this change, visit the following link:
 ${url}
 

@@ -63,6 +63,21 @@ export const auth = betterAuth({
     },
     autoSignInAfterVerification: true,
   },
+  user: {
+    changeEmail: {
+      enabled: true,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      sendChangeEmailVerification: async ({user, newEmail, url, token}, request) => {
+        await sendEmail({
+          type: "change",
+          email: user.email,
+          name: user.name,
+          url,
+          newEmail,
+        })
+      },
+    }
+  }
 });
 
 export type Session = typeof auth.$Infer.Session;

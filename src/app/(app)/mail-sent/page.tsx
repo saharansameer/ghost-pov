@@ -13,7 +13,7 @@ import { headers } from "next/headers";
 interface Props {
   searchParams: Promise<{
     to: string;
-    type: "verification" | "password" | "email" | "none";
+    type: "verification" | "password" | "email";
   }>;
 }
 
@@ -25,7 +25,7 @@ const mailDescription = {
 };
 
 export default async function MailSentPage({ searchParams }: Props) {
-  const { to, type = "none" } = await searchParams;
+  const { to, type = "verification" } = await searchParams;
 
   const user = await getAuthUser(await headers());
 

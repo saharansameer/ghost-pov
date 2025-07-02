@@ -8,7 +8,7 @@
   }
 
   .nav-button {
-    @apply px-0 font-semibold text-foreground/80 hover:text-primary transition-colors;
+    @apply px-0 font-semibold text-foreground sm:text-foreground/80 hover:text-primary transition-colors text-lg sm:text-sm;
   }
 }
 
