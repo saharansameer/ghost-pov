@@ -1,4 +1,9 @@
-import mongoose, { Schema, Document, AggregatePaginateModel } from "mongoose";
+import mongoose, {
+  Schema,
+  Types,
+  Document,
+  AggregatePaginateModel,
+} from "mongoose";
 import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2";
 
 export enum FeedbackCategories {
@@ -11,7 +16,8 @@ export enum FeedbackCategories {
 export interface FeedbackDocument extends Document {
   category: FeedbackCategories;
   message: string;
-  echoId: Schema.Types.ObjectId;
+  echoId: Types.ObjectId;
+  echoOwner: Types.ObjectId;
   flagged: boolean;
 }
 
@@ -30,8 +36,12 @@ const feedbackSchema = new Schema(
       maxlength: [5000, "Feedback message must not exceed 5000 characters"],
     },
     echoId: {
-      type: Schema.Types.ObjectId,
+      type: Types.ObjectId,
       ref: "Echo",
+    },
+    echoOwner: {
+      type: Types.ObjectId,
+      ref: "user",
     },
     flagged: {
       type: Boolean,

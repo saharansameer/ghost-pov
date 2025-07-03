@@ -10,11 +10,11 @@ interface UserAvatarProps {
 export function UserAvatar({
   src,
   altText,
-  className,
+  className = "border-[1px] w-16 h-16",
   scale,
 }: UserAvatarProps) {
   return (
-    <Avatar className={className || ""}>
+    <Avatar className={className}>
       <AvatarImage
         src={src}
         alt={`${altText}`}

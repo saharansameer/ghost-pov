@@ -57,6 +57,7 @@ export default async function Dashboard({ searchParams }: DashboardProps) {
         ))}
       </div>
 
+      {!data.hasNextPage && <div className="py-10"></div>}
       <PaginationButtons pagination={paginationInfo} />
     </div>
   );

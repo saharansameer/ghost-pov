@@ -36,8 +36,8 @@ export function ChangeEmailForm({
     resolver: zodResolver(emailSchema),
     mode: "onSubmit",
     defaultValues: {
-      email: currEmail
-    }
+      email: currEmail,
+    },
   });
 
   useEffect(() => {
@@ -49,8 +49,8 @@ export function ChangeEmailForm({
       const { email } = formData;
 
       if (email === currEmail) {
-        setFormOpen(false)
-        reset()
+        setFormOpen(false);
+        reset();
         return;
       }
 
@@ -98,9 +98,7 @@ export function ChangeEmailForm({
           </div>
 
           {!formOpen && <p className="text-muted-foreground">{currEmail}</p>}
-          {formOpen && (
-            <Input {...register("email")} className="mt-2"/>
-          )}
+          {formOpen && <Input {...register("email")} className="mt-2" />}
           {formOpen && errors.email && (
             <ErrorMessage text={errors.email.message as string} />
           )}

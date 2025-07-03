@@ -3,6 +3,7 @@ import { Session, User } from "better-auth";
 import { NextResponse } from "next/server";
 import { BaseResponse, AuthProvider } from "@/types";
 import mongoose, { Types } from "mongoose";
+import connectDB from "@/lib/db/db";
 
 export async function getAuthSession(
   headers: Headers
@@ -36,6 +37,8 @@ export async function getAuthUser(headers: Headers): Promise<User | null> {
 export async function getAuthProvider(
   userId: string | Types.ObjectId
 ): Promise<AuthProvider | null> {
+  await connectDB();
+
   const Accounts = mongoose.connection.collection("account");
 
   const userAccount = await Accounts.findOne(

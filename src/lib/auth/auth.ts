@@ -76,6 +76,9 @@ export const auth = betterAuth({
           newEmail,
         })
       },
+    },
+    deleteUser: {
+      enabled: true,
     }
   }
 });

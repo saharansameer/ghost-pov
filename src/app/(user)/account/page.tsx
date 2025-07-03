@@ -14,13 +14,12 @@ import {
   CreditCard,
   Calendar,
   Shield,
-  Trash2,
   AlertTriangle,
   Crown,
   Calendar as CalendarIcon,
 } from "lucide-react";
-import Image from "next/image";
-import { ChangeEmailForm } from "@/components/User/ChangeEmailForm";
+import { ChangeEmailForm, DeleteAccountButton } from "@/components/client";
+import { UserAvatar } from "@/components/server";
 import { getFormatDate } from "@/lib/utils";
 
 export default async function AccountPage() {
@@ -30,9 +29,9 @@ export default async function AccountPage() {
 
   // Mock data for demonstration
   const userData = {
-    name: user?.name || "John Doe",
-    email: user?.email || "john.doe@example.com",
-    avatar: user?.image || null,
+    name: user?.name,
+    email: user?.email as string,
+    avatar: user?.image,
     joinDate: getFormatDate(user?.createdAt as Date, "date-only"),
     plan: "Pro",
     billingCycle: "Monthly",
@@ -41,7 +40,7 @@ export default async function AccountPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background transition-all animate-[fadeIn_0.5s_ease-intial_forwards]">
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         {/* Header */}
         <div className="mb-8">
@@ -72,23 +71,11 @@ export default async function AccountPage() {
             <CardContent className="space-y-6">
               {/* Avatar and Name */}
               <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-                <div className="flex-shrink-0">
-                  <div className="w-20 h-20 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-2xl font-semibold shadow-lg">
-                    {userData.avatar ? (
-                      <Image
-                        src={userData.avatar}
-                        alt="Profile"
-                        className="w-full h-full rounded-full object-cover"
-                      />
-                    ) : (
-                      userData.name
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")
-                        .toUpperCase()
-                    )}
-                  </div>
-                </div>
+                <UserAvatar
+                  src={user?.image as string}
+                  altText={user?.name as string}
+                  scale={true}
+                />
                 <div className="flex-1">
                   <div className="flex items-center mb-2">
                     <h3 className="text-2xl font-semibold text-foreground">
@@ -241,14 +228,7 @@ export default async function AccountPage() {
                       This action cannot be undone.
                     </p>
                   </div>
-                  <Button
-                    variant="destructive"
-                    size="sm"
-                    className="shrink-0 transition-colors duration-200"
-                  >
-                    <Trash2 className="h-4 w-4 mr-2" />
-                    Delete Account
-                  </Button>
+                  <DeleteAccountButton />
                 </div>
               </div>
             </CardContent>

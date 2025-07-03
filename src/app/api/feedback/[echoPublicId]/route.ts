@@ -93,6 +93,7 @@ export async function POST(request: NextRequest, { params }: RequestParams) {
       category,
       feedbackMessage,
       echoId: echo._id,
+      echoOwner: echo.owner,
       flagged,
     });
 

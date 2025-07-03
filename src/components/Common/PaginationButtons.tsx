@@ -41,7 +41,7 @@ export function PaginationButtons({
           )}
 
           {/* First Page */}
-          <PaginationItem>
+          <PaginationItem className="ml-1">
             <PaginationLink href={getHref(1)} isActive={isFirstPage}>
               1
             </PaginationLink>
@@ -54,7 +54,7 @@ export function PaginationButtons({
 
           {/* Current Page */}
           {!isFirstPage && (
-            <PaginationItem>
+            <PaginationItem className="mr-3">
               <PaginationLink
                 href={getHref(pagination.currPage)}
                 isActive={true}

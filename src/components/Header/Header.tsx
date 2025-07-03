@@ -76,7 +76,7 @@ export function Header({ session }: HeaderProps) {
                 "/sign-up",
                 "/e/",
                 "/f/",
-                "/verification-pending",
+                "/mail-sent",
               ]}
             >
               <Link href={"/sign-in"}>
