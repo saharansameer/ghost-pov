@@ -36,7 +36,7 @@ export function HeaderDropdown({ children }: ReactChildren) {
       {/* Dropdown Content */}
       <div
         className={cn(
-          "absolute inset-0 top-full bg-background shadow-lg z-50 transition-all duration-200 ease-in-out",
+          "absolute inset-0 top-full z-50 transition-all duration-200 ease-in-out",
           isOpen
             ? "opacity-100 translate-y-0 visible"
             : "opacity-0 -translate-y-2 invisible"

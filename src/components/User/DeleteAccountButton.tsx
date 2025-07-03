@@ -20,12 +20,9 @@ import { useRouter } from "next/navigation";
 export function DeleteAccountButton() {
   const router = useRouter();
   const onContinueHandler = async () => {
-    const { success, message } = await fetch(
-      `${process.env.NEXT_PUBLIC_APP_URL}/api/user/delete-all-data`,
-      {
-        method: "GET",
-      }
-    ).then((res) => res.json());
+    const { success, message } = await fetch("/api/user/delete-all-data", {
+      method: "GET",
+    }).then((res) => res.json());
 
     if (!success) {
       toast.error(message);
@@ -63,7 +60,7 @@ export function DeleteAccountButton() {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={onContinueHandler}>
+          <AlertDialogAction onClick={onContinueHandler} className="destructive-button">
             Yes, Delete
           </AlertDialogAction>
         </AlertDialogFooter>

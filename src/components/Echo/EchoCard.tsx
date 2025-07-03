@@ -60,14 +60,14 @@ export function EchoCard({ echo }: EchoCardProps) {
               </Badge>
             )}
           </div>
-          <EchoDropdown echoId={String(echo._id)} echoPublicId={echo.publicId}/>
+          <EchoDropdown echo={echo}/>
         </div>
       </div>
 
       {/* Description */}
       <div className="mb-4 mr-14 h-6">
         <Link
-          href={`/dashboard/echo/${echo._id}`}
+          href={`/dashboard/echo/${echo._id}/feedbacks`}
           className="block text-muted-foreground hover:text-foreground transition-colors focus:outline-none focus:text-foreground"
         >
           <p className="text-sm line-clamp-2 leading-4 break-all">

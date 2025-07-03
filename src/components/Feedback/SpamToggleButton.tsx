@@ -29,10 +29,10 @@ export function SpamToggleButton({
   const onContinueHandler = async () => {
     try {
       const { message } = await fetch(
-        `${process.env.NEXT_PUBLIC_APP_URL}/api/feedback/toggle/${feedbackId}`,
+        `/api/feedback/toggle-flagged/${feedbackId}`,
         {
           method: "PATCH",
-          next: { revalidate: 0 }
+          next: { revalidate: 0 },
         }
       ).then((res) => res.json());
 
@@ -70,7 +70,7 @@ export function SpamToggleButton({
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction
-            className={flagged ? "bg-green-500" : ""}
+            className={flagged ? "" : "destructive-button"}
             onClick={onContinueHandler}
           >
             Continue

@@ -128,6 +128,7 @@ export async function GET(request: NextRequest) {
       flagged?: boolean;
     } = {
       echoId: new Types.ObjectId(String(echo._id)),
+      flagged: false
     };
 
     if (filterBy) {

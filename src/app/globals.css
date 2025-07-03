@@ -10,6 +10,14 @@
   .nav-button {
     @apply px-0 font-semibold text-foreground sm:text-foreground/80 hover:text-primary transition-colors text-lg sm:text-sm;
   }
+
+  .button-echo-dropdown {
+    @apply font-semibold pl-2 w-full flex justify-start dark:hover:text-foreground dark:hover:bg-accent/40;
+  }
+
+  .destructive-button {
+    @apply bg-destructive text-white shadow-xs hover:bg-destructive/80 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60
+  }
 }
 
 /* Keyframes */
