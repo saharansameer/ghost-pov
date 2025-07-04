@@ -5,6 +5,16 @@ import { getPaginationInfo } from "@/lib/utils";
 import { EchoObject } from "@/types";
 import Link from "next/link";
 import { Plus } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Dashboard | GhostPOV",
+  description: "Manage and track your echo collection.",
+  robots: {
+    index: false,
+    follow: true,
+  },
+};
 
 interface DashboardProps {
   searchParams?: Promise<{ p?: string }>;

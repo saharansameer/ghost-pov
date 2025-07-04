@@ -10,6 +10,16 @@ import {
 } from "@/components/ui/card";
 import SignUpButton from "@/components/Auth/social-signin";
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Sign up | GhostPOV",
+  description: " Choose your way to create new account with GhostPOV.",
+  robots: {
+    index: false,
+    follow: true,
+  },
+};
 
 export default function SignupPage() {
   return (
@@ -27,11 +37,11 @@ export default function SignupPage() {
           <Separator orientation="horizontal" />
 
           <div className="w-full flex flex-col gap-y-4 pb-4">
-            <SignUpButton provider="google" mode="sign-up" />
-            <SignUpButton provider="github" mode="sign-up" />
+            <SignUpButton provider="google" />
+            <SignUpButton provider="github" />
           </div>
         </CardContent>
-        <CardFooter>
+        <CardFooter className="flex flex-col gap-y-4">
           <div className="w-full flex justify-center gap-x-2 text-sm font-semibold">
             <span>Already have an account?</span>
             <Link
@@ -41,6 +51,19 @@ export default function SignupPage() {
             >
               Sign in
             </Link>
+          </div>
+          <div>
+            <p className="text-sm text-center">
+              By signing up, you agree to our{" "}
+              <Link href={"/terms-of-service"} className="p-link">
+                Terms of Service
+              </Link>{" "}
+              and{" "}
+              <Link href={"/privacy-policy"} className="p-link">
+                Privacy Policy
+              </Link>
+              .
+            </p>
           </div>
         </CardFooter>
       </Card>

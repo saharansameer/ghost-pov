@@ -21,6 +21,16 @@ import {
 import { ChangeEmailForm, DeleteAccountButton } from "@/components/client";
 import { UserAvatar } from "@/components/server";
 import { getFormatDate } from "@/lib/utils";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Account | GhostPOV",
+  description: "Manage your account preferences and billing information.",
+  robots: {
+    index: false,
+    follow: true,
+  },
+};
 
 export default async function AccountPage() {
   const user = await getAuthUser(await headers());

@@ -10,6 +10,16 @@ import {
 } from "@/components/ui/card";
 import SignInButton from "@/components/Auth/social-signin";
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Sign in | GhostPOV",
+  description: "Sign in to your GhostPOV Account.",
+  robots: {
+    index: false,
+    follow: true,
+  },
+};
 
 export default function SigninPage() {
   return (
@@ -25,8 +35,8 @@ export default function SigninPage() {
           <SigninForm mode="sign-in" />
           <Separator orientation="horizontal" />
           <div className="w-full flex flex-col gap-y-4 pb-4">
-            <SignInButton provider="google" mode="sign-in" />
-            <SignInButton provider="github" mode="sign-in" />
+            <SignInButton provider="google" />
+            <SignInButton provider="github" />
           </div>
         </CardContent>
         <CardFooter>

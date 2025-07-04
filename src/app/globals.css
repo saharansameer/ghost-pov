@@ -16,7 +16,15 @@
   }
 
   .destructive-button {
-    @apply bg-destructive text-white shadow-xs hover:bg-destructive/80 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60
+    @apply bg-destructive text-white shadow-xs hover:bg-destructive/80 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60;
+  }
+
+  .p-link {
+    @apply text-accent-foreground hover:underline;
+  }
+
+  .email-text {
+    @apply text-primary hover:underline;
   }
 }
 

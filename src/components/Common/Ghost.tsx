@@ -2,10 +2,10 @@ interface GhostProps {
   className?: string;
 }
 
-export function Ghost({ className = "w-9 h-9" }: GhostProps) {
+export function Ghost({ className }: GhostProps) {
   return (
     <div
-      className={`${className} bg-primary rounded-xl flex items-center justify-center`}
+      className={`${className} w-9 h-9 bg-primary rounded-xl flex items-center justify-center`}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

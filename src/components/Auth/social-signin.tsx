@@ -2,17 +2,15 @@
 
 import { Button } from "@/components/ui";
 import Image from "next/image";
-import { SocialProvider, AuthMode } from "@/types";
+import { SocialProvider } from "@/types";
 import { authClient } from "@/lib/auth/auth-client";
 
 interface SocialSigninProps {
   provider: SocialProvider;
-  mode: AuthMode;
 }
 
-export default function SocialSignin({ provider, mode }: SocialSigninProps) {
+export default function SocialSignin({ provider }: SocialSigninProps) {
   const isGoogle = provider === "google";
-  const isSignIn = mode === "sign-in";
   return (
     <Button
       variant={"outline"}
@@ -29,7 +27,7 @@ export default function SocialSignin({ provider, mode }: SocialSigninProps) {
         width={isGoogle ? 20 : 25}
         height={isGoogle ? 20 : 25}
       />
-      {isSignIn ? "Sign in" : "Sign up"} with {isGoogle ? "Google" : "Github"}
+      Continue with {isGoogle ? "Google" : "Github"}
     </Button>
   );
 }
