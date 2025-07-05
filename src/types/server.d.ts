@@ -11,7 +11,8 @@ export type RequestParams = {
   params: Promise<{
     echoId?: string;
     echoPublicId?: string;
-    feedbackId?: string
+    feedbackId?: string;
+    summaryId?: string;
   }>;
 };
 

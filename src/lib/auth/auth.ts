@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import mongoClient from "@/lib/db/mongo-client";
 import { sendEmail } from "@/lib/email/email";
+import { createUserProfile } from "@/lib/auth/profile";
 
 export const auth = betterAuth({
   database: mongodbAdapter(mongoClient.db("ghostpovdb")),
@@ -29,7 +32,6 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     requireEmailVerification: true,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     sendResetPassword: async ({ user, url, token }, request) => {
       await sendEmail({
         type: "reset",
@@ -66,21 +68,32 @@ export const auth = betterAuth({
   user: {
     changeEmail: {
       enabled: true,
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      sendChangeEmailVerification: async ({user, newEmail, url, token}, request) => {
+      sendChangeEmailVerification: async (
+        { user, newEmail, url, token },
+        request
+      ) => {
         await sendEmail({
           type: "change",
           email: user.email,
           name: user.name,
           url,
           newEmail,
-        })
+        });
       },
     },
     deleteUser: {
       enabled: true,
-    }
-  }
+    },
+  },
+  databaseHooks: {
+    user: {
+      create: {
+        after: async (user) => {
+          await createUserProfile(user.id);
+        },
+      },
+    },
+  },
 });
 
 export type Session = typeof auth.$Infer.Session;

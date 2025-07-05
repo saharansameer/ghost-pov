@@ -4,6 +4,7 @@ import { BaseResponse } from "@/types";
 import { getAuthSession, unauthorized } from "@/lib/auth/session";
 import { EchoModel } from "@/models/echo.model";
 import { FeedbackModel } from "@/models/feedback.model";
+import { ProfileModel } from "@/models/profile.model";
 
 export async function GET(request: NextRequest) {
   await connectDB();
@@ -19,8 +20,11 @@ export async function GET(request: NextRequest) {
     const deleteFeedbacks = await FeedbackModel.deleteMany({
       echoOwner: session.userId,
     });
+    const deleteProfile = await ProfileModel.deleteOne({
+      userId: session.userId,
+    });
 
-    if (!deleteEchos || !deleteFeedbacks) {
+    if (!deleteEchos || !deleteFeedbacks || !deleteProfile) {
       return NextResponse.json<BaseResponse>(
         { success: false, message: "Failed to Delete Echos and Feedbacks" },
         { status: 400 }

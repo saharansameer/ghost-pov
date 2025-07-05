@@ -33,7 +33,7 @@ export async function POST(request: NextRequest, { params }: RequestParams) {
         $lookup: {
           from: "profiles",
           localField: "owner",
-          foreignField: "betterAuthUserId",
+          foreignField: "userId",
           as: "echoOwner",
           pipeline: [
             {

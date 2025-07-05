@@ -64,7 +64,7 @@ export async function GET(request: NextRequest) {
         $lookup: {
           from: "profiles",
           localField: "owner",
-          foreignField: "betterAuthUserId",
+          foreignField: "userId",
           as: "owner",
           pipeline: [
             {
@@ -80,13 +80,7 @@ export async function GET(request: NextRequest) {
       {
         $addFields: {
           owner: {
-            $cond: {
-              if: { $gt: [{ $size: "$owner" }, 0] },
-              then: {
-                $arrayElemAt: ["$owner", 0],
-              },
-              else: { plan: "FREE", summaryCredits: 1 },
-            },
+            $first: "$owner",
           },
         },
       },
@@ -128,7 +122,7 @@ export async function GET(request: NextRequest) {
       flagged?: boolean;
     } = {
       echoId: new Types.ObjectId(String(echo._id)),
-      flagged: false
+      flagged: false,
     };
 
     if (filterBy) {
