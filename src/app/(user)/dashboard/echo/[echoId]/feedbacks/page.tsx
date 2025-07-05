@@ -4,13 +4,13 @@ import {
   FeedbackCard,
   EchoDetails,
 } from "@/components/server";
+import { FilterOptions, GenerateSummaryButton } from "@/components/client";
 import { getPaginationInfo } from "@/lib/utils";
 import { FeedbackObject } from "@/types";
-import { FilterOptions } from "@/components/Feedback/FilterOptions";
 
 type EchoPageProps = {
   params: Promise<{ echoId: string }>;
-  searchParams: Promise<{ p?: string; f?: string; }>;
+  searchParams: Promise<{ p?: string; f?: string }>;
 };
 
 export default async function EchoPage({
@@ -47,6 +47,10 @@ export default async function EchoPage({
       </div>
 
       <div className="w-full max-w-xl h-px my-10 bg-gradient-to-r from-transparent via-border to-transparent" />
+
+      <div>
+        <GenerateSummaryButton echoId={echo._id} />
+      </div>
 
       <div className="w-full flex flex-col sm:flex-row sm:justify-between gap-y-2 max-w-2xl ">
         <h2 className="font-bold text-3xl">Feedbacks</h2>
