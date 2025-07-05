@@ -35,15 +35,15 @@ export default async function RootLayout({ children }: ReactChildren) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased transition-theme ease-initial duration-200 animate-collapsible-up`}
       >
         <ThemeProvider>
-          <header className="layout-container">
-            <Header session={session as Session} />
-          </header>
+          <Header session={session as Session} />
+
           <PageTransition>
             <main className="layout-container min-h-screen">
               {children}
               <SonnerToaster />
             </main>
           </PageTransition>
+          
           <footer className="layout-container">
             <Footer />
           </footer>

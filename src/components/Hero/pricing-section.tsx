@@ -16,21 +16,21 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Separator } from "@/components/ui/separator";
 import { motion } from "framer-motion";
 import {
   Check,
+  X,
   HelpCircle,
   MessageSquare,
   Sparkles,
   Zap,
-  Gift,
+  Flame,
 } from "lucide-react";
 
 const pricingPlans = [
   {
     name: "Free",
-    price: "$",
+    price: "$0",
     description: "Perfect for testing the waters",
     icon: MessageSquare,
     features: [
@@ -46,23 +46,34 @@ const pricingPlans = [
         text: "7 days feedback retention",
         tooltip: "Feedbacks will be removed after 7 days",
       },
+      {
+        text: "Auto Spam Filtering",
+        cross: true,
+      },
+      {
+        text: "Add-on AI Summary Credits",
+        cross: true,
+      },
+      {
+        text: "Larger Token Size",
+        cross: true,
+      },
     ],
     cta: "Get Started For Free",
     popular: false,
-    hasBonus: false,
   },
   {
-    name: "One-Time",
-    price: "$",
+    name: "Plus",
+    price: "$20",
     description: "Best value for serious feedback seekers",
-    icon: Zap,
+    icon: Flame,
     features: [
       {
         text: "Unlimited echos",
         tooltip: "Create as many feedback requests as you need",
       },
       {
-        text: "2 AI summary credit",
+        text: "50 AI summary credits",
         tooltip: "Each AI summary costs 1 credit",
       },
       {
@@ -70,43 +81,56 @@ const pricingPlans = [
         tooltip: "Keep your feedback for 3 months",
       },
       {
-        text: "Spam Filtering",
-        tooltip: "Auto Filter spam or abusive feedbacks",
+        text: "Auto Spam Filtering",
+        tooltip: "Auto-filter potential abuse or spam feedbacks",
       },
       {
         text: "Add-on AI Summary Credits",
         tooltip: "You will able to purchase AI Summary Credits",
       },
-    ],
-    bonusFeatures: [
       {
-        text: "Free 10 summary credits (worth $)",
-        tooltip: "Bonus AI summary credits for generating insights",
+        text: "Larger Token Size",
       },
     ],
     cta: "Get Lifetime Access",
     popular: true,
-    hasBonus: true,
   },
   {
-    name: "Add-on Credits",
-    price: "Custom",
-    description: "Extend your AI summary capabilities",
-    icon: Sparkles,
+    name: "Pro",
+    price: "$50",
+    description: "Best value for professionals",
+    icon: Zap,
     features: [
       {
-        text: "Choose your custom price",
+        text: "Unlimited echos",
+        tooltip: "Create as many feedback requests as you need",
       },
       {
-        text: "Credits never expire",
-        tooltip: "Use them whenever you need insights",
+        text: "200 AI summary credits",
+        tooltip: "Each AI summary costs 1 credit",
+      },
+      {
+        text: "300 days feedback retention",
+        tooltip: "Keep your feedback for 10 months",
+      },
+      {
+        text: "Auto Spam Filtering",
+        tooltip: "Auto-filter potential abuse or spam feedbacks",
+      },
+      {
+        text: "Add-on AI Summary Credits",
+        tooltip: "You will able to purchase AI Summary Credits",
+      },
+      {
+        text: "Largest Token Size",
       },
     ],
-    cta: "Buy Credits",
+    cta: "Get Lifetime Access",
     popular: false,
-    hasBonus: false,
   },
 ];
+
+type FeatureType = { text: string; tooltip?: string; cross?: boolean };
 
 export default function PricingSection() {
   return (
@@ -170,55 +194,31 @@ export default function PricingSection() {
                   </CardHeader>
 
                   <CardContent className="space-y-4">
-                    {plan.features.map((feature, featureIndex) => (
-                      <div
-                        key={featureIndex}
-                        className="flex items-center gap-3"
-                      >
-                        <Check className="w-5 h-5 text-primary flex-shrink-0" />
-                        <span className="text-sm flex-1">{feature.text}</span>
-                        {feature.tooltip && (
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <HelpCircle className="w-4 h-4 text-muted-foreground cursor-help" />
-                            </TooltipTrigger>
-                            <TooltipContent className="max-w-xs">
-                              <p>{feature.tooltip}</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        )}
-                      </div>
-                    ))}
+                    {plan.features.map(
+                      (feature: FeatureType, featureIndex: number) => (
+                        <div
+                          key={featureIndex}
+                          className="flex items-center gap-3"
+                        >
+                          {feature.cross ? (
+                            <X className="w-5 h-5 text-destructive flex-shrink-0" />
+                          ) : (
+                            <Check className="w-5 h-5 text-primary flex-shrink-0" />
+                          )}
 
-                    {plan.hasBonus && (
-                      <>
-                        <Separator className="my-4" />
-                        <div className="bg-muted/50 rounded-lg p-4 space-y-3">
-                          <div className="flex items-center gap-2 text-sm font-medium text-primary">
-                            <Gift className="w-4 h-4" />
-                            Limited-time bonus:
-                          </div>
-                          {plan.bonusFeatures?.map((feature, featureIndex) => (
-                            <div
-                              key={featureIndex}
-                              className="flex items-center gap-3"
-                            >
-                              <Check className="w-4 h-4 text-primary flex-shrink-0" />
-                              <span className="text-sm flex-1">
-                                {feature.text}
-                              </span>
-                              <Tooltip>
-                                <TooltipTrigger asChild>
-                                  <HelpCircle className="w-3 h-3 text-muted-foreground cursor-help" />
-                                </TooltipTrigger>
-                                <TooltipContent className="max-w-xs">
-                                  <p>{feature.tooltip}</p>
-                                </TooltipContent>
-                              </Tooltip>
-                            </div>
-                          ))}
+                          <span className="text-sm flex-1">{feature.text}</span>
+                          {feature.tooltip && (
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <HelpCircle className="w-4 h-4 text-muted-foreground cursor-help" />
+                              </TooltipTrigger>
+                              <TooltipContent className="max-w-xs">
+                                <p>{feature.tooltip}</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          )}
                         </div>
-                      </>
+                      )
                     )}
                   </CardContent>
 

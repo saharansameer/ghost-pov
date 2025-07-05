@@ -42,8 +42,11 @@ export function HeaderDropdown({ children }: ReactChildren) {
             : "opacity-0 -translate-y-2 invisible"
         )}
       >
-        <div className="px-4 py-6">
-          <div className="flex flex-col gap-y-3 items-start" onClick={toggleDropdown}>{children}</div>
+        <div
+          className="flex flex-col gap-y-3 items-start bg-background py-5 px-4"
+          onClick={toggleDropdown}
+        >
+          {children}
         </div>
       </div>
     </div>
