@@ -1,17 +1,6 @@
-import {
-  FileText,
-  Users,
-  AlertTriangle,
-  CreditCard,
-  Globe,
-  XCircle,
-  ClipboardPen,
-} from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import Link from "next/link";
 import type { Metadata } from "next";
+import Link from "next/link";
+import { getCurrentFullYear } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Terms of Service | GhostPOV",
@@ -27,292 +16,455 @@ export default function TermsOfServicePage() {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <div>
-        <div className="max-w-4xl mx-auto px-4 py-12">
+        <div className="max-w-4xl mx-auto px-6 pt-7">
           <div className="text-center space-y-4">
-            <h1 className="text-4xl font-bold tracking-tight">
+            <h1 className="text-4xl font-bold tracking-tight text-foreground">
               Terms of Service
             </h1>
-            <p className="text-muted-foreground text-lg">
+            <p className="text-foreground max-w-2xl mx-auto">
               Your agreement with GhostPOV
             </p>
-            <Badge variant="outline" className="text-sm">
-              Last updated: 7 July, 2025
-            </Badge>
+            <div className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-secondary text-secondary-foreground border">
+              Last updated: July 7, 2025
+            </div>
           </div>
         </div>
       </div>
 
       {/* Content */}
-      <div className="max-w-4xl mx-auto px-4 py-12">
-        <div className="space-y-8">
+      <div className="max-w-4xl mx-auto px-6 py-16">
+        <div className="max-w-none">
           {/* Introduction */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-3">
-                <ClipboardPen className="h-6 w-6 text-muted-foreground" />
-                Introduction
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-muted-foreground">
+          <section className="mb-16">
+            <h2 className="text-2xl font-semibold text-foreground m-0">
+              1. Introduction
+            </h2>
+
+            <div className="space-y-4 text-foreground leading-relaxed">
+              <p>
                 Welcome to GhostPOV (&ldquo;Ghost Pov&rdquo;, &ldquo;we&rdquo;,
                 &ldquo;our&rdquo;, or &ldquo;us&rdquo;). These Terms of Service
-                (&ldquo;Terms&rdquo;, &ldquo;Terms & Condition&rdquo;,
-                &ldquo;TnC&rdquo;, &ldquo;T&C&rdquo;) govern your use of
-                GhostPOV across our website and any services and features we
-                offer. Our{" "}
-                <Link href={"/privacy-policy"} className="p-link">
+                (&ldquo;Terms&rdquo;, &ldquo;Terms &amp; Conditions&rdquo;,
+                &ldquo;TnC&rdquo;, &ldquo;T&amp;C&rdquo;) constitute a legally
+                binding agreement between you and GhostPOV regarding your use of
+                our website, platform, and any related services or features we
+                provide.
+              </p>
+              <p>
+                Our{" "}
+                <Link href="/privacy-policy" className="p-link">
                   Privacy Policy
                 </Link>{" "}
                 and{" "}
-                <Link href={"/payments-policy"} className="p-link">
+                <Link href="/payments-policy" className="p-link">
                   Payments Policy
                 </Link>{" "}
-                also form part of your agreement with us.
+                are incorporated by reference and form an integral part of this
+                agreement.
               </p>
-              <p className="text-muted-foreground">
-                By using GhostPOV or its services, you agree to these Terms and
-                our related policies. These terms apply to all users or visitors
-                who access or use the platform.
+              <p>
+                By accessing, browsing, or using GhostPOV in any manner, you
+                acknowledge that you have read, understood, and agree to be
+                bound by these Terms. If you do not agree to these Terms, you
+                must not use our service.
               </p>
-            </CardContent>
-          </Card>
+            </div>
+          </section>
 
           {/* Service Description */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-3">
-                <FileText className="h-6 w-6 text-muted-foreground" />
-                Service Description
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-muted-foreground">
-                GhostPOV is an anonymous feedback platform where users can
+          <section className="mb-16">
+            <h2 className="text-2xl font-semibold text-foreground m-0">
+              2. Service Description
+            </h2>
+
+            <div className="space-y-4 text-foreground leading-relaxed">
+              <p>
+                GhostPOV is an anonymous feedback platform that enables users to
                 create &ldquo;echo&rdquo; posts and receive anonymous feedback
-                from others. The service includes:
+                from the community. Our service facilitates honest, constructive
+                communication while maintaining user privacy.
               </p>
-              <ul className="text-muted-foreground space-y-2 ml-4">
-                <li>• Creating and sharing echo posts</li>
-                <li>• Receiving anonymous feedback</li>
-                <li>• AI-powered insights and summaries (premium feature)</li>
-                <li>• Spam and abuse filtering (premium feature)</li>
+              <p>
+                <strong className="text-foreground">Core Features:</strong>
+              </p>
+              <ul className="space-y-2 ml-6 list-disc">
+                <li>Creation and sharing of echo posts</li>
+                <li>Anonymous feedback submission and reception</li>
+                <li>Content moderation and filtering systems</li>
+                <li>User dashboard and analytics</li>
               </ul>
-            </CardContent>
-          </Card>
+              <p>
+                <strong className="text-foreground">Premium Features:</strong>
+              </p>
+              <ul className="space-y-2 ml-6 list-disc">
+                <li>AI-powered insights and sentiment analysis</li>
+                <li>Advanced spam and abuse detection</li>
+                <li>Enhanced content filtering and customization</li>
+              </ul>
+            </div>
+          </section>
 
           {/* User Responsibilities */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-3">
-                <Users className="h-6 w-6 text-muted-foreground" />
-                User Responsibilities
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="space-y-3">
-                <h4 className="font-semibold">You agree to:</h4>
-                <ul className="text-muted-foreground space-y-2 ml-4">
-                  <li>• Use the service lawfully and responsibly</li>
-                  <li>• Not share malicious, harmful, or illegal content</li>
+          <section className="mb-16">
+            <h2 className="text-2xl font-semibold text-foreground m-0">
+              3. User Responsibilities and Acceptable Use
+            </h2>
+
+            <div className="space-y-6 text-foreground leading-relaxed">
+              <div>
+                <h3 className="text-lg font-medium text-foreground mb-3">
+                  3.1 Permitted Use
+                </h3>
+                <p>
+                  You agree to use GhostPOV only for lawful purposes and in
+                  accordance with these Terms. You are responsible for:
+                </p>
+                <ul className="space-y-2 ml-6 mt-3 list-disc">
                   <li>
-                    • Not attempt to identify anonymous feedback providers
+                    Maintaining the confidentiality of your account information
                   </li>
-                  <li>• Respect other&apos;s privacy and dignity</li>
-                  <li>• Not use automated tools to spam the service</li>
+                  <li>
+                    Using the service in a respectful and constructive manner
+                  </li>
+                  <li>Providing accurate information when required</li>
+                  <li>Respecting the privacy and anonymity of other users</li>
+                  <li>Complying with all applicable laws and regulations</li>
                 </ul>
               </div>
-              <Card className="border-destructive/20 bg-destructive/5">
-                <CardContent>
-                  <h4 className="font-semibold text-destructive mb-3">
-                    Prohibited Activities
-                  </h4>
-                  <ul className="text-destructive text-sm space-y-1 ml-4">
-                    <li>• Harassment, abuse, or threatening behavior</li>
-                    <li>• Sharing illegal content or links</li>
-                    <li>• Attempting to compromise system security</li>
-                    <li>• Creating multiple accounts to circumvent limits</li>
-                  </ul>
-                </CardContent>
-              </Card>
-            </CardContent>
-          </Card>
+
+              <div className="bg-destructive/10 border-l-4 border-destructive p-6 rounded-r-lg">
+                <h3 className="text-lg font-medium text-destructive mb-3">
+                  3.2 Prohibited Activities
+                </h3>
+                <p className="text-destructive mb-3">
+                  You expressly agree NOT to:
+                </p>
+                <ul className="space-y-2 ml-6 text-destructive list-disc">
+                  <li>
+                    Engage in harassment, bullying, or threatening behavior
+                  </li>
+                  <li>Share illegal, defamatory, or harmful content</li>
+                  <li>Attempt to identify anonymous feedback providers</li>
+                  <li>
+                    Use automated tools, bots, or scripts to access the service
+                  </li>
+                  <li>Create multiple accounts to circumvent limitations</li>
+                  <li>Distribute malware, viruses, or malicious links</li>
+                  <li>Violate intellectual property rights</li>
+                  <li>
+                    Engage in any activity that disrupts or interferes with the
+                    service
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          {/* Privacy and Data */}
+          <section className="mb-16">
+            <h2 className="text-2xl font-semibold text-foreground m-0">
+              4. Privacy and Data Protection
+            </h2>
+            <div className="space-y-4 text-foreground leading-relaxed">
+              <p>
+                Your privacy is important to us. Our collection, use, and
+                protection of your personal information is governed by our
+                Privacy Policy, which is incorporated into these Terms by
+                reference.
+              </p>
+              <p>
+                While we maintain anonymity for feedback providers, we may
+                collect certain information necessary for service operation,
+                security, and legal compliance. You consent to such collection
+                and use as described in our Privacy Policy.
+              </p>
+              <p>
+                You are responsible for the content you post and the feedback
+                you provide. Do not share personal information that could
+                compromise your anonymity or that of others.
+              </p>
+            </div>
+          </section>
 
           {/* Limitation of Liability */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-3">
-                <AlertTriangle className="h-6 w-6 text-muted-foreground" />
-                Limitation of Liability
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <Alert className="border-yellow-200 bg-yellow-50 dark:bg-yellow-950/20">
-                <AlertTriangle className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
-                <AlertDescription className="text-yellow-800 dark:text-yellow-200">
-                  <strong>Risk Acknowledgment:</strong> Due to the anonymous
-                  nature of our service, feedback content or message may contain
-                  spam, abusive language, slurs, or malicious links. Please
-                  exercise caution and avoid interacting with suspicious
-                  content.
-                </AlertDescription>
-              </Alert>
-
-              <div className="space-y-4">
-                <h4 className="font-semibold">
-                  GhostPOV and its team (&ldquo;owners&rdquo; or
-                  &ldquo;developers&rdquo;) are NOT responsible for:
-                </h4>
-                <ul className="text-muted-foreground space-y-2 ml-4">
-                  <li>
-                    • Any damages or losses resulting from feedback received
-                  </li>
-                  <li>• Content of anonymous feedback messages</li>
-                  <li>
-                    • Malicious links or content shared through the platform
-                  </li>
-                  <li>• Any misuse of the service by other users</li>
-                  <li>• Service interruptions or data loss</li>
-                </ul>
-              </div>
-
-              <Card className="bg-muted/30">
-                <CardContent>
-                  <p className="text-muted-foreground text-sm">
-                    <strong>No Warranties:</strong> The service is provided
-                    &ldquo;as is&rdquo; without any warranties of any kind,
-                    either express or implied.
-                  </p>
-                </CardContent>
-              </Card>
-            </CardContent>
-          </Card>
-
-          {/* Premium Features & Marketing Terms */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-3">
-                <CreditCard className="h-6 w-6 text-muted-foreground" />
-                Premium Features & Marketing Terms
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="space-y-3">
-                <h4 className="font-semibold">Premium Features</h4>
-                <ul className="text-muted-foreground space-y-2 ml-4">
-                  <li>• AI-powered insights and summaries</li>
-                  <li>• Advanced spam and abuse filtering</li>
-                  <li>• Add-on summary credits available for purchase</li>
-                </ul>
-              </div>
-
-              <Card className="border-primary/20 bg-primary/5">
-                <CardContent>
-                  <h4 className="font-semibold text-primary mb-3">
-                    Marketing Terms Clarification
-                  </h4>
-                  <div className="text-primary/80 text-sm space-y-3">
-                    <p>
-                      <strong>&ldquo;Lifetime&rdquo;</strong> means as long as
-                      GhostPOV remains active and operational. This is not a
-                      guarantee of perpetual service.
-                    </p>
-                    <p>
-                      <strong>&ldquo;Unlimited&rdquo;</strong> features may have
-                      reasonable usage limits to ensure fair use and service
-                      stability.
+          <section className="mb-16">
+            <h2 className="text-2xl font-semibold text-foreground m-0">
+              5. Limitation of Liability and Disclaimers
+            </h2>
+            <div className="space-y-6 text-foreground leading-relaxed">
+              <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-6">
+                <div className="flex items-start gap-3">
+                  <div>
+                    <h4 className="font-semibold text-orange-600 dark:text-orange-400 mb-2">
+                      Important Risk Acknowledgment
+                    </h4>
+                    <p className="text-orange-600 dark:text-orange-400">
+                      Due to the anonymous nature of our service, feedback
+                      content or message may contain spam, abusive language,
+                      slurs, or malicious links. Exercise caution and avoid
+                      interacting with suspicious content.
                     </p>
                   </div>
-                </CardContent>
-              </Card>
-            </CardContent>
-          </Card>
+                </div>
+              </div>
 
-          {/* Service Availability */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-3">
-                <Globe className="h-6 w-6 text-muted-foreground" />
-                Service Availability
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-muted-foreground">
-                We strive to keep GhostPOV available 24/7, but we cannot
-                guarantee uninterrupted service. We may temporarily suspend the
-                service for maintenance or updates.
-              </p>
-              <Card className="bg-muted/30">
-                <CardContent>
-                  <p className="text-muted-foreground text-sm">
-                    We reserve the right to modify, suspend, or discontinue the
-                    service at any time with reasonable notice to users.
-                  </p>
-                </CardContent>
-              </Card>
-            </CardContent>
-          </Card>
+              <div>
+                <h3 className="text-lg font-medium text-foreground mb-3">
+                  5.1 Service Disclaimer
+                </h3>
+                <p>
+                  GhostPOV is provided on an &ldquo;as is&rdquo; and &ldquo;as
+                  available&rdquo; basis. We make no warranties, expressed or
+                  implied, regarding the service&rsquo;s reliability, accuracy,
+                  or fitness for any particular purpose.
+                </p>
+              </div>
 
-          {/* Account Termination */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-3">
-                <XCircle className="h-6 w-6 text-muted-foreground" />
-                Account Termination
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-muted-foreground">
-                We reserve the right to terminate or suspend accounts that
-                violate these terms. Users may also delete their accounts at any
-                time.
-              </p>
-              <div className="space-y-3">
-                <h4 className="font-semibold">
-                  Reasons for account termination:
-                </h4>
-                <ul className="text-muted-foreground space-y-2 ml-4">
-                  <li>• Violation of prohibited activities</li>
-                  <li>• Abuse of the service or other users</li>
-                  <li>• Fraudulent or illegal activities</li>
-                  <li>• Repeated violations of community guidelines</li>
+              <div>
+                <h3 className="text-lg font-medium text-foreground mb-3">
+                  5.2 Limitation of Liability
+                </h3>
+                <p>
+                  To the maximum extent permitted by law, GhostPOV and its team
+                  (&ldquo;owners&rdquo; or &ldquo;developers&rdquo;) shall not
+                  be liable for:
+                </p>
+                <ul className="space-y-2 ml-6 mt-3 list-disc">
+                  <li>
+                    Any damages resulting from feedback content received through
+                    the platform
+                  </li>
+                  <li>
+                    Losses arising from malicious links or content shared by
+                    users
+                  </li>
+                  <li>Service interruptions, downtime, or data loss</li>
+                  <li>Actions or misconduct of other users</li>
+                  <li>
+                    Any indirect, incidental, special, or consequential damages
+                  </li>
                 </ul>
               </div>
-            </CardContent>
-          </Card>
-          {/* Governing Law */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-3">
-                <Globe className="h-6 w-6 text-muted-foreground" />
-                Governing Law
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">
-                These terms are governed by the laws of India. Any legal
-                disputes will be resolved only under the jurisdiction of courts
-                in India.
-              </p>
-            </CardContent>
-          </Card>
 
-          {/* Contact Section */}
-          <Card>
-            <CardContent>
-              <h3 className="font-semibold mb-2">Contact & Disputes</h3>
-              <p className="text-muted-foreground text-sm">
-                For any questions regarding these terms, please contact us at{" "}
+              <div>
+                <h3 className="text-lg font-medium text-foreground mb-3">
+                  5.3 Indemnification
+                </h3>
+                <p>
+                  You agree to indemnify and hold harmless GhostPOV, its
+                  officers, directors, employees, and agents from any claims,
+                  damages, or expenses arising from your use of the service or
+                  violation of these Terms.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* Premium Features */}
+          <section className="mb-16">
+            <h2 className="text-2xl font-semibold text-foreground m-0">
+              6. Premium Features and Billing
+            </h2>
+
+            <div className="space-y-6 text-foreground leading-relaxed">
+              <div>
+                <h3 className="text-lg font-medium text-foreground mb-3">
+                  6.1 Premium Subscriptions
+                </h3>
+                <p>
+                  Premium features are available through subscription plans with
+                  enhanced functionality including AI-powered insights, advanced
+                  filtering, and priority support.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-lg font-medium text-foreground mb-3">
+                  6.2 Billing and Payments
+                </h3>
+                <p>
+                  Subscription fees are billed in advance and are non-refundable
+                  except as required by law. Detailed payment terms are outlined
+                  in our Payments Policy.
+                </p>
+              </div>
+
+              <div className="bg-primary/10 border-l-4 border-primary p-6 rounded-r-lg">
+                <h3 className="text-lg font-medium text-primary mb-3">
+                  6.3 Marketing Terms Clarification
+                </h3>
+                <div className="space-y-3 text-primary">
+                  <p>
+                    <strong>&ldquo;Lifetime&rdquo; access</strong> means for the
+                    duration that GhostPOV remains operational and is not a
+                    guarantee of perpetual service availability.
+                  </p>
+                  <p>
+                    <strong>&ldquo;Unlimited&rdquo; features</strong> are
+                    subject to fair use policies and reasonable limitations to
+                    ensure service stability and prevent abuse.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Service Availability */}
+          <section className="mb-16">
+            <h2 className="text-2xl font-semibold text-foreground m-0">
+              7. Service Availability and Modifications
+            </h2>
+            <div className="space-y-4 text-foreground leading-relaxed">
+              <p>
+                We strive to maintain continuous service availability but cannot
+                guarantee uninterrupted access. We may temporarily suspend the
+                service for maintenance, updates, or security reasons.
+              </p>
+              <p>
+                We reserve the right to modify, suspend, or discontinue any
+                aspect of the service at any time. We will provide reasonable
+                notice of significant changes when possible.
+              </p>
+              <p>
+                These Terms may be updated periodically. Continued use of the
+                service after changes constitutes acceptance of the updated
+                Terms.
+              </p>
+            </div>
+          </section>
+
+          {/* Account Termination */}
+          <section className="mb-16">
+            <h2 className="text-2xl font-semibold text-foreground m-0">
+              8. Account Termination
+            </h2>
+            <div className="space-y-6 text-foreground leading-relaxed">
+              <div>
+                <h3 className="text-lg font-medium text-foreground mb-3">
+                  8.1 Termination by User
+                </h3>
+                <p>
+                  You may terminate your account at any time by following the
+                  account deletion process in your user settings. Upon
+                  termination, your access to premium features will cease
+                  immediately.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-lg font-medium text-foreground mb-3">
+                  8.2 Termination by GhostPOV
+                </h3>
+                <p>
+                  We reserve the right to terminate or suspend accounts for:
+                </p>
+                <ul className="space-y-2 ml-6 mt-3 list-disc">
+                  <li>Violation of these Terms of Service</li>
+                  <li>Abusive behavior toward other users or staff</li>
+                  <li>Fraudulent or illegal activities</li>
+                  <li>Repeated policy violations</li>
+                  <li>Failure to pay subscription fees</li>
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="text-lg font-medium text-foreground mb-3">
+                  8.3 Effect of Termination
+                </h3>
+                <p>
+                  Upon termination, your right to use the service ceases
+                  immediately. We may retain certain information as required by
+                  law or for legitimate business purposes.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* Governing Law */}
+          <section className="mb-16">
+            <h2 className="text-2xl font-semibold text-foreground m-0">
+              9. Governing Law and Dispute Resolution
+            </h2>
+            <div className="space-y-4 text-foreground leading-relaxed">
+              <p>
+                These Terms are governed by and construed in accordance with the
+                laws of India, without regard to conflict of law principles.
+              </p>
+              <p>
+                Any disputes arising from or relating to these Terms or your use
+                of GhostPOV shall be subject to the exclusive jurisdiction of
+                the courts located in India.
+              </p>
+              <p>
+                We encourage users to contact us directly to resolve any issues
+                before pursuing legal action.
+              </p>
+            </div>
+          </section>
+
+          {/* Miscellaneous */}
+          <section className="mb-16">
+            <h2 className="text-2xl font-semibold text-foreground m-0">
+              10. Miscellaneous
+            </h2>
+            <div className="space-y-4 text-foreground leading-relaxed">
+              <p>
+                <strong className="text-foreground">Severability:</strong> If
+                any provision of these Terms is found to be unenforceable, the
+                remaining provisions will continue in full force and effect.
+              </p>
+              <p>
+                <strong className="text-foreground">Entire Agreement:</strong>{" "}
+                These Terms, together with our{" "}
+                <Link href="/privacy-policy" className="p-link">
+                  Privacy Policy
+                </Link>{" "}
+                and{" "}
+                <Link href="/payments-policy" className="p-link">
+                  Payments Policy
+                </Link>
+                , constitute the entire agreement between you and GhostPOV.
+              </p>
+              <p>
+                <strong className="text-foreground">No Waiver:</strong> Our
+                failure to enforce any provision of these Terms shall not be
+                deemed a waiver of such provision or our right to enforce it.
+              </p>
+            </div>
+          </section>
+
+          {/* Contact Information */}
+          <section>
+            <h2 className="text-2xl font-semibold text-foreground m-0">
+              11. Contact Information
+            </h2>
+            <div>
+              <p className="text-foreground leading-relaxed">
+                If you have questions about these Terms of Service, need
+                clarification on any provisions, or wish to report a violation,
+                please contact us at:{" "}
                 <Link href="mailto:privacy@ghostpov.xyz" className="email-text">
                   privacy@ghostpov.xyz
                 </Link>
               </p>
-            </CardContent>
-          </Card>
+              <p className="text-sm text-foreground mt-4">
+                We aim to respond to all inquiries within 24-72 hours during
+                business days.
+              </p>
+            </div>
+          </section>
         </div>
       </div>
 
-      <div className="py-10"></div>
+      {/* Effective Date */}
+      <div className="text-center py-10">
+        <p className="text-sm text-muted-foreground">
+          This Policy is effective as of July 7, 2025.
+        </p>
+        <p className="text-sm text-muted-foreground">
+          &copy; {getCurrentFullYear()} GhostPOV. All Rights Reserved.
+        </p>
+      </div>
     </div>
   );
 }

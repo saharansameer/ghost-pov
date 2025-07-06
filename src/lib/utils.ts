@@ -37,3 +37,7 @@ export function getFormatDate(date: Date, type: "date-only" | "date-time") {
 
   return new Date(date).toLocaleString("en-US", options);
 }
+
+export function getCurrentFullYear() {
+  return new Date().getFullYear();
+}
