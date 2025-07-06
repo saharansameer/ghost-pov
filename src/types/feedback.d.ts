@@ -14,8 +14,10 @@ export interface FeedbackResponse extends BaseResponse {
     description: string;
     owner: {
       plan: string;
-      summaryCredits: number;
+      credits: number;
     };
+    summaries: { _id: string; createdAt: Date; content: string }[];
+    hasSummaries: boolean;
   };
 }
 

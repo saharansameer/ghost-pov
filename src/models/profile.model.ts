@@ -2,14 +2,13 @@ import mongoose, { Schema, Document } from "mongoose";
 
 enum Plan {
   FREE = "FREE",
-  PLUS = "PLUS",
-  PRO = "PRO"
 }
 
 interface ProfileDocument extends Document {
   userId: Schema.Types.ObjectId;
   plan: Plan;
-  summaryCredits: number;
+  credits: number;
+  maxTokenLimit: number;
 }
 
 const profileSchema = new Schema({
@@ -22,9 +21,13 @@ const profileSchema = new Schema({
     enum: Object.values(Plan),
     default: Plan.FREE,
   },
-  summaryCredits: {
+  credits: {
     type: Number,
     default: 2,
+  },
+  maxTokenLimit: {
+    type: Number,
+    default: 2000,
   },
 });
 

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Instrument_Sans } from "next/font/google";
 import "./globals.css";
 import { Header, Footer } from "@/components/server";
 import { auth, Session } from "@/lib/auth/auth";
@@ -19,6 +19,11 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const instrumentSans = Instrument_Sans({
+  variable: "--font-instrument-sans",
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
   title: "GhostPOV",
   description:
@@ -32,7 +37,7 @@ export default async function RootLayout({ children }: ReactChildren) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased transition-theme ease-initial duration-200 animate-collapsible-up`}
+        className={`${geistSans.variable} ${geistMono.variable} ${instrumentSans.variable} antialiased transition-theme ease-initial duration-200 animate-collapsible-up`}
       >
         <ThemeProvider>
           <Header session={session as Session} />
@@ -43,7 +48,7 @@ export default async function RootLayout({ children }: ReactChildren) {
               <SonnerToaster />
             </main>
           </PageTransition>
-          
+
           <footer className="layout-container">
             <Footer />
           </footer>

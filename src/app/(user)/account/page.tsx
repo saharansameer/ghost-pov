@@ -11,17 +11,16 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import {
   User,
-  CreditCard,
   Calendar,
   Shield,
   AlertTriangle,
-  Crown,
-  Calendar as CalendarIcon,
+  Coins
 } from "lucide-react";
 import { ChangeEmailForm, DeleteAccountButton } from "@/components/client";
 import { UserAvatar } from "@/components/server";
 import { getFormatDate } from "@/lib/utils";
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Account | GhostPOV",
@@ -43,14 +42,10 @@ export default async function AccountPage() {
     email: user?.email as string,
     avatar: user?.image,
     joinDate: getFormatDate(user?.createdAt as Date, "date-only"),
-    plan: "Pro",
-    billingCycle: "Monthly",
-    nextBilling: "August 15, 2024",
-    paymentMethod: "**** **** **** 4242",
   };
 
   return (
-    <div className="min-h-screen bg-background transition-all animate-[fadeIn_0.5s_ease-intial_forwards]">
+    <div className="min-h-screen bg-background transition-all animate-[fadeIn_0.5s_ease-intial_forwards] pb-20">
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         {/* Header */}
         <div className="mb-8">
@@ -130,81 +125,37 @@ export default async function AccountPage() {
             <CardHeader className="pb-4">
               <div className="flex items-center gap-3">
                 <div className="p-2 rounded-full bg-primary/10">
-                  <CreditCard className="h-5 w-5 text-primary" />
+                  <Coins className="h-5 w-5 text-primary" />
                 </div>
                 <div>
-                  <CardTitle className="text-xl">Billing Information</CardTitle>
+                  <CardTitle className="text-xl">Credits</CardTitle>
                   <CardDescription>
-                    Manage your subscription and payment details
+                    Manage your credits and purchase more
                   </CardDescription>
                 </div>
               </div>
             </CardHeader>
             <CardContent className="space-y-6">
-              {/* Current Plan */}
-              <div className="p-4 rounded-lg bg-accent border">
+              {/* Credits Summary */}
+              <div className="p-2 rounded-lg border">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <Crown className="h-5 w-5 text-primary" />
+                  <div className="flex items-center gap-4">
+                    <div className="p-3 rounded-full bg-primary/10">
+                      <Coins className="h-6 w-6 text-primary" />
+                    </div>
                     <div>
-                      <h4 className="font-semibold text-foreground">
-                        {userData.plan} Plan
+                      <h4 className="font-semibold text-foreground mb-1">
+                        Available Credits
                       </h4>
-                      <p className="text-sm text-muted-foreground">
-                        Billed {userData.billingCycle.toLowerCase()}
+                      <p className="text-3xl font-bold text-primary">
+                        {"2"}
                       </p>
                     </div>
                   </div>
-                  <Button variant="outline" size="sm">
-                    Upgrade Plan
-                  </Button>
+                  <Link href="/buy-credits">
+                    <Button variant="outline">Buy More Credits</Button>
+                  </Link>
                 </div>
-              </div>
-
-              {/* Payment Method */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-full bg-muted">
-                    <CreditCard className="h-4 w-4 text-muted-foreground" />
-                  </div>
-                  <div>
-                    <p className="font-medium text-foreground">
-                      Payment Method
-                    </p>
-                    <p className="text-muted-foreground">
-                      {userData.paymentMethod}
-                    </p>
-                  </div>
-                </div>
-                <Button variant="outline" size="sm">
-                  Update Payment
-                </Button>
-              </div>
-
-              {/* Next Billing */}
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-full bg-muted">
-                  <CalendarIcon className="h-4 w-4 text-muted-foreground" />
-                </div>
-                <div>
-                  <p className="font-medium text-foreground">
-                    Next Billing Date
-                  </p>
-                  <p className="text-muted-foreground">
-                    {userData.nextBilling}
-                  </p>
-                </div>
-              </div>
-
-              <Separator />
-
-              <div className="flex flex-col sm:flex-row gap-3">
-                <Button variant="outline" className="flex-1">
-                  View Billing History
-                </Button>
-                <Button variant="outline" className="flex-1">
-                  Download Invoices
-                </Button>
               </div>
             </CardContent>
           </Card>

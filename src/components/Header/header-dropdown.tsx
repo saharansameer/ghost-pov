@@ -43,7 +43,7 @@ export function HeaderDropdown({ children }: ReactChildren) {
         )}
       >
         <div
-          className="flex flex-col gap-y-3 items-start bg-background py-5 px-4"
+          className="flex flex-col gap-y-3 items-start bg-background/80 py-5 px-4 backdrop-blur-sm"
           onClick={toggleDropdown}
         >
           {children}

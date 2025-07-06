@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@tailwind utilities;
 
 /* Custom Utility Classes*/
 @layer utilities {
@@ -8,7 +9,7 @@
   }
 
   .nav-button {
-    @apply px-0 font-semibold text-foreground sm:text-foreground/80 hover:text-primary transition-colors text-lg sm:text-sm;
+    @apply px-0 font-instrument text-foreground sm:text-foreground/70 hover:text-foreground transition-colors text-lg sm:text-sm;
   }
 
   .button-echo-dropdown {
@@ -47,6 +48,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-instrument: var(--font-instrument-sans);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);

@@ -4,9 +4,11 @@ import {
   FeedbackCard,
   EchoDetails,
 } from "@/components/server";
-import { FilterOptions, GenerateSummaryButton } from "@/components/client";
+import { FilterOptions } from "@/components/client";
 import { getPaginationInfo } from "@/lib/utils";
 import { FeedbackObject } from "@/types";
+import { SummarySection } from "@/components/Summary/SummarySection";
+import { FileText } from "lucide-react";
 
 type EchoPageProps = {
   params: Promise<{ echoId: string }>;
@@ -38,22 +40,29 @@ export default async function EchoPage({
 
   const paginationInfo = getPaginationInfo({ ...data, docs: [] });
 
-  // const isPremiumUser = echo.owner.plan !== "FREE";
-
   return (
     <div className="w-full max-w-3xl flex flex-col items-center mx-auto min-h-screen h-auto py-5 px-1 ">
-      <div className="max-w-3xl">
+      <div className="w-full max-w-2xl">
         <EchoDetails title={echo.title} description={echo.description} />
       </div>
 
       <div className="w-full max-w-xl h-px my-10 bg-gradient-to-r from-transparent via-border to-transparent" />
 
-      <div>
-        <GenerateSummaryButton echoId={echo._id} />
+      {/* Summary Section */}
+      <div className="w-full max-w-2xl ">
+        <SummarySection summaries={echo.summaries} echoId={echo._id} />
       </div>
 
-      <div className="w-full flex flex-col sm:flex-row sm:justify-between gap-y-2 max-w-2xl ">
-        <h2 className="font-bold text-3xl">Feedbacks</h2>
+      <div className="w-full max-w-xl h-px my-20 bg-gradient-to-r from-transparent via-border to-transparent" />
+
+      <div className="w-full flex flex-col sm:flex-row sm:justify-between gap-y-2 max-w-2xl">
+        <div>
+          <h2 className="text-2xl font-bold tracking-tight">Feedbacks</h2>
+          <p className="text-muted-foreground">
+            Recieved anonymous feedback responses
+          </p>
+        </div>
+
         <FilterOptions
           echoId={echo._id}
           page={String(page)}
@@ -62,6 +71,14 @@ export default async function EchoPage({
       </div>
 
       <div className="w-full flex flex-col gap-y-16 items-center py-10">
+        {data.docs.length === 0 && (
+          <div className="flex flex-col items-center mt-10">
+            <div className="w-14 h-14 mx-auto bg-muted rounded-full flex items-center justify-center">
+              <FileText />
+            </div>
+            <h3 className="font-semibold text-sm mt-1">No feedbacks yet</h3>
+          </div>
+        )}
         {data.docs.map((item: FeedbackObject) => (
           <FeedbackCard key={item._id} feedback={item} />
         ))}

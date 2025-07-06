@@ -71,8 +71,28 @@ export async function GET(request: NextRequest) {
               $project: {
                 _id: 0,
                 plan: 1,
-                summaryCredits: 1,
+                credits: 1,
               },
+            },
+          ],
+        },
+      },
+      {
+        $lookup: {
+          from: "summaries",
+          localField: "_id",
+          foreignField: "echoId",
+          as: "summaries",
+          pipeline: [
+            {
+              $project: {
+                _id: 1,
+                createdAt: 1,
+                content: 1
+              },
+            },
+            {
+              $sort: { createdAt: -1 },
             },
           ],
         },
@@ -82,6 +102,7 @@ export async function GET(request: NextRequest) {
           owner: {
             $first: "$owner",
           },
+          hasSummaries: { $gt: [{ $size: "$summaries" }, 0] },
         },
       },
       {
@@ -90,6 +111,8 @@ export async function GET(request: NextRequest) {
           title: 1,
           description: 1,
           owner: 1,
+          summaries: 1,
+          hasSummaries: 1,
         },
       },
     ]);
@@ -113,15 +136,17 @@ export async function GET(request: NextRequest) {
       title: echo.title,
       description: echo.description,
       owner: echo.owner,
+      summaries: echo.summaries,
+      hasSummaries: echo.hasSummaries,
     };
 
     // Feedback Aggregate Logic
     const matchStage: {
-      echoId: Types.ObjectId;
+      echoId: Types.ObjectId | string;
       category?: string;
       flagged?: boolean;
     } = {
-      echoId: new Types.ObjectId(String(echo._id)),
+      echoId: new Types.ObjectId(echo._id as string),
       flagged: false,
     };
 

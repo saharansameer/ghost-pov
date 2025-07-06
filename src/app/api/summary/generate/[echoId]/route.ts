@@ -8,6 +8,8 @@ import { Types } from "mongoose";
 import openai from "@/lib/ai/openai";
 import { getPrompt } from "@/lib/ai/prompts";
 import { generateText } from "ai";
+import { ProfileModel } from "@/models/profile.model";
+import { deleteByPrefix } from "@/lib/db/redis";
 
 export async function POST(request: NextRequest, { params }: RequestParams) {
   await connectDB();
@@ -41,7 +43,8 @@ export async function POST(request: NextRequest, { params }: RequestParams) {
                 _id: 0,
                 userId: 1,
                 plan: 1,
-                summaryCredits: 1,
+                credits: 1,
+                maxTokenLimit: 1,
               },
             },
           ],
@@ -110,6 +113,13 @@ export async function POST(request: NextRequest, { params }: RequestParams) {
     // Extract echo from aggreate
     const echo = echoAggregate[0];
 
+    if (echo.credits <= 0) {
+      return NextResponse.json<BaseResponse>(
+        { success: false, message: "No Summary Credits Left" },
+        { status: 400 }
+      );
+    }
+
     if (!echo.hasFeedbacks) {
       return NextResponse.json<BaseResponse>(
         { success: false, message: "Echo has not sufficient feedbacks" },
@@ -142,8 +152,14 @@ export async function POST(request: NextRequest, { params }: RequestParams) {
     const { text } = await generateText({
       model: openai("gpt-4.1-nano"),
       prompt,
-      maxTokens: 2000,
+      maxTokens: echo.owner.maxTokenLimit,
     });
+
+    // Decrement summary credit
+    await ProfileModel.findOneAndUpdate(
+      { userId: session.userId },
+      { $inc: { credits: -1 } }
+    );
 
     // Store Summary in Database
     const summary = await SummaryModel.create({
@@ -161,6 +177,9 @@ export async function POST(request: NextRequest, { params }: RequestParams) {
         { status: 400 }
       );
     }
+
+    // Clear cache
+    await deleteByPrefix(`feedbacks:${echo._id}`);
 
     // Final Response
     return NextResponse.json<SummaryResponse>({

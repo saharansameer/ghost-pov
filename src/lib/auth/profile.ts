@@ -13,7 +13,7 @@ export async function createUserProfile(
   await Profiles.insertOne({
     userId: new Types.ObjectId(userId),
     plan: "FREE",
-    summaryCredits: 2,
+    credits: 2,
     createdAt: now,
     updatedAt: now,
   });
