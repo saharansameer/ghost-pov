@@ -12,7 +12,7 @@ export default async function EchoUpdatePage({
   const echoId = queryParams.echoId;
 
   const response = await fetch(
-    `${process.env.APP_URL}/api/echo/read?echoId=${echoId}`,
+    `${process.env.BASE_URL}/api/echo/read?echoId=${echoId}`,
     {
       next: { revalidate: 0 },
       headers: await headers(),

@@ -25,7 +25,7 @@ export default async function Dashboard({ searchParams }: DashboardProps) {
   const page = Number(queryParams?.p || 1);
 
   const response = await fetch(
-    `${process.env.APP_URL}/api/user-echos?page=${page}&limit=15`,
+    `${process.env.BASE_URL}/api/user-echos?page=${page}&limit=15`,
     {
       next: { revalidate: 0 },
       headers: await headers(),

@@ -44,7 +44,7 @@ export function EchoDropdown({ echo }: EchoDropdownProps) {
   const copyToClipboard = async (text: string) => {
     try {
       await navigator.clipboard.writeText(
-        `${process.env.NEXT_PUBLIC_APP_URL}/e/${text}`
+        `${process.env.NEXT_PUBLIC_BASE_URL}/e/${text}`
       );
       toast.info("Copied to clipboard");
     } catch {

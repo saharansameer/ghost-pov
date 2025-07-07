@@ -9,7 +9,7 @@ export default async function EchoFeedbackPage({ params }: EchoFeedbackProps) {
   const { echoPublicId } = await params;
 
   const response = await fetch(
-    `${process.env.APP_URL}/api/echo/${echoPublicId}`,
+    `${process.env.BASE_URL}/api/echo/${echoPublicId}`,
     {
       method: "GET",
       next: { revalidate: 0 },
