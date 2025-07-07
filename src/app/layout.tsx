@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Instrument_Sans } from "next/font/google";
 import "./globals.css";
 import { Header, Footer } from "@/components/server";
-import { auth, Session } from "@/lib/auth/auth";
-import { headers } from "next/headers";
 import { ThemeProvider } from "@/context/theme-provider";
 import { ReactChildren } from "@/types";
 import { PageTransition } from "@/components/Motion/PageTransition";
 import SonnerToaster from "@/components/Sonner/SonnerToaster";
+import { auth } from "@/lib/auth/auth";
+import { headers } from "next/headers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,8 +30,8 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://ghostpov.xyz"),
   icons: {
     icon: "/favicon.ico",
-    shortcut: "/ghosticon.png",
-    apple: "/ghosticon.png",
+    shortcut: "/ghost-icon.png",
+    apple: "/ghost-icon.png",
   },
   openGraph: {
     title: "GhostPOV",
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
     "GhostPOV",
     "ghost-pov",
     "ghostpov",
-    "sameer saharan"
+    "sameer saharan",
   ],
   authors: [{ name: "Sameer Saharan", url: "https://sameersaharan.com" }],
   creator: "Sameer Saharan",
@@ -75,16 +75,15 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: ReactChildren) {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+  const session = await auth.api.getSession({ headers: await headers() });
+  const authenticated = session !== null;
   return (
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${instrumentSans.variable} antialiased transition-theme ease-initial duration-200 animate-collapsible-up`}
       >
         <ThemeProvider>
-          <Header session={session as Session} />
+          <Header authenticated={authenticated} />
 
           <PageTransition>
             <main className="layout-container min-h-screen">

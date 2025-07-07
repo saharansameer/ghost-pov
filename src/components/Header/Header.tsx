@@ -5,32 +5,23 @@ import { ThemeToggle } from "./theme-toggle";
 import { LogoutButton } from "./logout-button";
 import { HeaderDropdown } from "./header-dropdown";
 import Link from "next/link";
-import { Session } from "@/lib/auth/auth";
 
-interface HeaderProps {
-  session: Session | null;
-}
-
-const NavAuthItems = ({ session }: HeaderProps) => {
+const NavAuthItems = () => {
   return (
     <>
-      {session && (
-        <>
-          <Link href={"/dashboard"}>
-            <Button variant={null} size={"sm"} className="nav-button">
-              Dashboard
-            </Button>
-          </Link>
+      <Link href={"/dashboard"}>
+        <Button variant={null} size={"sm"} className="nav-button">
+          Dashboard
+        </Button>
+      </Link>
 
-          <Link href={"/account"}>
-            <Button variant={null} size={"sm"} className="nav-button">
-              Account
-            </Button>
-          </Link>
+      <Link href={"/account"}>
+        <Button variant={null} size={"sm"} className="nav-button">
+          Account
+        </Button>
+      </Link>
 
-          <LogoutButton />
-        </>
-      )}
+      <LogoutButton />
     </>
   );
 };
@@ -63,7 +54,11 @@ const NavItems = () => {
   );
 };
 
-export function Header({ session }: HeaderProps) {
+interface HeaderProps {
+  authenticated: boolean;
+}
+
+export function Header({ authenticated }: HeaderProps) {
   return (
     <HeaderParent>
       <div className="mx-auto px-1 py-5 border-b border-b-[#d5d5d5] dark:border-border">
@@ -86,19 +81,19 @@ export function Header({ session }: HeaderProps) {
             <ThemeToggle />
 
             {/* Navigation Items (Auth Related) */}
-            {session && (
+            {authenticated && (
               <>
                 <div className="hidden sm:flex gap-x-5">
-                  <NavAuthItems session={session} />
+                  <NavAuthItems />
                 </div>
                 <HeaderDropdown>
-                  <NavAuthItems session={session} />
+                  <NavAuthItems />
                 </HeaderDropdown>
               </>
             )}
 
             {/* Navigation Items (Non-Auth) */}
-            {!session && (
+            {!authenticated && (
               <>
                 <div className="hidden sm:flex gap-x-5">
                   <NavItems />

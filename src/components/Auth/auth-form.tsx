@@ -63,7 +63,6 @@ export default function AuthForm({ mode }: AuthFormProps) {
     }
     router.push("/dashboard");
     router.refresh();
-    reset();
   };
 
   // SignUp Handler

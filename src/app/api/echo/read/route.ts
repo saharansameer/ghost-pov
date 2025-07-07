@@ -7,18 +7,20 @@ import { BaseResponse, EchoResponse } from "@/types";
 export async function GET(request: NextRequest) {
   await connectDB();
 
+  // Check auth
   const session = await getAuthSession(request.headers);
   if (!session) {
     return unauthorized();
   }
+
   try {
     // Extract echo id from search params
     const searchParams = request.nextUrl.searchParams;
     const echoId = searchParams.get("echoId");
 
     // Find echo by id and check it's existence
-    const echo = await EchoModel.findById(echoId)
-    
+    const echo = await EchoModel.findById(echoId);
+
     if (!echo) {
       return NextResponse.json<BaseResponse>(
         { success: false, message: "Echo does not exist anymore" },

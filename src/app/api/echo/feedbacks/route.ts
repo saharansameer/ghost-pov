@@ -88,7 +88,7 @@ export async function GET(request: NextRequest) {
               $project: {
                 _id: 1,
                 createdAt: 1,
-                content: 1
+                content: 1,
               },
             },
             {

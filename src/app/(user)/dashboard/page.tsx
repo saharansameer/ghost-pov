@@ -1,4 +1,3 @@
-import { headers } from "next/headers";
 import { EchoCard, PaginationButtons } from "@/components/server";
 import { Button } from "@/components/ui";
 import { getPaginationInfo } from "@/lib/utils";
@@ -6,6 +5,7 @@ import { EchoObject } from "@/types";
 import Link from "next/link";
 import { Plus } from "lucide-react";
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 
 export const metadata: Metadata = {
   title: "Dashboard | GhostPOV",
@@ -24,11 +24,16 @@ export default async function Dashboard({ searchParams }: DashboardProps) {
   const queryParams = await searchParams;
   const page = Number(queryParams?.p || 1);
 
+  const headersList = await headers();
+
   const response = await fetch(
-    `${process.env.BASE_URL}/api/user-echos?page=${page}&limit=15`,
+    `${process.env.BASE_URL}/api/user-echos?page=${page}&limit=25`,
     {
+      headers: {
+        cookie: headersList.get("cookie") || "",
+        authorization: headersList.get("authorization") || "",
+      },
       next: { revalidate: 0 },
-      headers: await headers(),
     }
   );
   const { success, message, data } = await response.json();
@@ -40,7 +45,7 @@ export default async function Dashboard({ searchParams }: DashboardProps) {
   const paginationInfo = getPaginationInfo(data);
 
   return (
-    <div className="flex flex-col min-h-screen h-auto overflow-y-scroll">
+    <div className="flex flex-col min-h-screen h-auto overflow-y-auto">
       <div className="flex justify-center pt-4 pb-10">
         {/* Page Title and Actions */}
         <div className="w-full max-w-2xl flex justify-between items-start">

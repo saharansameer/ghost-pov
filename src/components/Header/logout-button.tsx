@@ -9,7 +9,7 @@ export function LogoutButton() {
   const router = useRouter();
   const onSignOutHandler = async () => {
     await authClient.signOut();
-    toast.success("Logged out")
+    toast.success("Logged out");
     router.push("/sign-in");
     router.refresh();
   };

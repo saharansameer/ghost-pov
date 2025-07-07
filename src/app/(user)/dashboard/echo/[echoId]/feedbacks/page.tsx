@@ -1,4 +1,3 @@
-import { headers } from "next/headers";
 import {
   PaginationButtons,
   FeedbackCard,
@@ -9,6 +8,7 @@ import { getPaginationInfo } from "@/lib/utils";
 import { FeedbackObject } from "@/types";
 import { SummarySection } from "@/components/Summary/SummarySection";
 import { FileText } from "lucide-react";
+import { headers } from "next/headers";
 
 type EchoPageProps = {
   params: Promise<{ echoId: string }>;
@@ -24,11 +24,16 @@ export default async function EchoPage({
   const page = Number(queryParams?.p || 1);
   const filterBy = queryParams?.f || "";
 
+  const headersList = await headers();
+
   const response = await fetch(
     `${process.env.BASE_URL}/api/echo/feedbacks?echoId=${echoId}&page=${page}&limit=25&filter=${filterBy}`,
     {
+      headers: {
+        cookie: headersList.get("cookie") || "",
+        authorization: headersList.get("authorization") || "",
+      },
       next: { revalidate: 0 },
-      headers: await headers(),
     }
   );
 

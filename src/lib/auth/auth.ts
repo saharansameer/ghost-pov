@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { betterAuth } from "better-auth";
+import { nextCookies } from "better-auth/next-js";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import mongoClient from "@/lib/db/mongo-client";
 import { sendEmail } from "@/lib/email/email";
@@ -8,7 +9,7 @@ import { createUserProfile } from "@/lib/auth/profile";
 
 export const auth = betterAuth({
   database: mongodbAdapter(mongoClient.db("ghostpovdb")),
-  plugins: [],
+  plugins: [nextCookies()],
   session: {
     expiresIn: 60 * 60 * 24 * 7, // 7 days
     updateAge: 60 * 60 * 24, // 1 day
