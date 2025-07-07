@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/select";
 import { Check, MessageSquare, Zap } from "lucide-react";
 import Link from "next/link";
+import { toast } from "sonner";
 
 const freeTierFeatures = [
   "2 AI credits included",
@@ -37,7 +38,7 @@ export default function PricingSection() {
   };
 
   return (
-    <section className="flex flex-col items-center pt-10 pb-20">
+    <section id="pricing" className="flex flex-col items-center pt-10 pb-20">
       <div className="container px-4 md:px-6">
         <motion.div
           className="text-center space-y-4 mb-16"
@@ -65,7 +66,7 @@ export default function PricingSection() {
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
             >
-              <Card className="h-full">
+              <Card className="h-[500px]">
                 <CardHeader className="text-center pb-8">
                   <div className="mx-auto mb-4 p-3 bg-muted rounded-full w-fit">
                     <MessageSquare className="w-6 h-6 text-primary" />
@@ -111,13 +112,13 @@ export default function PricingSection() {
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              <Card className="h-full">
+              <Card className="h-[500px]">
                 <CardHeader className="text-center pb-8">
                   <div className="mx-auto mb-4 p-3 bg-muted rounded-full w-fit">
                     <Zap className="w-6 h-6 text-primary" />
                   </div>
                   <CardTitle className="text-2xl font-bold">
-                    Buy AI Credits
+                    Buy Credits
                   </CardTitle>
                   <CardDescription className="text-base">
                     Get more AI-powered insights
@@ -165,6 +166,11 @@ export default function PricingSection() {
                     variant="outline"
                     size="lg"
                     disabled={!selectedCredits}
+                    onClick={() =>
+                      toast.info("Credits purchase will be available soon", {
+                        className: "text-sm",
+                      })
+                    }
                   >
                     Purchase Credits
                   </Button>

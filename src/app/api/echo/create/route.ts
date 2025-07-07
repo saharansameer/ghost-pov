@@ -5,6 +5,7 @@ import { nanoid } from "nanoid";
 import { getAuthSession, unauthorized } from "@/lib/auth/session";
 import redis from "@/lib/db/redis";
 import { BaseResponse } from "@/types";
+import { trimAndClean } from "@/lib/utils";
 
 export async function POST(request: NextRequest) {
   await connectDB();
@@ -17,9 +18,10 @@ export async function POST(request: NextRequest) {
   try {
     // Extract title, description and owner from Request body
     const { title, description } = await request.json();
+    const trimmedTitle = trimAndClean(title || " ");
 
     // Check if all fields exist
-    if (!title) {
+    if (!trimmedTitle) {
       return NextResponse.json<BaseResponse>(
         { success: false, message: "Title is required" },
         { status: 400 }

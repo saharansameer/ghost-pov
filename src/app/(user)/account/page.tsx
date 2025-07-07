@@ -14,7 +14,8 @@ import {
   Calendar,
   Shield,
   AlertTriangle,
-  Coins
+  Coins,
+  Lock,
 } from "lucide-react";
 import { ChangeEmailForm, DeleteAccountButton } from "@/components/client";
 import { UserAvatar } from "@/components/server";
@@ -147,13 +148,13 @@ export default async function AccountPage() {
                       <h4 className="font-semibold text-foreground mb-1">
                         Available Credits
                       </h4>
-                      <p className="text-3xl font-bold text-primary">
-                        {"2"}
-                      </p>
+                      <p className="text-3xl font-bold text-primary">{"2"}</p>
                     </div>
                   </div>
-                  <Link href="/buy-credits">
-                    <Button variant="outline">Buy More Credits</Button>
+                  <Link href="/account" className="cursor-not-allowed">
+                    <Button variant="outline" disabled>
+                      <Lock className="mr-1" /> Buy More Credits
+                    </Button>
                   </Link>
                 </div>
               </div>

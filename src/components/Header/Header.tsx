@@ -50,12 +50,6 @@ const NavItems = () => {
         </Button>
       </Link>
 
-      <Link href={"/faqs"}>
-        <Button variant={null} className="nav-button">
-          FAQ
-        </Button>
-      </Link>
-
       <PartiallyHidden
         routes={["/sign-in", "/sign-up", "/e/", "/f/", "/mail-sent"]}
       >

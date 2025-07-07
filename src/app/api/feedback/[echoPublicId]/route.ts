@@ -29,6 +29,7 @@ export async function POST(request: NextRequest, { params }: RequestParams) {
           isAcceptingFeedback: true,
         },
       },
+      /*
       {
         $lookup: {
           from: "profiles",
@@ -45,8 +46,11 @@ export async function POST(request: NextRequest, { params }: RequestParams) {
           ],
         },
       },
+      */
       {
         $addFields: {
+          allowFilter: true,
+          /* 
           allowFilter: {
             $cond: {
               if: {
@@ -58,11 +62,12 @@ export async function POST(request: NextRequest, { params }: RequestParams) {
               then: false,
               else: true,
             },
-          },
+          }, 
+          */
         },
       },
     ]);
-    
+
     // Check if echo exist and accepting feedback
     if (echoAggregate.length === 0) {
       return NextResponse.json<BaseResponse>(

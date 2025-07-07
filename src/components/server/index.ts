@@ -4,6 +4,8 @@ export { LoadingOverlay } from "../Common/LoadingOverlay";
 export { Ghost } from "../Common/Ghost";
 export { TextLinkify } from "../Common/TextLinkify";
 export { PaginationButtons } from "../Common/PaginationButtons";
+export { XSeparator } from "../Common/XSeparator";
+export { CopyrightText } from "../Common/CopyrightText";
 
 export { Header } from "../Header/Header";
 export { Footer } from "../Footer/Footer";

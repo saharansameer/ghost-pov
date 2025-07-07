@@ -26,6 +26,7 @@ export function EchoForm({ method, data }: EchoFormProps) {
     reset,
     control,
     setError,
+    watch,
   } = useForm<EchoSchemaType>({
     resolver: zodResolver(echoSchema),
     mode: "onSubmit",
@@ -77,6 +78,12 @@ export function EchoForm({ method, data }: EchoFormProps) {
     reset();
   };
 
+  const titleValue = watch("title") || "";
+  const maxTitleChars = 100;
+
+  const descriptionValue = watch("description") || "";
+  const maxDescriptionChars = 2000;
+
   return (
     <form
       onSubmit={handleSubmit(onSubmitHandler)}
@@ -99,7 +106,13 @@ export function EchoForm({ method, data }: EchoFormProps) {
       {/* Title */}
       <div>
         <div className="space-y-2">
-          <Label htmlFor="title">Title</Label>
+          <div>
+            <Label htmlFor="title">Title</Label>
+            {errors.title && (
+              <ErrorMessage text={errors.title.message as string} />
+            )}
+          </div>
+
           <Input
             {...register("title")}
             id="title"
@@ -107,13 +120,30 @@ export function EchoForm({ method, data }: EchoFormProps) {
           />
         </div>
 
-        {errors.title && <ErrorMessage text={errors.title.message as string} />}
+        {/* Title Char Counter */}
+        <div className="flex justify-end">
+          <span
+            className={`text-sm ${
+              titleValue.length > maxTitleChars
+                ? "text-red-500"
+                : "text-gray-500"
+            }`}
+          >
+            {titleValue.length}/{maxTitleChars}
+          </span>
+        </div>
       </div>
 
       {/* Description */}
       <div>
         <div className="space-y-2">
-          <Label htmlFor="description">Description</Label>
+          <div>
+            <Label htmlFor="description">Description</Label>
+            {errors.description && (
+              <ErrorMessage text={errors.description.message as string} />
+            )}
+          </div>
+
           <Controller
             name="description"
             control={control}
@@ -131,9 +161,18 @@ export function EchoForm({ method, data }: EchoFormProps) {
           />
         </div>
 
-        {errors.description && (
-          <ErrorMessage text={errors.description.message as string} />
-        )}
+        {/* Description Char Counter */}
+        <div className="flex justify-end">
+          <span
+            className={`text-sm ${
+              descriptionValue.length > maxDescriptionChars
+                ? "text-red-500"
+                : "text-gray-500"
+            }`}
+          >
+            {descriptionValue.length}/{maxDescriptionChars}
+          </span>
+        </div>
       </div>
 
       <Button

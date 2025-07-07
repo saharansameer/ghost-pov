@@ -26,8 +26,52 @@ const instrumentSans = Instrument_Sans({
 
 export const metadata: Metadata = {
   title: "GhostPOV",
-  description:
-    "The simplest way to get anonymous feedback on your project, resume, portfolio and more.",
+  description: "The Simplest Way to Get Anonymous Feedback",
+  metadataBase: new URL("https://ghostpov.xyz"),
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/ghosticon.png",
+    apple: "/ghosticon.png",
+  },
+  openGraph: {
+    title: "GhostPOV",
+    description: "The Simplest Way to Get Anonymous Feedback",
+    url: "https://www.ghostpov.com",
+    siteName: "GhostPOV",
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "GhostPOV - anonymous feedback platform",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "GhostPOV",
+    description:
+      "Get anonymous feedback on your resume, portfolio, or project in seconds.",
+    images: ["/og.png"],
+    creator: "@sameersaharanx",
+  },
+  keywords: [
+    "anonymous feedback",
+    "resume feedback",
+    "portfolio review",
+    "project feedback",
+    "get feedback",
+    "GhostPOV",
+    "ghost-pov",
+    "ghostpov",
+    "sameer saharan"
+  ],
+  authors: [{ name: "Sameer Saharan", url: "https://sameersaharan.com" }],
+  creator: "Sameer Saharan",
+  publisher: "Sameer Saharan",
+  category: "technology",
 };
 
 export default async function RootLayout({ children }: ReactChildren) {

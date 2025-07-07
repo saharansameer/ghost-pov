@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import HeroSection from "@/components/Hero/hero-section";
 import PricingSection from "@/components/Hero/pricing-section";
-import { Separator } from "@/components/ui";
+import { XSeparator } from "@/components/server";
+import { CommonFaqs } from "@/components/Hero/common-faqs";
 
 export const metadata: Metadata = {
   title: "GhostPOV",
@@ -13,8 +14,10 @@ export default function Page() {
   return (
     <div>
       <HeroSection />
-      <Separator />
+      <XSeparator />
       <PricingSection />
+      <XSeparator />
+      <CommonFaqs />
     </div>
   );
 }

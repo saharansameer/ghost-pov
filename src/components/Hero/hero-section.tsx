@@ -59,7 +59,10 @@ const workCards = [
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-7 pb-16">
+    <section
+      id="home"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-7 pb-16"
+    >
       <div className="container px-4 md:px-6 relative z-10">
         <div className="flex flex-col items-center space-y-6 text-center max-w-4xl mx-auto">
           {/* Badge */}
@@ -84,22 +87,22 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight">
-              Collect <span className="text-primary">Anonymous</span> Feedback,
+            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
+              The Simplest Way
               <br />
-              No Strings Attached
+              to Get <span className="text-primary">Anonymous</span> Feedback
             </h1>
           </motion.div>
 
           {/* Subheadline */}
           <motion.p
-            className="text-base md:text-lg text-muted-foreground max-w-2xl leading-relaxed"
+            className="text-base text-muted-foreground max-w-2xl leading-relaxed"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            Share a link, collect honest feedback without barriers, and let AI
-            summarize the responses into actionable insights.
+            Create an Echo, share the link, get honest feedbacks with zero
+            friction, and let AI transform it into insights you can act on.
           </motion.p>
 
           {/* Single CTA */}

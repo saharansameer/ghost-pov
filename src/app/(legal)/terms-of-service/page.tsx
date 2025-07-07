@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getCurrentFullYear } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Terms of Service | GhostPOV",
@@ -460,9 +459,6 @@ export default function TermsOfServicePage() {
       <div className="text-center py-10">
         <p className="text-sm text-muted-foreground">
           This Policy is effective as of July 7, 2025.
-        </p>
-        <p className="text-sm text-muted-foreground">
-          &copy; {getCurrentFullYear()} GhostPOV. All Rights Reserved.
         </p>
       </div>
     </div>
