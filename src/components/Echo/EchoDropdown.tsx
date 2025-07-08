@@ -91,7 +91,7 @@ export function EchoDropdown({ echo }: EchoDropdownProps) {
   };
 
   return (
-    <DropdownMenu open={open} onOpenChange={setOpen}>
+    <DropdownMenu open={open} onOpenChange={setOpen} modal={false}>
       <DropdownMenuTrigger asChild>
         <button
           className="cursor-pointer px-1 rounded-sm hover:bg-accent dark:hover:bg-accent/60 

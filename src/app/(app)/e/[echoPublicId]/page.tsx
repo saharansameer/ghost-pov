@@ -1,11 +1,19 @@
 import { FeedbackForm } from "@/components/client";
 import { EchoDetails } from "@/components/server";
 
-async function PublicEcho({ publicId }: { publicId: string }) {
-  const response = await fetch(`${process.env.BASE_URL}/api/echo/${publicId}`, {
-    method: "GET",
-    next: { revalidate: 0 },
-  });
+interface PageProps {
+  params: Promise<{ echoPublicId?: string }>;
+}
+
+async function PublicEcho({ params }: PageProps) {
+  const { echoPublicId } = await params;
+  const response = await fetch(
+    `${process.env.BASE_URL}/api/echo/${echoPublicId}`,
+    {
+      method: "GET",
+      next: { revalidate: 0 },
+    }
+  );
 
   const { success, data } = await response.json();
 
@@ -16,19 +24,13 @@ async function PublicEcho({ publicId }: { publicId: string }) {
   return <EchoDetails title={data.title} description={data.description} />;
 }
 
-interface PageProps {
-  params: { echoPublicId: string };
-}
-
-export default function Page({ params }: PageProps) {
-  const { echoPublicId } = params;
-
+export default function Page({ ...props }: PageProps) {
   return (
     <div className="min-h-screen bg-background">
       <div className="py-10 px-4">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-2xl mx-auto">
           {/* Header Section */}
-          <PublicEcho publicId={echoPublicId} />
+          <PublicEcho {...props} />
 
           {/* Subtle divider */}
           <div className="w-full max-w-xl h-px my-10 bg-gradient-to-r from-transparent via-border to-transparent mx-auto" />
@@ -45,7 +47,7 @@ export default function Page({ params }: PageProps) {
                 </p>
               </div>
 
-              <FeedbackForm echoPublicId={echoPublicId} />
+              <FeedbackForm />
             </div>
           </div>
         </div>

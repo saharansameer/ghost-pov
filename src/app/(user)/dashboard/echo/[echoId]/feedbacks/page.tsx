@@ -3,10 +3,13 @@ import {
   FeedbackCard,
   EchoDetails,
 } from "@/components/server";
-import { FilterOptions } from "@/components/client";
+import {
+  FilterOptions,
+  SummarySection,
+  EchoOptions,
+} from "@/components/client";
 import { getPaginationInfo } from "@/lib/utils";
 import { FeedbackObject } from "@/types";
-import { SummarySection } from "@/components/Summary/SummarySection";
 import { FileText } from "lucide-react";
 import { headers } from "next/headers";
 
@@ -44,6 +47,12 @@ async function FeedbacksAndSummaries({ params, searchParams }: PageProps) {
 
   return (
     <>
+      <EchoOptions
+        echoId={echo._id}
+        publicId={echo.publicId}
+        isAcceptingFeedback={echo.isAcceptingFeedback}
+      />
+
       <div className="w-full max-w-2xl">
         <EchoDetails title={echo.title} description={echo.description} />
       </div>
@@ -93,7 +102,7 @@ async function FeedbacksAndSummaries({ params, searchParams }: PageProps) {
 
 export default function EchoPage(props: PageProps) {
   return (
-    <div className="w-full max-w-3xl flex flex-col items-center mx-auto min-h-screen h-auto py-5 px-1 ">
+    <div className="w-full max-w-3xl flex flex-col items-center mx-auto min-h-screen h-auto py-5 px-1">
       <FeedbacksAndSummaries {...props} />
     </div>
   );

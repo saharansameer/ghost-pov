@@ -39,6 +39,7 @@ export async function PATCH(request: NextRequest, { params }: RequestParams) {
 
     // Clear cache
     await deleteByPrefix(`echos:${session.userId}`);
+    await deleteByPrefix(`feedbacks:${echoId}`)
 
     // Final Response
     return NextResponse.json(

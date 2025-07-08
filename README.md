@@ -8,7 +8,7 @@ Try it here: [`ghostpov.xyz`](https://ghostpov.xyz)
 
 ## Tech Stack
 
-- **Next.js (v15+)**
+- **Next.js**
 - **TypeScript**
 - **Tailwind CSS**
 - **shadcn/ui**
@@ -22,21 +22,29 @@ Try it here: [`ghostpov.xyz`](https://ghostpov.xyz)
 
 ## Features
 
-- Authenticated users can create an Echo (a post) and get a shareable link
-- Visitors can submit feedback anonymously, without login
-- Spam and toxicity detection via Perspective API
-- AI-generated feedback summaries using OpenAI
+- **Echo Creation:** Authenticated users can create Echos (posts) and get unique shareable links.
+- **Anonymous Feedback:** Anyone can submit feedback without logging in.
+- **Feedback Moderation:** Users can choose to allow or disable feedback on their Echos.
+- **Account Settings:** Change email, reset password, or delete account.
+- **Access Control:** Feedback is only visible to Echo owners.
+- **Email Notifications:** Email-based verification, password resets, and change confirmations.
+- **Responsive UI:** Built with Tailwind CSS and shadcn/ui for a clean and accessible experience.
 
 ---
 
 ## Architecture Notes
 
-- Feedback is stored in MongoDB, associated with each Echo
-- Perspective API is used to filter toxic or spammy input before storing
-- Vercel AI SDK handles OpenAI integration for summarizing responses
+- **Database:** MongoDB is used to store all core application data.
+- **AI Integration:** Vercel's AI-SDK is used to interact with OpenAI for generating summaries and AI-driven content.
+- **Content Filtering:** Perspective API is integrated to detect and filter spam or toxic feedback before storing it.
+- **Authentication**: Handled via BetterAuth with support for email and OAuth providers.
+- **Rate Limiting & Caching:** Powered by Upstash Redis for both API rate limiting and server-side caching.
+- **UI & Styling:** Built using Tailwind CSS, shadcn/ui, and Framer Motion for smooth transitions
+- **Deployment:** Hosted on Vercel with edge-optimized middleware and smart caching strategies.
 
 ---
 
-## Connect
+## Deployment
 
-For any feedback or suggestions, feel free to reach out to me on [`X/twitter`](https://x.com/sameersaharanx)
+Fully deployed and live at [`ghostpov.xyz`](https://ghostpov.xyz)  
+Built by [Sameer Saharan](https://sameersaharan.com)

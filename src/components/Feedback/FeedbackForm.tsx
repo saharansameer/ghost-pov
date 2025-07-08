@@ -20,12 +20,12 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Ghost } from "lucide-react";
 import { toast } from "sonner";
+import { useParams } from "next/navigation";
 
-interface FeedbackFormProps {
-  echoPublicId: string;
-}
+export function FeedbackForm() {
+  const params = useParams();
+  const echoPublicId = params.echoPublicId as string;
 
-export function FeedbackForm({ echoPublicId }: FeedbackFormProps) {
   const {
     handleSubmit,
     formState: { errors, isSubmitting },
@@ -66,7 +66,7 @@ export function FeedbackForm({ echoPublicId }: FeedbackFormProps) {
         return;
       }
 
-      toast.success(message)
+      toast.success(message);
     } catch (error) {
       console.error("Feedback Form Error:", error);
     }

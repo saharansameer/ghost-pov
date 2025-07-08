@@ -9,7 +9,7 @@ export function EchoDetails({ title, description }: EchoDetailsProps) {
   return (
     <div className="animate-in fade-in-0 slide-in-from-top-4 duration-700">
       <div className="space-y-4">
-        <h1 className="text-3xl font-bold tracking-tight text-foreground bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text">
+        <h1 className="text-2xl font-bold tracking-tight text-foreground bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text">
           {title}
         </h1>
         {description && (

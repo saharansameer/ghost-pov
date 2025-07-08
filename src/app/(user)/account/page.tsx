@@ -66,13 +66,13 @@ async function ProfileSection() {
           />
           <div className="flex-1">
             <div className="flex items-center mb-2">
-              <h3 className="text-2xl font-semibold text-foreground">
+              <h3 className="text-xl font-semibold text-foreground">
                 {user?.name}
               </h3>
             </div>
             <div className="flex items-center gap-2 text-muted-foreground">
               <Calendar className="h-4 w-4" />
-              <span>Member since {joinDate}</span>
+              <span className="text-sm">Member since {joinDate}</span>
             </div>
           </div>
         </div>
@@ -111,7 +111,7 @@ export default function Page() {
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-foreground mb-2">
+          <h1 className="text-3xl font-bold text-foreground">
             Account Settings
           </h1>
           <p className="text-muted-foreground">

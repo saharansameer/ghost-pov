@@ -52,7 +52,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Find Echo by public-Id
+    // Echo Aggregation Pipeline for fetching Feedback and Summaries
     const echoAggregate = await EchoModel.aggregate([
       {
         $match: {
@@ -113,6 +113,8 @@ export async function GET(request: NextRequest) {
           owner: 1,
           summaries: 1,
           hasSummaries: 1,
+          publicId: 1,
+          isAcceptingFeedback: 1,
         },
       },
     ]);
@@ -138,6 +140,8 @@ export async function GET(request: NextRequest) {
       owner: echo.owner,
       summaries: echo.summaries,
       hasSummaries: echo.hasSummaries,
+      publicId: echo.publicId,
+      isAcceptingFeedback: echo.isAcceptingFeedback,
     };
 
     // Feedback Aggregate Logic
