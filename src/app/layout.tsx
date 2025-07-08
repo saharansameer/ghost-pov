@@ -74,16 +74,20 @@ export const metadata: Metadata = {
   category: "technology",
 };
 
-export default async function RootLayout({ children }: ReactChildren) {
+async function HeaderWithAuth() {
   const session = await auth.api.getSession({ headers: await headers() });
   const authenticated = session !== null;
+  return <Header authenticated={authenticated} />;
+}
+
+export default function RootLayout({ children }: ReactChildren) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${instrumentSans.variable} antialiased transition-theme ease-initial duration-200 animate-collapsible-up`}
+        className={`${geistSans.variable} ${geistMono.variable} ${instrumentSans.variable} antialiased transition-theme ease-initial duration-200 animate-accordion-down`}
       >
         <ThemeProvider>
-          <Header authenticated={authenticated} />
+          <HeaderWithAuth />
 
           <PageTransition>
             <main className="layout-container min-h-screen">

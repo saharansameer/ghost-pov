@@ -32,21 +32,82 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function AccountPage() {
+async function ProfileSection() {
   const user = await getAuthUser(await headers());
+
+  if (!user) {
+    return <div>Failed to Load User Account Details</div>;
+  }
+
   const provider = await getAuthProvider(user!.id);
   const isCredential = provider === "credential";
-
-  // Mock data for demonstration
-  const userData = {
-    name: user?.name,
-    email: user?.email as string,
-    avatar: user?.image,
-    joinDate: getFormatDate(user?.createdAt as Date, "date-only"),
-  };
+  const joinDate = getFormatDate(user?.createdAt as Date, "date-only");
 
   return (
-    <div className="min-h-screen bg-background transition-all animate-[fadeIn_0.5s_ease-intial_forwards] pb-20">
+    <Card className="transition-all duration-300 hover:shadow-md">
+      <CardHeader className="pb-4">
+        <div className="flex items-center gap-3">
+          <div className="p-2 rounded-full bg-primary/10">
+            <User className="h-5 w-5 text-primary" />
+          </div>
+          <div>
+            <CardTitle className="text-xl">Profile Information</CardTitle>
+            <CardDescription>Your personal account details</CardDescription>
+          </div>
+        </div>
+      </CardHeader>
+      <CardContent className="space-y-6">
+        {/* Avatar and Name */}
+        <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+          <UserAvatar
+            src={user?.image as string}
+            altText={user?.name as string}
+            scale={true}
+          />
+          <div className="flex-1">
+            <div className="flex items-center mb-2">
+              <h3 className="text-2xl font-semibold text-foreground">
+                {user?.name}
+              </h3>
+            </div>
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <Calendar className="h-4 w-4" />
+              <span>Member since {joinDate}</span>
+            </div>
+          </div>
+        </div>
+
+        <Separator />
+
+        {/* Email */}
+        <ChangeEmailForm
+          currEmail={user?.email as string}
+          changesAllowed={isCredential}
+          emailVerified={user?.emailVerified as boolean}
+        />
+
+        {/* Authentication Method */}
+        <div className="flex items-center gap-3">
+          <div className="p-2 rounded-full bg-muted">
+            <Shield className="h-4 w-4 text-muted-foreground" />
+          </div>
+          <div>
+            <p className="font-medium text-foreground">Authentication</p>
+            <p className="text-muted-foreground">
+              {isCredential
+                ? "Email & Password"
+                : `${provider === "google" ? "Google Account" : "Github Account"}`}
+            </p>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+export default function Page() {
+  return (
+    <div className="min-h-screen bg-background transition-all">
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         {/* Header */}
         <div className="mb-8">
@@ -60,66 +121,7 @@ export default async function AccountPage() {
 
         <div className="space-y-6">
           {/* Profile Section */}
-          <Card className="transition-all duration-300 hover:shadow-md">
-            <CardHeader className="pb-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-full bg-primary/10">
-                  <User className="h-5 w-5 text-primary" />
-                </div>
-                <div>
-                  <CardTitle className="text-xl">Profile Information</CardTitle>
-                  <CardDescription>
-                    Your personal account details
-                  </CardDescription>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {/* Avatar and Name */}
-              <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-                <UserAvatar
-                  src={user?.image as string}
-                  altText={user?.name as string}
-                  scale={true}
-                />
-                <div className="flex-1">
-                  <div className="flex items-center mb-2">
-                    <h3 className="text-2xl font-semibold text-foreground">
-                      {userData.name}
-                    </h3>
-                  </div>
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <Calendar className="h-4 w-4" />
-                    <span>Member since {userData.joinDate}</span>
-                  </div>
-                </div>
-              </div>
-
-              <Separator />
-
-              {/* Email */}
-              <ChangeEmailForm
-                currEmail={userData.email}
-                changesAllowed={isCredential}
-                emailVerified={user?.emailVerified as boolean}
-              />
-
-              {/* Authentication Method */}
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-full bg-muted">
-                  <Shield className="h-4 w-4 text-muted-foreground" />
-                </div>
-                <div>
-                  <p className="font-medium text-foreground">Authentication</p>
-                  <p className="text-muted-foreground">
-                    {isCredential
-                      ? "Email & Password"
-                      : `${provider === "google" ? "Google Account" : "Github Account"}`}
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          <ProfileSection />
 
           {/* Billing Section */}
           <Card className="transition-all duration-300 hover:shadow-md">

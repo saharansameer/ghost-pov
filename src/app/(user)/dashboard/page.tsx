@@ -16,11 +16,11 @@ export const metadata: Metadata = {
   },
 };
 
-interface DashboardProps {
-  searchParams?: Promise<{ p?: string }>;
+interface PageProps {
+  searchParams: { p?: string };
 }
 
-export default async function Dashboard({ searchParams }: DashboardProps) {
+async function EchoList({ searchParams }: PageProps) {
   const queryParams = await searchParams;
   const page = Number(queryParams?.p || 1);
 
@@ -45,6 +45,21 @@ export default async function Dashboard({ searchParams }: DashboardProps) {
   const paginationInfo = getPaginationInfo(data);
 
   return (
+    <>
+      <div className="flex flex-col items-center gap-y-10 px-2">
+        {data.docs.map((echo: EchoObject) => (
+          <EchoCard key={echo.publicId} echo={echo} />
+        ))}
+      </div>
+
+      {!data.hasNextPage && <div className="py-10"></div>}
+      <PaginationButtons pagination={paginationInfo} />
+    </>
+  );
+}
+
+export default function DashboardPage(props: PageProps) {
+  return (
     <div className="flex flex-col min-h-screen h-auto overflow-y-auto">
       <div className="flex justify-center pt-4 pb-10">
         {/* Page Title and Actions */}
@@ -66,14 +81,8 @@ export default async function Dashboard({ searchParams }: DashboardProps) {
         </div>
       </div>
 
-      <div className="flex flex-col items-center gap-y-10 px-2">
-        {data.docs.map((echo: EchoObject) => (
-          <EchoCard key={echo.publicId} echo={echo} />
-        ))}
-      </div>
-
-      {!data.hasNextPage && <div className="py-10"></div>}
-      <PaginationButtons pagination={paginationInfo} />
+      {/* Echo Cards with Pagination */}
+      <EchoList {...props} />
     </div>
   );
 }

@@ -10,15 +10,12 @@ import { SummarySection } from "@/components/Summary/SummarySection";
 import { FileText } from "lucide-react";
 import { headers } from "next/headers";
 
-type EchoPageProps = {
-  params: Promise<{ echoId: string }>;
+type PageProps = {
+  params: Promise<{ echoId?: string }>;
   searchParams: Promise<{ p?: string; f?: string }>;
 };
 
-export default async function EchoPage({
-  params,
-  searchParams,
-}: EchoPageProps) {
+async function FeedbacksAndSummaries({ params, searchParams }: PageProps) {
   const { echoId } = await params;
   const queryParams = await searchParams;
   const page = Number(queryParams?.p || 1);
@@ -46,7 +43,7 @@ export default async function EchoPage({
   const paginationInfo = getPaginationInfo({ ...data, docs: [] });
 
   return (
-    <div className="w-full max-w-3xl flex flex-col items-center mx-auto min-h-screen h-auto py-5 px-1 ">
+    <>
       <div className="w-full max-w-2xl">
         <EchoDetails title={echo.title} description={echo.description} />
       </div>
@@ -90,6 +87,14 @@ export default async function EchoPage({
       </div>
 
       <PaginationButtons pagination={paginationInfo} filter={filterBy} />
+    </>
+  );
+}
+
+export default function EchoPage(props: PageProps) {
+  return (
+    <div className="w-full max-w-3xl flex flex-col items-center mx-auto min-h-screen h-auto py-5 px-1 ">
+      <FeedbacksAndSummaries {...props} />
     </div>
   );
 }

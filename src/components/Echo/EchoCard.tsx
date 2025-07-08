@@ -14,8 +14,7 @@ export function EchoCard({ echo }: EchoCardProps) {
     <div
       className="w-full max-w-2xl group relative bg-card border border-border rounded-xl px-4 py-2
       hover:shadow-lg hover:shadow-primary/5 hover:border-primary/20 
-      transition-all duration-300 ease-in-out hover:-translate-y-0.5 
-      animate-[fadeIn_0.5s_ease-in-out_forwards]"
+      transition-all duration-300 ease-in-out hover:-translate-y-0.5"
       role="article"
       aria-labelledby={`echo-title-${echo._id}`}
     >

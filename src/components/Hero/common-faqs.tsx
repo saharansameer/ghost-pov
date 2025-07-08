@@ -50,15 +50,14 @@ const faqs: FaqArray = [
     content: (
       <>
         <p>
-          Refunds are not allowed. Please make sure you&apos;re confident before
-          making any payment or buying extra credits.
+          No, refunds aren&apos;t available. Make payment only if you&apos;re sure.
         </p>
       </>
     ),
   },
   {
     value: "item-4",
-    trigger: "What if someone sends abusive or spam messages?",
+    trigger: "What if someone sends abusive or spam feedbacks?",
     content: (
       <>
         <p>
@@ -78,7 +77,7 @@ const faqs: FaqArray = [
 export function CommonFaqs() {
   return (
     <motion.div
-      className="w-full max-w-2xl mx-auto mb-60"
+      className="w-full max-w-2xl mx-auto mb-40 px-2"
       initial={{ opacity: 0, y: 60 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, delay: 0.2 }}

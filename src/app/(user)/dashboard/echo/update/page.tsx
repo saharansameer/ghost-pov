@@ -1,15 +1,13 @@
 import { headers } from "next/headers";
 import { EchoForm } from "@/components/client";
 
-interface EchoUpdatePageProps {
+interface PageProps {
   searchParams: Promise<{ echoId?: string }>;
 }
 
-export default async function EchoUpdatePage({
-  searchParams,
-}: EchoUpdatePageProps) {
+async function EchoFormWithData({ searchParams }: PageProps) {
   const queryParams = await searchParams;
-  const echoId = queryParams.echoId;
+  const echoId = queryParams?.echoId;
 
   const headersList = await headers();
 
@@ -24,11 +22,19 @@ export default async function EchoUpdatePage({
     }
   );
 
-  const { data } = await response.json();
+  const { success, data } = await response.json();
 
+  if (!success) {
+    return <div>Echo no longer exist</div>;
+  }
+
+  return <EchoForm method="PATCH" data={data} />;
+}
+
+export default function Page(props: PageProps) {
   return (
     <div className="flex justify-center">
-      <EchoForm method="PATCH" data={data} />
+      <EchoFormWithData {...props} />
     </div>
   );
 }

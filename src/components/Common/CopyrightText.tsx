@@ -5,7 +5,7 @@ interface CopyrightTextProps {
 }
 
 export function CopyrightText({
-  className = "text-sm text-muted-foreground font-instrument",
+  className = "text-xs text-muted-foreground font-instrument",
 }: CopyrightTextProps) {
   return (
     <p className={className}>

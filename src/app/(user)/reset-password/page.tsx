@@ -69,8 +69,7 @@ export default function ResetPasswordPage() {
           <form onSubmit={handleSubmit(onSubmitHandler)} className="space-y-6">
             {errors.root && (
               <div
-                className="rounded-md bg-destructive/15 p-2 transition-all duration-100
-                animate-[fadeIn_0.5s_ease-in-out_forwards]"
+                className="rounded-md bg-destructive/15 p-2"
               >
                 <ErrorMessage text={errors.root.message as string} />
               </div>
