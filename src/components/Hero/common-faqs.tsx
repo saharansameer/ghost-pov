@@ -39,9 +39,12 @@ const faqs: FaqArray = [
     content: (
       <>
         <p>
-          Credits are used to generate AI-powered summaries and insights. Every
-          new user gets 2 free credits after signing up.
+          Credits are used to generate AI-powered summaries and insights.
+          Typically, 1 credit is consumed per summary generation, but more may
+          be required if feedback messages exceeds the context limit.
         </p>
+
+        <p>Every new user gets 2 free credits after signing up.</p>
       </>
     ),
   },

@@ -28,7 +28,7 @@ export function ChangeEmailForm({
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isSubmitSuccessful },
     reset,
     setFocus,
     setError,
@@ -116,7 +116,12 @@ export function ChangeEmailForm({
           </Button>
 
           {formOpen && (
-            <Button variant="outline" size="sm" type="submit">
+            <Button
+              variant="outline"
+              size="sm"
+              type="submit"
+              disabled={isSubmitting || isSubmitSuccessful}
+            >
               {isSubmitting ? <LoaderSpin /> : "Save"}
             </Button>
           )}

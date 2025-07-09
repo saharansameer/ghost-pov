@@ -28,7 +28,7 @@ export function PaymentForm() {
   const router = useRouter();
   const {
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isSubmitSuccessful },
     reset,
     control,
     setValue,
@@ -167,7 +167,7 @@ export function PaymentForm() {
                 <Button
                   className="w-full h-12 text-base font-semibold"
                   size="lg"
-                  disabled={isSubmitting || !field.value}
+                  disabled={isSubmitting || !field.value || isSubmitSuccessful}
                   type="submit"
                 >
                   {isSubmitting ? <LoaderSpin /> : "Buy Credits"}

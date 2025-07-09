@@ -28,7 +28,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isSubmitSuccessful },
     reset,
     setError,
   } = useForm<SigninSchemaType>({
@@ -139,7 +139,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
         type="submit"
         size={"sm"}
         className="font-semibold w-full"
-        disabled={isSubmitting}
+        disabled={isSubmitting || isSubmitSuccessful}
       >
         {isSubmitting ? <LoaderSpin /> : isSignIn ? "Sign in" : "Sign up"}
       </Button>

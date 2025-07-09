@@ -9,6 +9,15 @@ import { Mail, ArrowRight } from "lucide-react";
 import { redirect } from "next/navigation";
 import { getAuthUser } from "@/lib/auth/session";
 import { headers } from "next/headers";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Mail Sent",
+  robots: {
+    index: false,
+    follow: true,
+  },
+};
 
 interface Props {
   searchParams: Promise<{
@@ -21,7 +30,7 @@ const mailDescription = {
   verification: "We've sent a verification link to confirm your email.",
   password: "We've sent you a link to reset your password.",
   email: "We've sent you a link to update your email address.",
-  none: "We've need to confirm that its you."
+  none: "We've need to confirm that its you.",
 };
 
 export default async function MailSentPage({ searchParams }: Props) {

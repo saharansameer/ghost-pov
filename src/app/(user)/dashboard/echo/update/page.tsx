@@ -1,5 +1,6 @@
 import { headers } from "next/headers";
 import { EchoForm } from "@/components/client";
+import { NotSuccess } from "@/components/server";
 
 interface PageProps {
   searchParams: Promise<{ echoId?: string }>;
@@ -22,10 +23,10 @@ async function EchoFormWithData({ searchParams }: PageProps) {
     }
   );
 
-  const { success, data } = await response.json();
+  const { success, message, data } = await response.json();
 
   if (!success) {
-    return <div>Echo no longer exist</div>;
+    return <NotSuccess message={message} />;
   }
 
   return <EchoForm method="PATCH" data={data} />;

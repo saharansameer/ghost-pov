@@ -2,6 +2,8 @@ import {
   PaginationButtons,
   FeedbackCard,
   EchoDetails,
+  NotSuccess,
+  EmptyState,
 } from "@/components/server";
 import {
   FilterOptions,
@@ -10,7 +12,6 @@ import {
 } from "@/components/client";
 import { getPaginationInfo } from "@/lib/utils";
 import { FeedbackObject } from "@/types";
-import { FileText } from "lucide-react";
 import { headers } from "next/headers";
 
 type PageProps = {
@@ -40,7 +41,7 @@ async function FeedbacksAndSummaries({ params, searchParams }: PageProps) {
   const { success, message, data, echo } = await response.json();
 
   if (!success) {
-    return <div>{message}</div>;
+    return <NotSuccess message={message} />;
   }
 
   const paginationInfo = getPaginationInfo({ ...data, docs: [] });
@@ -83,12 +84,7 @@ async function FeedbacksAndSummaries({ params, searchParams }: PageProps) {
 
       <div className="w-full flex flex-col gap-y-16 items-center py-10">
         {data.docs.length === 0 && (
-          <div className="flex flex-col items-center mt-10">
-            <div className="w-14 h-14 mx-auto bg-muted rounded-full flex items-center justify-center">
-              <FileText />
-            </div>
-            <h3 className="font-semibold text-sm mt-1">No feedbacks yet</h3>
-          </div>
+          <EmptyState title="No Feedbacks Yet" type="feedback" />
         )}
         {data.docs.map((item: FeedbackObject) => (
           <FeedbackCard key={item._id} feedback={item} />

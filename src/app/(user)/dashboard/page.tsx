@@ -1,4 +1,4 @@
-import { EchoCard, PaginationButtons } from "@/components/server";
+import { EchoCard, PaginationButtons, EmptyState } from "@/components/server";
 import { Button } from "@/components/ui";
 import { getPaginationInfo } from "@/lib/utils";
 import { EchoObject } from "@/types";
@@ -43,6 +43,16 @@ async function EchoList({ searchParams }: PageProps) {
   }
 
   const paginationInfo = getPaginationInfo(data);
+
+  if (data.docs.length === 0) {
+    return (
+      <EmptyState
+        title="Empty For Now"
+        message="Create your first echo to get started"
+        type="echos"
+      />
+    );
+  }
 
   return (
     <>

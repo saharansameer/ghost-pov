@@ -22,8 +22,7 @@ export function EchoForm({ method, data }: EchoFormProps) {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
-    reset,
+    formState: { errors, isSubmitting, isSubmitSuccessful },
     control,
     setError,
     watch,
@@ -74,8 +73,6 @@ export function EchoForm({ method, data }: EchoFormProps) {
     } catch (error) {
       console.error("Echo Form Error:", error);
     }
-
-    reset();
   };
 
   const titleValue = watch("title") || "";
@@ -176,7 +173,7 @@ export function EchoForm({ method, data }: EchoFormProps) {
       </div>
 
       <Button
-        disabled={isSubmitting}
+        disabled={isSubmitting || isSubmitSuccessful}
         type="submit"
         variant={"default"}
         className="font-semibold w-full sm:w-40"

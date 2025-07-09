@@ -28,7 +28,7 @@ export function FeedbackForm() {
 
   const {
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isSubmitSuccessful },
     reset,
     control,
     watch,
@@ -167,7 +167,7 @@ export function FeedbackForm() {
         type="submit"
         variant={"default"}
         className="max-w-40 font-semibold"
-        disabled={isSubmitting}
+        disabled={isSubmitting || isSubmitSuccessful}
       >
         <Ghost />
         {isSubmitting ? <LoaderSpin /> : "Send"}

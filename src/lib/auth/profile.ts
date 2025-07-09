@@ -18,3 +18,20 @@ export async function createUserProfile(
     updatedAt: now,
   });
 }
+
+export async function getAvailableCredits(
+  userId: Types.ObjectId | string
+): Promise<number | null> {
+  await connectDB();
+
+  const Profiles = mongoose.connection.collection("profiles");
+
+  const userProfile = await Profiles.findOne(
+    { userId: new Types.ObjectId(userId) },
+    { projection: { _id: 0, credits: 1 } }
+  );
+
+  if (!userProfile) return null;
+
+  return userProfile.credits;
+}

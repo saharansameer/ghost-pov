@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui";
-import { Sparkles, FileText } from "lucide-react";
+import { EmptyState } from "@/components/server";
+import { Sparkles } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { SummaryLoadingUI } from "./SummaryLoadingUI";
@@ -65,12 +66,7 @@ export function SummarySection({ summaries, echoId }: SummarySectionProps) {
       {!generating && (
         <div className="space-y-14">
           {summaries.length === 0 ? (
-            <div className="flex flex-col items-center">
-              <div className="w-14 h-14 mx-auto bg-muted rounded-full flex items-center justify-center">
-                <FileText />
-              </div>
-              <h3 className="font-semibold text-sm">No summaries yet</h3>
-            </div>
+            <EmptyState title="No Summaries Yet" type="summary" />
           ) : (
             summaries.map((summary) => (
               <ExpandableMarkdownField

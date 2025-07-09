@@ -1,5 +1,5 @@
 import { FeedbackForm } from "@/components/client";
-import { EchoDetails } from "@/components/server";
+import { EchoDetails, EmptyState } from "@/components/server";
 
 interface PageProps {
   params: Promise<{ echoPublicId?: string }>;
@@ -18,7 +18,13 @@ async function PublicEcho({ params }: PageProps) {
   const { success, data } = await response.json();
 
   if (!success) {
-    return <div>Echo no longer accepting feedback</div>;
+    return (
+      <EmptyState
+        title="Feedbacks Paused"
+        message="User is no longer accepting feedbacks"
+        type="feedback"
+      />
+    );
   }
 
   return <EchoDetails title={data.title} description={data.description} />;
