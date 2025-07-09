@@ -7,6 +7,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import Link from "next/link";
 
 type FaqArray = { value: string; trigger: string; content: React.ReactNode }[];
 
@@ -50,7 +51,12 @@ const faqs: FaqArray = [
     content: (
       <>
         <p>
-          No, refunds aren&apos;t available. Make payment only if you&apos;re sure.
+          Refunds are generally not available. But we will try our best to
+          resolve any issue. For refund or payment related queries, reach out us
+          at:{" "}
+          <Link href="mailto:payments@ghostpov.com" className="p-link">
+            payments@ghostpov.com
+          </Link>
         </p>
       </>
     ),
@@ -89,7 +95,9 @@ export function CommonFaqs() {
       <Accordion type="single" collapsible className="w-full" defaultValue="">
         {faqs.map((faq, index) => (
           <AccordionItem key={`${index}-fqit`} value={faq.value}>
-            <AccordionTrigger className="font-semibold text-lg">{faq.trigger}</AccordionTrigger>
+            <AccordionTrigger className="font-semibold text-lg">
+              {faq.trigger}
+            </AccordionTrigger>
             <AccordionContent className="flex flex-col gap-4 text-balance">
               {faq.content}
             </AccordionContent>

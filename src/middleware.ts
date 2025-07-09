@@ -7,7 +7,7 @@ const authRoutes = [
   "/forgot-password",
   "/reset-password",
 ];
-const protectedRoutes = ["/dashboard", "/account"];
+const protectedRoutes = ["/dashboard", "/account", "/buy-credits"];
 
 export async function middleware(request: NextRequest) {
   const { pathname, origin } = request.nextUrl;
@@ -39,5 +39,6 @@ export const config = {
     "/sign-up",
     "/forgot-password",
     "/reset-password",
+    "/buy-credits",
   ],
 };

@@ -27,7 +27,7 @@ const profileSchema = new Schema({
   },
   maxTokenLimit: {
     type: Number,
-    default: 2000,
+    default: 5000,
   },
 });
 

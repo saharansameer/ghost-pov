@@ -25,10 +25,13 @@ Try it here: [`ghostpov.xyz`](https://ghostpov.xyz)
 - **Echo Creation:** Authenticated users can create Echos (posts) and get unique shareable links.
 - **Anonymous Feedback:** Anyone can submit feedback without logging in.
 - **Feedback Moderation:** Users can choose to allow or disable feedback on their Echos.
+- **AI Summaries** – Users can generate AI-powered summaries and insights.
+  **Usage Credits** – Generating summaries requires credits, which users can purchase via Razorpay.
 - **Account Settings:** Change email, reset password, or delete account.
 - **Access Control:** Feedback is only visible to Echo owners.
 - **Email Notifications:** Email-based verification, password resets, and change confirmations.
 - **Responsive UI:** Built with Tailwind CSS and shadcn/ui for a clean and accessible experience.
+- **Usage based :** Users can purchase usage credits securely via Razorpay.
 
 ---
 
@@ -40,6 +43,7 @@ Try it here: [`ghostpov.xyz`](https://ghostpov.xyz)
 - **Authentication**: Handled via BetterAuth with support for email and OAuth providers.
 - **Rate Limiting & Caching:** Powered by Upstash Redis for both API rate limiting and server-side caching.
 - **UI & Styling:** Built using Tailwind CSS, shadcn/ui, and Framer Motion for smooth transitions
+- **Payment Gateway:** Razorpay is integrated server-side with API routes and a webhook to handle and verify credit purchases.
 - **Deployment:** Hosted on Vercel with edge-optimized middleware and smart caching strategies.
 
 ---
