@@ -8,6 +8,7 @@ import { PageTransition } from "@/components/Motion/PageTransition";
 import SonnerToaster from "@/components/Sonner/SonnerToaster";
 import { auth } from "@/lib/auth/auth";
 import { headers } from "next/headers";
+import { Analytics } from "@vercel/analytics/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -100,6 +101,7 @@ export default function RootLayout({ children }: ReactChildren) {
             <Footer />
           </footer>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
