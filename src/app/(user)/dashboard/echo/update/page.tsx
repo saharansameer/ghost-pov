@@ -1,6 +1,16 @@
 import { headers } from "next/headers";
 import { EchoForm } from "@/components/client";
-import { NotSuccess } from "@/components/server";
+import { NotSuccess, EchoFormSkeleton } from "@/components/server";
+import type { Metadata } from "next";
+import { Suspense } from "react";
+
+export const metadata: Metadata = {
+  title: "Update Echo Details",
+  robots: {
+    index: false,
+    follow: true,
+  },
+};
 
 interface PageProps {
   searchParams: Promise<{ echoId?: string }>;
@@ -35,7 +45,9 @@ async function EchoFormWithData({ searchParams }: PageProps) {
 export default function Page(props: PageProps) {
   return (
     <div className="flex justify-center">
-      <EchoFormWithData {...props} />
+      <Suspense fallback={<EchoFormSkeleton />}>
+        <EchoFormWithData {...props} />
+      </Suspense>
     </div>
   );
 }

@@ -1,5 +1,19 @@
 import { FeedbackForm } from "@/components/client";
-import { EchoDetails, EmptyState } from "@/components/server";
+import {
+  EchoDetails,
+  EmptyState,
+  EchoDetailsSkeleton,
+} from "@/components/server";
+import { Suspense } from "react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Anonymous Feedback",
+  robots: {
+    index: false,
+    follow: true,
+  },
+};
 
 interface PageProps {
   params: Promise<{ echoPublicId?: string }>;
@@ -11,7 +25,7 @@ async function PublicEcho({ params }: PageProps) {
     `${process.env.BASE_URL}/api/echo/${echoPublicId}`,
     {
       method: "GET",
-      next: { revalidate: 0 },
+      next: { revalidate: 60 },
     }
   );
 
@@ -36,13 +50,15 @@ export default function Page({ ...props }: PageProps) {
       <div className="py-10 px-4">
         <div className="max-w-2xl mx-auto">
           {/* Header Section */}
-          <PublicEcho {...props} />
+          <Suspense fallback={<EchoDetailsSkeleton />}>
+            <PublicEcho {...props} />
+          </Suspense>
 
           {/* Subtle divider */}
           <div className="w-full max-w-xl h-px my-10 bg-gradient-to-r from-transparent via-border to-transparent mx-auto" />
 
           {/* Feedback Section */}
-          <div className="animate-in fade-in-0 slide-in-from-bottom-4 duration-700 delay-300">
+          <div className="animate-in fade-in-0 slide-in-from-bottom-4 delay-200">
             <div className="space-y-4">
               <div>
                 <h2 className="text-2xl font-semibold tracking-tight text-foreground">

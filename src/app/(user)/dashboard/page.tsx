@@ -1,4 +1,9 @@
-import { EchoCard, PaginationButtons, EmptyState } from "@/components/server";
+import {
+  EchoCard,
+  PaginationButtons,
+  EmptyState,
+  EchoCardSkeleton,
+} from "@/components/server";
 import { Button } from "@/components/ui";
 import { getPaginationInfo } from "@/lib/utils";
 import { EchoObject } from "@/types";
@@ -6,6 +11,7 @@ import Link from "next/link";
 import { Plus } from "lucide-react";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Dashboard | GhostPOV",
@@ -64,6 +70,10 @@ async function EchoList({ searchParams }: PageProps) {
 
       {!data.hasNextPage && <div className="py-10"></div>}
       <PaginationButtons pagination={paginationInfo} />
+
+      {paginationInfo.currPage === 1 && !paginationInfo.hasNextPage && (
+        <div className="py-40"></div>
+      )}
     </>
   );
 }
@@ -92,7 +102,17 @@ export default function DashboardPage(props: PageProps) {
       </div>
 
       {/* Echo Cards with Pagination */}
-      <EchoList {...props} />
+      <Suspense
+        fallback={
+          <div className="flex flex-col items-center gap-y-10 px-2">
+            {Array.from({ length: 25 }).map((_, index) => (
+              <EchoCardSkeleton key={index} />
+            ))}
+          </div>
+        }
+      >
+        <EchoList {...props} />
+      </Suspense>
     </div>
   );
 }

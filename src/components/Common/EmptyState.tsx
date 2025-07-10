@@ -24,15 +24,15 @@ export function EmptyState({
   const getTypeIcon = () => {
     switch (type) {
       case "echos":
-        return <FileX className="w-12 h-12" />;
+        return <FileX className="w-10 h-10" />;
       case "feedback":
-        return <MessageSquare className="w-12 h-12" />;
+        return <MessageSquare className="w-10 h-10" />;
       case "summary":
-        return <BarChart3 className="w-12 h-12" />;
+        return <BarChart3 className="w-10 h-10" />;
       case "profile":
-        return <User className="w-12 h-12" />;
+        return <User className="w-10 h-10" />;
       default:
-        return <Sparkles className="w-12 h-12" />;
+        return <Sparkles className="w-10 h-10" />;
     }
   };
 
@@ -58,7 +58,7 @@ export function EmptyState({
       {/* Icon with gradient background */}
       <div className="relative mb-2">
         <div
-          className={`w-40 h-14 rounded-2xl bg-gradient-to-br ${getGradientColors()} flex items-center justify-center backdrop-blur-sm border border-white/10 shadow-lg`}
+          className={`w-16 h-16 rounded-full bg-gradient-to-br ${getGradientColors()} flex items-center justify-center backdrop-blur-sm border border-white/10 shadow-lg`}
         >
           <div className="text-foreground/70">{icon || getTypeIcon()}</div>
         </div>

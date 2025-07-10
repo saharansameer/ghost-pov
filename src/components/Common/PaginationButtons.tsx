@@ -28,7 +28,7 @@ export function PaginationButtons({
   return (
     <div
       className={
-        isFirstPage && !pagination.hasNextPage ? "hidden" : "mt-auto py-10"
+        isFirstPage && !pagination.hasNextPage ? "hidden" : "mt-auto pt-40 pb-10"
       }
     >
       <Pagination>

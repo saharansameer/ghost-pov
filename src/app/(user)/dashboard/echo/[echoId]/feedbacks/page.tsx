@@ -4,6 +4,7 @@ import {
   EchoDetails,
   NotSuccess,
   EmptyState,
+  EchoPageSkeleton,
 } from "@/components/server";
 import {
   FilterOptions,
@@ -13,6 +14,7 @@ import {
 import { getPaginationInfo } from "@/lib/utils";
 import { FeedbackObject } from "@/types";
 import { headers } from "next/headers";
+import { Suspense } from "react";
 
 type PageProps = {
   params: Promise<{ echoId?: string }>;
@@ -61,6 +63,7 @@ async function FeedbacksAndSummaries({ params, searchParams }: PageProps) {
       <div className="w-full max-w-xl h-px my-10 bg-gradient-to-r from-transparent via-border to-transparent" />
 
       {/* Summary Section */}
+
       <div className="w-full max-w-2xl ">
         <SummarySection summaries={echo.summaries} echoId={echo._id} />
       </div>
@@ -92,6 +95,10 @@ async function FeedbacksAndSummaries({ params, searchParams }: PageProps) {
       </div>
 
       <PaginationButtons pagination={paginationInfo} filter={filterBy} />
+
+      {paginationInfo.currPage === 1 && !paginationInfo.hasNextPage && (
+        <div className="py-40"></div>
+      )}
     </>
   );
 }
@@ -99,7 +106,9 @@ async function FeedbacksAndSummaries({ params, searchParams }: PageProps) {
 export default function EchoPage(props: PageProps) {
   return (
     <div className="w-full max-w-3xl flex flex-col items-center mx-auto min-h-screen h-auto py-5 px-1">
-      <FeedbacksAndSummaries {...props} />
+      <Suspense fallback={<EchoPageSkeleton />}>
+        <FeedbacksAndSummaries {...props} />
+      </Suspense>
     </div>
   );
 }

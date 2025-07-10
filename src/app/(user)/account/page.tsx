@@ -13,10 +13,11 @@ import {
 import { Button, Separator } from "@/components/ui";
 import { User, Calendar, Shield, AlertTriangle, Coins } from "lucide-react";
 import { ChangeEmailForm, DeleteAccountButton } from "@/components/client";
-import { UserAvatar, NotSuccess } from "@/components/server";
+import { UserAvatar, NotSuccess, ProfileSkeleton } from "@/components/server";
 import { getFormatDate } from "@/lib/utils";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Account | GhostPOV",
@@ -163,10 +164,11 @@ export default function Page() {
           </p>
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-6 pb-60">
           {/* Profile Section */}
-
-          <ProfileAndCreditsSection />
+          <Suspense fallback={<ProfileSkeleton />}>
+            <ProfileAndCreditsSection />
+          </Suspense>
 
           {/* Danger Zone */}
           <Card className="transition-all duration-300 hover:shadow-md border-destructive/50">

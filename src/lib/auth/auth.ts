@@ -22,11 +22,11 @@ export const auth = betterAuth({
   rateLimit: {
     enabled: true,
     window: 10, // time window in seconds
-    max: 5, // max requests in the window
+    max: 30, // max requests in the window
     customRules: {
       "/sign-in/email": {
         window: 600,
-        max: 2,
+        max: 10,
       },
     },
   },

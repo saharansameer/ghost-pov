@@ -19,6 +19,12 @@ export { FeedbackCard } from "../Feedback/FeedbackCard";
 export { EchoCard } from "../Echo/EchoCard";
 export { EchoDetails } from "../Echo/EchoDetails";
 
+export { ProfileSkeleton } from "../Skeleton/profile-skeleton";
+export { EchoCardSkeleton } from "../Skeleton/echo-card-skeleton";
+export { EchoPageSkeleton } from "../Skeleton/echo-page-skeleton";
+export { EchoDetailsSkeleton } from "../Skeleton/echo-details-skeleton";
+export { EchoFormSkeleton } from "../Skeleton/echo-form-skeleton";
+
 export {
   VerifyEmailTemplate,
   VerifyEmailText,
