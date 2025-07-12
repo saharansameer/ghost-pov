@@ -39,6 +39,7 @@ export function FeedbackForm() {
       category: "General",
       feedbackMessage: "",
     },
+    mode: "onSubmit",
   });
 
   const onSendHandler: SubmitHandler<FeedbackSchemaType> = async (formData) => {

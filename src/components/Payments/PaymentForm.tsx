@@ -34,6 +34,7 @@ export function PaymentForm() {
     setValue,
   } = useForm<PaymentSchemaType>({
     resolver: zodResolver(paymentSchema),
+    mode: "onSubmit",
   });
 
   const paymentHandler: SubmitHandler<PaymentSchemaType> = async (formData) => {
