@@ -5,5 +5,5 @@ export const rateLimiter = new Ratelimit({
   redis: redisClient,
   limiter: Ratelimit.slidingWindow(30, "10s"),
   analytics: false,
-  prefix: "ratelimit",
+  prefix: "ghostpov-rl",
 });

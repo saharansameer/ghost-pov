@@ -29,6 +29,9 @@ export const metadata: Metadata = {
   title: "GhostPOV",
   description: "The Simplest Way to Get Anonymous Feedback",
   metadataBase: new URL("https://ghostpov.xyz"),
+  alternates: {
+    canonical: "https://ghostpov.xyz",
+  },
   icons: {
     icon: "/favicon.ico",
     shortcut: "/ghost-icon.png",
