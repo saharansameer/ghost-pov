@@ -35,7 +35,6 @@ export async function POST(request: NextRequest) {
       // If Payment Success
       case "payment.captured":
         const payment = event.payload.payment.entity;
-        console.log("Payment captured:", payment.id);
 
         // Update order's payment status
         const updatedOrder = await OrderModel.findOneAndUpdate(

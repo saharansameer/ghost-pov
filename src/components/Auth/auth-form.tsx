@@ -15,6 +15,7 @@ import { authClient } from "@/lib/auth/auth-client";
 import { useRouter } from "next/navigation";
 import { AuthMode } from "@/types";
 import Link from "next/link";
+import { toast } from "sonner";
 
 interface AuthFormProps {
   mode: AuthMode;
@@ -29,7 +30,6 @@ export default function AuthForm({ mode }: AuthFormProps) {
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isSubmitSuccessful },
-    reset,
     setError,
   } = useForm<SigninSchemaType>({
     resolver: zodResolver(isSignIn ? signinSchema : signupSchema),
@@ -58,11 +58,13 @@ export default function AuthForm({ mode }: AuthFormProps) {
         });
         return;
       }
-    } catch (error) {
-      console.error("SignIn Error:", error);
+
+      toast.success("Signed In");
+      router.push("/dashboard");
+      router.refresh();
+    } catch {
+      toast.error("Sign-in Failed");
     }
-    router.push("/dashboard");
-    router.refresh();
   };
 
   // SignUp Handler
@@ -83,12 +85,11 @@ export default function AuthForm({ mode }: AuthFormProps) {
         });
         return;
       }
-    } catch (error) {
-      console.error("SignUp Error:", error);
-    }
 
-    router.push(`/mail-sent?to=${formData.email}&type=verification`);
-    reset();
+      router.push(`/mail-sent?to=${formData.email}&type=verification`);
+    } catch {
+      toast.error("Sign-up Failed");
+    }
   };
 
   return (
@@ -141,7 +142,13 @@ export default function AuthForm({ mode }: AuthFormProps) {
         className="font-semibold w-full"
         disabled={isSubmitting || isSubmitSuccessful}
       >
-        {isSubmitting ? <LoaderSpin /> : isSignIn ? "Sign in" : "Sign up"}
+        {isSubmitting || isSubmitSuccessful ? (
+          <LoaderSpin />
+        ) : isSignIn ? (
+          "Sign in"
+        ) : (
+          "Sign up"
+        )}
       </Button>
     </form>
   );

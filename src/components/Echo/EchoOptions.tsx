@@ -58,7 +58,6 @@ export function EchoOptions({
     const { success, message } = await response.json();
 
     if (!success) {
-      console.log(message);
       toast.error("Toggle Failed");
       return;
     }

@@ -40,7 +40,7 @@ export async function filterFeedbackMessage(
 
     // Parse JSON response
     const data = await response.json();
-    console.log(data)
+
     // Extract attribute scores from the response
     const scores = {
       TOXICITY: data.attributeScores.TOXICITY.summaryScore.value || 0,
@@ -63,8 +63,7 @@ export async function filterFeedbackMessage(
       scores,
       reason: flaggedAttributes,
     };
-  } catch (error){
-    console.log(error)
+  } catch {
     return {
       success: false,
       message: "Failed to filter Feedback Message",

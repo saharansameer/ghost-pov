@@ -178,7 +178,7 @@ export function EchoForm({ method, data }: EchoFormProps) {
         variant={"default"}
         className="font-semibold w-full sm:w-40"
       >
-        {isSubmitting ? <LoaderSpin /> : "Publish"}
+        {isSubmitting || isSubmitSuccessful ? <LoaderSpin /> : "Publish"}
       </Button>
     </form>
   );

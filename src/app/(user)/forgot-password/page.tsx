@@ -59,8 +59,8 @@ export default function ForgotPasswordPage() {
 
       toast.info("Email Sent");
       router.push(`/mail-sent?to=${email}&type=password`);
-    } catch (error) {
-      console.log("Forgot Password Page Error:", error);
+    } catch {
+      toast.error("Request Failed");
     }
 
     reset();
@@ -80,9 +80,7 @@ export default function ForgotPasswordPage() {
           <form onSubmit={handleSubmit(onSubmitHandler)} className="space-y-8">
             <div className="space-y-2">
               {errors.email && (
-                <div
-                  className="rounded-md bg-destructive/15 p-2"
-                >
+                <div className="rounded-md bg-destructive/15 p-2">
                   <ErrorMessage text={errors.email.message as string} />
                 </div>
               )}

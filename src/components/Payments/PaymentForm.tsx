@@ -53,7 +53,6 @@ export function PaymentForm() {
         toast.error(message);
         return;
       }
-      console.log("Order Response:", data);
 
       const options = {
         key: data.key,

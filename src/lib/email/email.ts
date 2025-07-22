@@ -46,7 +46,7 @@ export async function sendEmail({
 }: SendEmailParams): Promise<BaseResponse> {
   try {
     await resend.emails.send({
-      from: "GhostPOV <no-reply@ghostpov.xyz>",
+      from: "GhostPOV <ghostpov@mail.sameersaharan.com>",
       to: [email],
       subject: emailType[type].subject,
       react: emailType[type]["template"]({ name, url, newEmail }),

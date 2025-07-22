@@ -9,6 +9,7 @@ import { Edit3, Mail, ShieldCheck, ShieldX } from "lucide-react";
 import { authClient } from "@/lib/auth/auth-client";
 import { useRouter } from "next/navigation";
 import { ErrorMessage, LoaderSpin } from "@/components/server";
+import { toast } from "sonner";
 
 interface ChangeEmailFormProps {
   currEmail: string;
@@ -68,8 +69,8 @@ export function ChangeEmailForm({
       }
 
       router.push(`/mail-sent?to=${currEmail}&type=email`);
-    } catch (error) {
-      console.log("Change Email Error:", error);
+    } catch {
+      toast.error("Unable to update email");
     }
 
     reset();

@@ -68,11 +68,10 @@ export function FeedbackForm() {
       }
 
       toast.success(message);
-    } catch (error) {
-      console.error("Feedback Form Error:", error);
+      reset();
+    } catch {
+      toast.error("Failed to send feedback");
     }
-
-    reset();
   };
 
   const feedbackValue = watch("feedbackMessage") || "";
@@ -171,7 +170,7 @@ export function FeedbackForm() {
         disabled={isSubmitting || isSubmitSuccessful}
       >
         <Ghost />
-        {isSubmitting ? <LoaderSpin /> : "Send"}
+        {isSubmitting || isSubmitSuccessful ? <LoaderSpin /> : "Send"}
       </Button>
     </form>
   );
