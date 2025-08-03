@@ -13,10 +13,6 @@ const general: FooterArray = [
     text: "FAQs",
     href: "/faqs",
   },
-  {
-    text: "Github",
-    href: "https://github.com/saharansameer/ghost-pov",
-  },
 ];
 
 const legal: FooterArray = [
