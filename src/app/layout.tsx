@@ -34,20 +34,20 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: "/favicon.ico",
-    shortcut: "/ghost-icon.png",
-    apple: "/ghost-icon.png",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
   },
   openGraph: {
     title: "GhostPOV",
     description: "The Simplest Way to Get Anonymous Feedback",
-    url: "https://www.ghostpov.com",
+    url: "https://ghostpov.com",
     siteName: "GhostPOV",
     images: [
       {
         url: "/og.png",
         width: 1200,
         height: 630,
-        alt: "GhostPOV - anonymous feedback platform",
+        alt: "GhostPOV - The Simplest Way to Get Anonymous Feedback",
       },
     ],
     locale: "en_US",
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "GhostPOV",
     description:
-      "Get anonymous feedback on your resume, portfolio, or project in seconds.",
+      "The Simplest Way to Get Anonymous Feedback",
     images: ["/og.png"],
     creator: "@sameersaharanx",
   },
@@ -76,6 +76,10 @@ export const metadata: Metadata = {
   creator: "Sameer Saharan",
   publisher: "Sameer Saharan",
   category: "technology",
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 async function HeaderWithAuth() {

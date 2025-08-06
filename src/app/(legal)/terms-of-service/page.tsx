@@ -4,10 +4,6 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Terms of Service | GhostPOV",
   description: "Understand the terms and conditions for using GhostPOV.",
-  robots: {
-    index: false,
-    follow: true,
-  },
 };
 
 export default function TermsOfServicePage() {

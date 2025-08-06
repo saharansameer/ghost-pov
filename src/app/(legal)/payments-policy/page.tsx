@@ -4,10 +4,6 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Payments Policy | GhostPOV",
   description: "Learn about payment terms, billing, and refunds on GhostPOV.",
-  robots: {
-    index: false,
-    follow: true,
-  },
 };
 
 export default function PaymentPolicyPage() {

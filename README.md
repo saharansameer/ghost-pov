@@ -1,8 +1,6 @@
 # GhostPOV
 
-GhostPOV is a web-based platform that lets users quickly collect anonymous feedback by sharing a simple link. Whether it’s a project, portfolio, resume, or idea — GhostPOV helps you get honest, unfiltered input from anyone, without requiring them to sign up or log in.
-
-Try it here: [`ghostpov.xyz`](https://ghostpov.xyz)
+GhostPOV is a web-based platform that lets users quickly collect anonymous feedback by sharing a simple link. Whether it’s a project, portfolio, resume, or idea — GhostPOV helps you get honest, unfiltered input from anyone, and provides AI-powered summaries and insights.
 
 ---
 

@@ -4,10 +4,6 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Privacy Policy | GhostPOV",
   description: "Read how GhostPOV collects, uses, and protects your data.",
-  robots: {
-    index: false,
-    follow: true,
-  },
 };
 
 export default function PrivacyPolicyPage() {

@@ -12,7 +12,6 @@ import {
   Plus,
   Send,
   BarChart3,
-  Play as PlayIcon,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -113,27 +112,15 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
           >
-            <div className="w-full flex flex-col sm:flex-row justify-center gap-y-3 gap-x-5">
-              <Link href={"/sign-up"}>
-                <Button
-                  variant={"outline"}
-                  size="lg"
-                  className="w-full text-base px-10 py-3"
-                >
-                  Get Started
-                </Button>
-              </Link>
-              <Link href={"https://sameersaharan.com/demo/ghost-pov"}>
-                <Button
-                  variant={"ghost"}
-                  size="lg"
-                  className="w-full bg-accent text-base px-8 py-3 shadow-sm"
-                >
-                  <PlayIcon className="mr-3 h-5 w-5 group-hover:scale-110 transition-transform" />
-                  Watch Demo
-                </Button>
-              </Link>
-            </div>
+            <Link href={"/sign-up"}>
+              <Button
+                variant={"default"}
+                size="lg"
+                className="w-full max-w-60 text-base px-10 py-3 shadow-sm"
+              >
+                Get Started
+              </Button>
+            </Link>
           </motion.div>
 
           {/* Why Choose GhostPOV */}
