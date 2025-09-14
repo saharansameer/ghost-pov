@@ -471,10 +471,10 @@ export default function PaymentPolicyPage() {
                 For payment-related queries, billing questions, technical
                 issues, or general support, please contact us at:{" "}
                 <Link
-                  href="mailto:payments@ghostpov.com"
+                  href="mailto:payments@ghostpov.xyz"
                   className="email-text"
                 >
-                  payments@ghostpov.com
+                  payments@ghostpov.xyz
                 </Link>
               </p>
               <p className="text-sm text-foreground mt-4">

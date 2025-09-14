@@ -86,7 +86,7 @@ export default function DashboardPage(props: PageProps) {
         <div className="w-full max-w-2xl flex justify-between items-start">
           <div>
             <h1 className="text-2xl font-bold text-foreground">
-              Echos Dashboard
+              Dashboard
             </h1>
             <p className="text-muted-foreground text-sm mt-1">
               Manage and track your echo collection

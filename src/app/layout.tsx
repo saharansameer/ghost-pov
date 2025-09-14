@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "GhostPOV",
     description: "The Simplest Way to Get Anonymous Feedback",
-    url: "https://ghostpov.com",
+    url: "https://ghostpov.xyz",
     siteName: "GhostPOV",
     images: [
       {
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "GhostPOV",
+    title: "GhostPOV - The Simplest Way to Get Anonymous Feedback",
     description:
       "The Simplest Way to Get Anonymous Feedback",
     images: ["/og.png"],

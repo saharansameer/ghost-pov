@@ -14,7 +14,7 @@ import { Check, MessageSquare, Zap } from "lucide-react";
 import Link from "next/link";
 
 const freeTierFeatures = [
-  "Includes 2 free AI credits",
+  "Includes 10 AI credits",
   "AI-powered Summary & Insights",
   "Anonymous Feedback Collection",
   "Auto Spam Filtering",
