@@ -44,7 +44,7 @@ const faqs: FaqArray = [
           be required if feedback messages exceeds the context limit.
         </p>
 
-        <p>Every new user gets 2 free credits after signing up.</p>
+        <p>Every new user gets 10 AI credits for free after signing up.</p>
       </>
     ),
   },
@@ -57,8 +57,8 @@ const faqs: FaqArray = [
           Refunds are generally not available. But we will try our best to
           resolve any issue. For refund or payment related queries, reach out us
           at:{" "}
-          <Link href="mailto:payments@ghostpov.com" className="p-link">
-            payments@ghostpov.com
+          <Link href="mailto:payments@ghostpov.xyz" className="p-link">
+            payments@ghostpov.xyz
           </Link>
         </p>
       </>
@@ -101,7 +101,7 @@ export function CommonFaqs() {
             <AccordionTrigger className="font-semibold text-lg">
               {faq.trigger}
             </AccordionTrigger>
-            <AccordionContent className="flex flex-col gap-4 text-balance">
+            <AccordionContent className="flex flex-col gap-4">
               {faq.content}
             </AccordionContent>
           </AccordionItem>

@@ -406,25 +406,15 @@ export default function PrivacyPolicyPage() {
                     your account
                   </li>
                   <li>
-                    Payment records: Retained for 7 years for tax and legal
-                    compliance
+                    Payment records: We do not collect or store your payment
+                    details. All transactions are securely processed by
+                    Razorpay.
                   </li>
                   <li>
-                    Technical logs: Retained for 90 days for security and
-                    debugging
+                    Technical logs: We do not retain technical logs beyond what
+                    is necessary for immediate operation of the service.
                   </li>
                 </ul>
-              </div>
-
-              <div>
-                <h3 className="text-lg font-medium text-foreground mb-3">
-                  7.2 Automatic Deletion
-                </h3>
-                <p>
-                  Inactive accounts (no login for 2 years) will be automatically
-                  deleted after email notification. You can reactivate your
-                  account by logging in within 30 days of the notification.
-                </p>
               </div>
             </div>
           </section>

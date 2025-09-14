@@ -339,10 +339,10 @@ export default function TermsOfServicePage() {
                   8.1 Termination by User
                 </h3>
                 <p>
-                  You may terminate your account at any time by following the
-                  account deletion process in your user settings. Upon
-                  termination, your access to premium features will cease
-                  immediately.
+                  A User may terminate their account at any time through the
+                  account deletion process in the account settings. Upon
+                  termination, the User&apos;s access to all premium and free
+                  features will cease immediately.
                 </p>
               </div>
 
@@ -355,10 +355,8 @@ export default function TermsOfServicePage() {
                 </p>
                 <ul className="space-y-2 ml-6 mt-3 list-disc">
                   <li>Violation of these Terms of Service</li>
-                  <li>Abusive behavior toward other users or staff</li>
                   <li>Fraudulent or illegal activities</li>
                   <li>Repeated policy violations</li>
-                  <li>Failure to pay subscription fees</li>
                 </ul>
               </div>
 
@@ -368,8 +366,7 @@ export default function TermsOfServicePage() {
                 </h3>
                 <p>
                   Upon termination, your right to use the service ceases
-                  immediately. We may retain certain information as required by
-                  law or for legitimate business purposes.
+                  immediately.
                 </p>
               </div>
             </div>
