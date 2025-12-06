@@ -23,11 +23,11 @@ const profileSchema = new Schema({
   },
   credits: {
     type: Number,
-    default: 2,
+    default: 10,
   },
   maxTokenLimit: {
     type: Number,
-    default: 5000,
+    default: 10000,
   },
 });
 

@@ -6,7 +6,7 @@ import { getAuthSession, unauthorized } from "@/lib/auth/session";
 import { RequestParams, BaseResponse, SummaryResponse } from "@/types";
 import { Types } from "mongoose";
 import openai from "@/lib/ai/openai";
-import { getPrompt } from "@/lib/ai/prompts";
+import { SYSTEM_PROMPT } from "@/lib/ai/prompts";
 import { generateText } from "ai";
 import { ProfileModel } from "@/models/profile.model";
 import { deleteByPrefix } from "@/lib/db/redis";
@@ -141,18 +141,21 @@ export async function POST(request: NextRequest, { params }: RequestParams) {
       })
       .join("\n\n");
 
-    // Create Prompt
-    const prompt = getPrompt({
-      title: echo.title,
-      description: echo.description,
-      feedbacks: formattedFeedbacks,
-    });
-
     // Generate AI Summary & Insights
     const { text } = await generateText({
       model: openai("gpt-4.1-nano"),
-      prompt,
-      maxTokens: echo.owner.maxTokenLimit,
+      messages: [
+        { role: "system", content: SYSTEM_PROMPT },
+        {
+          role: "user",
+          content: `
+          ANALYZE:
+          - Product Title: ${echo.title} 
+          - Product Description: ${echo.description}
+          - User Feedbacks: ${formattedFeedbacks}`,
+        },
+      ],
+      maxOutputTokens: echo.owner.maxTokenLimit,
     });
 
     // Decrement summary credit
