@@ -188,7 +188,7 @@ export async function POST(request: NextRequest, { params }: RequestParams) {
     return NextResponse.json<SummaryResponse>({
       success: true,
       message: "Summary Generated and Stored",
-      summaryId: summary._id as string,
+      summaryId: summary._id,
     });
   } catch {
     return NextResponse.json<BaseResponse>(
