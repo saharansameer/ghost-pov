@@ -1,6 +1,6 @@
 # GhostPOV
 
-GhostPOV is a web-based platform that lets users quickly collect anonymous feedback by sharing a simple link. Whether it’s a project, portfolio, resume, or idea — GhostPOV helps you get honest, unfiltered input from anyone, and provides AI-powered summaries and insights.
+GhostPOV is a platform to collect anonymous feedback using a shareable link. Anyone can submit feedback without revealing their identity. Based on the received feedback, AI-powered summaries and insights can be generated to help you understand the responses quickly. It supports a credit-based system, with payments handled through Razorpay.
 
 ---
 
@@ -11,7 +11,7 @@ GhostPOV is a web-based platform that lets users quickly collect anonymous feedb
 - **Tailwind CSS**
 - **shadcn/ui**
 - **MongoDB**
-- **Better Auth** – Authentication and session management
+- **Better-Auth** – Auth and session management
 - **OpenAI API** – Used for generating summaries and insignts of collected feedback
 - **AI-SDK** – Integrated with OpenAI for streaming and efficient AI response handling
 - **Perspective API** – Used for automatic spam detection and filtering
