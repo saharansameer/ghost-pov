@@ -11,7 +11,7 @@ const authRoutes = [
 const protectedRoutes = ["/dashboard", "/account", "/buy-credits"];
 const rateLimitExcludedRoutes = ["/api/auth", "/api/razorpay/webhook"];
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname, origin } = request.nextUrl;
 
   // Get IP

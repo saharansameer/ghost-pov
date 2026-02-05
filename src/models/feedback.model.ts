@@ -15,7 +15,7 @@ export enum FeedbackCategories {
 
 export interface FeedbackDocument extends Document {
   category: FeedbackCategories;
-  message: string;
+  feedbackMessage: string;
   echoId: Types.ObjectId;
   echoOwner: Types.ObjectId;
   flagged: boolean;

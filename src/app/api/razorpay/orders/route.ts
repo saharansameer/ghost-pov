@@ -3,12 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/db/db";
 import { OrderModel } from "@/models/order.model";
 import { getAuthUser, unauthorized, getAuthSession } from "@/lib/auth/session";
-import {
-  BaseResponse,
-  OrderResponse,
-  RazorpayOrderAmount,
-  RazorpayOrderVariant,
-} from "@/types";
+import { BaseResponse, OrderResponse, RazorpayOrderVariant } from "@/types";
 
 // POST
 export async function POST(request: NextRequest) {
@@ -46,7 +41,7 @@ export async function POST(request: NextRequest) {
       userId: user.id,
       orderId: order.id,
       orderDate: order.created_at,
-      amount: order.amount,
+      amount: Number(order.amount),
       status: "pending",
       variant,
     });
@@ -58,7 +53,7 @@ export async function POST(request: NextRequest) {
         message: "Order Created",
         data: {
           orderId: order.id,
-          amount: order.amount as RazorpayOrderAmount,
+          amount: Number(order.amount),
           currency: order.currency,
           key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID!,
           user: {

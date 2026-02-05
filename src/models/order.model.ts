@@ -1,15 +1,11 @@
 import mongoose, { Schema, Types, Document } from "mongoose";
-import {
-  RazorpayOrderVariant,
-  RazorpayOrderStatus,
-  RazorpayOrderAmount,
-} from "@/types";
+import { RazorpayOrderVariant, RazorpayOrderStatus } from "@/types";
 
 interface OrderDocument extends Document {
   userId: Types.ObjectId;
   orderId: string;
   orderDate: number;
-  amount: RazorpayOrderAmount;
+  amount: number;
   status: RazorpayOrderStatus;
   variant: RazorpayOrderVariant;
 }

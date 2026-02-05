@@ -12,7 +12,7 @@ interface FeedbackCardProps {
 
 export function FeedbackCard({ feedback }: FeedbackCardProps) {
   return (
-    <div className="w-full max-w-2xl bg-card rounded-md border-t-1 shadow-xs transition-all duration-300 ease-out">
+    <div className="w-full max-w-2xl bg-card rounded-md border-t shadow-xs transition-all duration-300 ease-out">
       <div className="flex items-start justify-between py-1 px-1">
         {/*Category Badges*/}
         <div className="flex gap-x-2">
@@ -36,7 +36,7 @@ export function FeedbackCard({ feedback }: FeedbackCardProps) {
       </div>
 
       {/* Feedback Message */}
-      <div className="min-h-[72px]">
+      <div className="min-h-18">
         <ExpandableField text={feedback.feedbackMessage} />
       </div>
 

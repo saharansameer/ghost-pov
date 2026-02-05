@@ -1,11 +1,11 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document, Types } from "mongoose";
 
 enum Plan {
   FREE = "FREE",
 }
 
 interface ProfileDocument extends Document {
-  userId: Schema.Types.ObjectId;
+  userId: Types.ObjectId;
   plan: Plan;
   credits: number;
   maxTokenLimit: number;

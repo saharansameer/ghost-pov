@@ -1,11 +1,16 @@
-import mongoose, { Schema, Document, AggregatePaginateModel } from "mongoose";
+import mongoose, {
+  Schema,
+  Document,
+  AggregatePaginateModel,
+  Types,
+} from "mongoose";
 import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2";
 
 export interface EchoDocument extends Document {
   publicId: string;
   title: string;
   description: string;
-  owner: Schema.Types.ObjectId;
+  owner: Types.ObjectId;
   isAcceptingFeedback: boolean;
 }
 
